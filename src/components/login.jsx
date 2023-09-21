@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import the Link component
+
 
 function Login() {
     const headingStyle = {
