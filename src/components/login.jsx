@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import the Link component
 
 
-function Login() {
+function Login(props) {
+    const { setShowSignup } = props;
+
     const headingStyle = {
         color: '#1DAEFF',
         textShadow: '0px 0px 4px rgba(0, 0, 0, 0.56)',
@@ -78,6 +80,12 @@ function Login() {
         marginBottom: '-200px', // Keep margin-bottom for the "LOGIN" text unchanged
         marginTop: '110px', 
     };
+
+
+    const handleShowSignup = (e) => {
+        e.preventDefault();
+        setShowSignup(true);
+    };
     
 
     return (
@@ -99,7 +107,7 @@ function Login() {
                     />
                 </div>
                 <button style={buttonStyle}>LOGIN</button>
-                <a href="#" style={linkStyle}>Don't have an account?</a>
+                <a style={linkStyle} onClick={(e) => {handleShowSignup(e)}}>Don't have an account?</a>
 
                 <p style={{ textAlign: 'center' }}>
                 </p>

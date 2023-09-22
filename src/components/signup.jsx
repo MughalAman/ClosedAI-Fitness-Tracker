@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import the Link component
 
 
-function Signup() {
+function Signup(props) {
+    const { setShowSignup } = props;
+
     // Määritellään tyylit otsikolle
     const headingStyle = {
         color: '#1DAEFF',
@@ -135,6 +137,11 @@ function Signup() {
     // Alustetaan valittu sukupuoli
     const [selectedGender, setSelectedGender] = useState('');
 
+    const handleShowSignup = (e) => {
+        e.preventDefault();
+        setShowSignup(false);
+    }
+
     // Palautetaan komponentti
     return (
         <div>
@@ -198,7 +205,7 @@ function Signup() {
                     </div>
                 </div>
                 <button style={buttonStyle}>Sign Up</button>
-                <a href= 'login.jsx' style={linkStyle}>Already have an account? Login</a>
+                <a style={linkStyle} onClick={(e) => {handleShowSignup(e)}}>Already have an account? Login</a>
             </div>
         </div>
     );
