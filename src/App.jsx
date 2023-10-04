@@ -5,9 +5,8 @@ import Login from './components/login';
 import Signup from './components/signup';
 import TrainingGoal from './components/TrainingGoal';
 import TrainingExperience from './components/TrainingExperience';
-
+import TrainingDays from './components/TrainingDays';
 import Profile from './components/profile';
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,8 +49,7 @@ function App() {
 
   return (
     <>
-    
-      {Profile()}
+      {isLoggedIn ? (<div>Logged in</div>) : (showSignup ? <Signup setShowSignup={setShowSignup}/> : <Login setShowSignup={setShowSignup} />)}
     </>
   );
 }
