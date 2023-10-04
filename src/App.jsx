@@ -6,7 +6,10 @@ import Signup from './components/signup';
 import TrainingGoal from './components/TrainingGoal';
 import TrainingExperience from './components/TrainingExperience';
 import TrainingDays from './components/TrainingDays';
+import WorkoutSettings from './components/WorkoutSettings';
+import MainPage from './components/MainPage';
 import Profile from './components/profile';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,7 +52,7 @@ function App() {
 
   return (
     <>
-      {isLoggedIn ? (<div>Logged in</div>) : (showSignup ? <Signup setShowSignup={setShowSignup}/> : <Login setShowSignup={setShowSignup} />)}
+      { isLoggedIn ? (<div>Logged in</div>) : (showSignup ? <Signup setShowSignup={setShowSignup}/> : <Login setShowSignup={setShowSignup} />) }
     </>
   );
 }
