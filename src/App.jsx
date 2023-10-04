@@ -48,6 +48,8 @@ function App() {
   return (
     <>
       { isLoggedIn ? (<div>Logged in</div>) : (showSignup ? <Signup setShowSignup={setShowSignup}/> : <Login setShowSignup={setShowSignup} />)}
+    
+      {TrainingGoal()}
     </>
   );
 }
