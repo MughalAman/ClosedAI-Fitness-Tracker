@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 function Profile(props) {
     const [unit, setUnit] = useState('kg');
+    const [selectedWeightUnit, setSelectedWeightUnit] = useState(null);
+    const [selectedPlate, setSelectedPlate] = useState(null);
+    const [profileVisibility, setProfileVisibility] = useState('private');
 
     const profileTxtStyle = {
         color: '#FFF',
@@ -13,7 +16,7 @@ function Profile(props) {
     };
 
     const buttonStyle = {
-        backgroundColor: '#4CAF50', // Green
+        backgroundColor: '#404040',
         border: 'none',
         color: 'white',
         padding: '15px 32px',
@@ -26,60 +29,117 @@ function Profile(props) {
         cursor: 'pointer',
     };
 
-    const buttonStyleHover = {
+    const buttonStyleActive = {
         ...buttonStyle,
         backgroundColor: 'white',
         color: 'black',
-        border: '2px solid #4CAF50',
+        border: '2px solid #404040',
     };
 
-    return (
-        <div style={{ padding: '20px', backgroundColor: '#333' }}>
+    const radioStyle = {
+        margin: '0 8px',
+    };
+
+    const labelStyle = {
+        color: '#FFF',
+        fontSize: '16px',
+        margin: '0 8px',
+    };
+
+    const containerStyle = {
+        display: 'flex',
+        justifyContent: 'space-between',
+        color: '#FFF', 
+    };
+
+    const leftContent = (
+        <div>
             <h1 style={profileTxtStyle}>
                 Profile: <br />
                 Workout Settings
             </h1>
             <p>Weight measurement:</p>
-
-            <button style={buttonStyle} onClick={() => setUnit('kg')}>
+            <button 
+                style={selectedWeightUnit === 'kg' ? buttonStyleActive : buttonStyle} 
+                onClick={() => {
+                    setUnit('kg');
+                    setSelectedWeightUnit('kg');
+                }}
+            >
                 kg
             </button>
-            <button style={buttonStyle} onClick={() => setUnit('lbs')}>
+            <button 
+                style={selectedWeightUnit === 'lbs' ? buttonStyleActive : buttonStyle} 
+                onClick={() => {
+                    setUnit('lbs');
+                    setSelectedWeightUnit('lbs');
+                }}
+            >
                 lbs
             </button>
 
             <p>Smallest Plate:</p>
             {unit === 'kg' && (
                 <>
-                    <button style={buttonStyle}>2.5kg</button>
-                    <button style={buttonStyle}>1.25kg</button>
-                    <button style={buttonStyle}>1kg</button>
-                    <button style={buttonStyle}>0.5kg</button>
-                    <p>kg</p>
+                    {['2.5', '1.25', '1', '0.5'].map((value) => (
+                        <button 
+                            key={value}
+                            style={selectedPlate === `${value}kg` ? buttonStyleActive : buttonStyle} 
+                            onClick={() => setSelectedPlate(`${value}kg`)}
+                        >
+                            {value}kg
+                        </button>
+                    ))}
                 </>
             )}
             {unit === 'lbs' && (
                 <>
-                    <button style={buttonStyle}>5.51lbs</button>
-                    <button style={buttonStyle}>2.76lbs</button>
-                    <button style={buttonStyle}>2.20lbs</button>
-                    <button style={buttonStyle}>1.10lbs</button>
-                    <p>lbs</p>
+                    {['5.51', '2.76', '2.20', '1.10'].map((value) => (
+                        <button 
+                            key={value}
+                            style={selectedPlate === `${value}lbs` ? buttonStyleActive : buttonStyle} 
+                            onClick={() => setSelectedPlate(`${value}lbs`)}
+                        >
+                            {value}lbs
+                        </button>
+                    ))}
                 </>
             )}
+        </div>
+    );
 
-            <div>
-                <p>Profile id</p>
-                <p>Name</p>
-                <p>Age</p>
-                <p>Sex</p>
-                <p>Weight</p>
-                <p>Height</p>
-                <p>Profile Visibility:</p>
+    const rightContent = (
+        <div>
+            <p>Profile id</p>
+            <p>Name</p>
+            <p>Age</p>
+            <p>Sex</p>
+            <p>Weight</p>
+            <p>Height</p>
+            <p>Profile Visibility:</p>
+            <input 
+                type="radio" 
+                value="private" 
+                checked={profileVisibility === 'private'} 
+                onChange={() => setProfileVisibility('private')} 
+                style={radioStyle} 
+            />
+            <label style={labelStyle}>Private</label>
+            <input 
+                type="radio" 
+                value="public" 
+                checked={profileVisibility === 'public'} 
+                onChange={() => setProfileVisibility('public')} 
+                style={radioStyle} 
+            />
+            <label style={labelStyle}>Public</label>
+        </div>
+    );
 
-                <button style={buttonStyleHover}>Private</button>
-                <button style={buttonStyleHover}>Public</button>
-            </div>
+    return (
+        <div style={containerStyle}>
+            {leftContent}
+            {rightContent}
         </div>
     );
 }
