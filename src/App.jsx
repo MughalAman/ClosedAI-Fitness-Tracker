@@ -7,7 +7,7 @@ import TrainingGoal from './components/TrainingGoal';
 import TrainingExperience from './components/TrainingExperience';
 import TrainingDays from './components/TrainingDays';
 import WorkoutSettings from './components/WorkoutSettings';
-import MainPage from './components/MainPage';
+//import MainPage from './components/MainPage';
 import Profile from './components/profile';
 
 
@@ -52,7 +52,7 @@ function App() {
 
   return (
     <>
-      { isLoggedIn ? (<div>Logged in</div>) : (showSignup ? <Signup setShowSignup={setShowSignup}/> : <Login setShowSignup={setShowSignup} />) }
+        {Profile()}
     </>
   );
 }
