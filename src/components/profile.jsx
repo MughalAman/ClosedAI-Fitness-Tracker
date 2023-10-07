@@ -219,7 +219,7 @@ const textStyle = {
             />
 
 
-        <p style={textStyle}>Profile id</p>
+        <p style={textStyle}>Friend Code</p>
         <p style={textStyle}>Name</p>
         <p style={textStyle}>Age</p>
         <p style={textStyle}>Sex</p>
