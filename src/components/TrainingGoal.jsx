@@ -9,6 +9,7 @@ function TrainingGoal(props) {
         fontStyle: 'normal',
         fontWeight: 'bold', // Teksti lihavoitu
         lineHeight: 'normal',
+        textAlign: 'center', // Center the text horizontally
       };
     
       const containerStyle = {
@@ -55,27 +56,32 @@ function TrainingGoal(props) {
     };
 
  
-  return (
-    <div>
-      <h1 style={headingStyle}>What is your training goal?</h1>
-      <div style={containerStyle}>
-        <div style={innerContainerStyle}>
-          <h2 style={txtStyle}>Bodybuilding</h2>
-          <p style={pStyle}>Build muscle for the entire body.</p>
-        </div>
-        <div style={innerContainerStyle}>
-          <h2 style={txtStyle}>Powerlifting</h2>
-          <p style={pStyle}>Increase strength for squat, bench and deadlift.</p>
-        </div>
+    return (
+      <div>
+          <h1 style={headingStyle}>What is your training goal?</h1>
+          <div style={containerStyle}>
+              <a href="#" style={{ textDecoration: 'none' }}>
+                  <div style={innerContainerStyle}>
+                      <h2 style={txtStyle}>Bodybuilding</h2>
+                      <p style={pStyle}>Build muscle for the entire body.</p>
+                  </div>
+              </a>
+              <a href="#" style={{ textDecoration: 'none' }}>
+                  <div style={innerContainerStyle}>
+                      <h2 style={txtStyle}>Powerlifting</h2>
+                      <p style={pStyle}>Increase strength for squat, bench, and deadlift.</p>
+                  </div>
+              </a>
+          </div>
+          <div style={containerStyle}>
+              <a href="#" style={{ textDecoration: 'none' }}>
+                  <div style={innerContainerStyle}>
+                      <h2 style={txtStyle}>Powerbuilding</h2>
+                      <p style={pStyle}>Gain both strength and muscle.</p>
+                  </div>
+              </a>
+          </div>
       </div>
-      <div style={containerStyle}>
-        <div style={innerContainerStyle}>
-          <h2 style={txtStyle}>Powerbuilding</h2>
-          <p style={pStyle}>Gain both strenght and muscle.</p>
-        </div>
-        
-      </div>
-    </div>
   );
 
   

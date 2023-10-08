@@ -7,8 +7,9 @@ function TrainingExperience(props) {
     fontFamily: 'Inter',
     fontSize: '64px',
     fontStyle: 'normal',
-    fontWeight: 'bold', // Teksti lihavoitu
+    fontWeight: 'bold',
     lineHeight: 'normal',
+    textAlign: 'center',
   };
 
   const containerStyle = {
@@ -30,18 +31,17 @@ function TrainingExperience(props) {
     color: 'white',
     width: '440px',
     height: '324px',
-    marginLeft: '100px', // Adjust the spacing between containers as needed
-    marginRight: '100px', // Adjust the spacing between containers as needed
-    marginBottom: '25px', // Adjust the spacing between containers as needed
+    marginLeft: '100px',
+    marginRight: '100px',
+    marginBottom: '25px',
   };
 
-  // Define txtStyle with the desired styling properties
   const txtStyle = {
     color: 'white',
     fontFamily: 'Inter',
     fontSize: '40px',
     fontStyle: 'normal',
-    fontWeight: 700, // Text is bold
+    fontWeight: 700,
     lineHeight: 'normal',
   };
 
@@ -52,30 +52,38 @@ function TrainingExperience(props) {
     fontStyle: 'normal',
     lineHeight: 'normal',
     textAlign: 'left',
-};
+  };
 
   return (
     <div>
       <h1 style={headingStyle}>What is your training experience?</h1>
       <div style={containerStyle}>
-        <div style={innerContainerStyle}>
-          <h2 style={txtStyle}>Beginner</h2>
-          <p style={pStyle}>You have not lifted consistently at all and you would like to learn the fundamentals.</p>
-        </div>
-        <div style={innerContainerStyle}>
-          <h2 style={txtStyle}>Novice</h2>
-          <p style={pStyle}>Under a year of consistent lifting or have trained before but you have taken a break for more than half a year.</p>
-        </div>
+        <a href="#" style={{ textDecoration: 'none' }}>
+          <div style={innerContainerStyle}>
+            <h2 style={txtStyle}>Beginner</h2>
+            <p style={pStyle}>You have not lifted consistently at all and you would like to learn the fundamentals.</p>
+          </div>
+        </a>
+        <a href="#" style={{ textDecoration: 'none' }}>
+          <div style={innerContainerStyle}>
+            <h2 style={txtStyle}>Novice</h2>
+            <p style={pStyle}>Under a year of consistent lifting or have trained before but you have taken a break for more than half a year.</p>
+          </div>
+        </a>
       </div>
       <div style={containerStyle}>
-        <div style={innerContainerStyle}>
-          <h2 style={txtStyle}>Intermediate</h2>
-          <p style={pStyle}>1-3 years of consistent lifting and you want to take it to the next level.</p>
-        </div>
-        <div style={innerContainerStyle}>
-          <h2 style={txtStyle}>Advanced</h2>
-          <p style={pStyle}>Over 3 years of consistent lifting and have completed many trainings in the past.</p>
-        </div>
+        <a href="#" style={{ textDecoration: 'none' }}>
+          <div style={innerContainerStyle}>
+            <h2 style={txtStyle}>Intermediate</h2>
+            <p style={pStyle}>1-3 years of consistent lifting and you want to take it to the next level.</p>
+          </div>
+        </a>
+        <a href="#" style={{ textDecoration: 'none' }}>
+          <div style={innerContainerStyle}>
+            <h2 style={txtStyle}>Advanced</h2>
+            <p style={pStyle}>Over 3 years of consistent lifting and have completed many trainings in the past.</p>
+          </div>
+        </a>
       </div>
     </div>
   );

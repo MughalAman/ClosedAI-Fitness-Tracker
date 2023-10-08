@@ -14,6 +14,7 @@ function Login(props) {
         fontStyle: 'normal',
         fontWeight: 900,
         lineHeight: 'normal',
+        textAlign: 'center', // Center the text horizontally
     };
 
     const containerStyle = {
@@ -31,8 +32,7 @@ function Login(props) {
         fontWeight: 900,
         fontFamily: 'Inter',
         lineHeight: 'bold',
-        marginBottom: '-200px', // Keep margin-bottom for the "LOGIN" text unchanged
-        marginTop: '110px', // Keep margin-top for the "LOGIN" text unchanged
+        textAlign: 'center', // Center the text horizontally
     };
 
     const inputStyle = {
@@ -62,7 +62,7 @@ function Login(props) {
         borderRadius: '5px',
         border: 'none',
         cursor: 'pointer',
-        marginTop: '100px', // Reduce margin-top to bring the buttons closer
+        marginTop: '20px', // Adjust the margin-top to center the button vertically
     };
 
     const linkStyle = {
@@ -78,10 +78,8 @@ function Login(props) {
         lineHeight: 'normal',
         textDecorationLine: 'underline',
         cursor: 'pointer',
-        marginBottom: '-200px', // Keep margin-bottom for the "LOGIN" text unchanged
-        marginTop: '110px',
+        marginTop: '20px', // Adjust the margin-top to center the link vertically
     };
-
 
     const handleShowSignup = (e) => {
         e.preventDefault();
@@ -113,14 +111,13 @@ function Login(props) {
             .catch((err) => {
                 console.log(err);
             });
-    }
-
+    };
 
     return (
-        <div style={{maxWidth: "1280px", textAlign: "center", padding: "2rem"}}>
-            <h1 style={headingStyle}>FITNESS TRACKER</h1>
-            <p style={logintxtStyle}>LOGIN</p>
+        <div>
             <div style={containerStyle}>
+                <h1 style={headingStyle}>FITNESS TRACKER</h1>
+                <p style={logintxtStyle}>LOGIN</p>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <input
                         type="email"
@@ -135,8 +132,8 @@ function Login(props) {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button style={buttonStyle} onClick={(e) => {handleLogin(e)}}>LOGIN</button>
-                <a style={linkStyle} onClick={(e) => {handleShowSignup(e)}}>Don't have an account?</a>
+                <button style={buttonStyle} onClick={(e) => { handleLogin(e) }}>LOGIN</button>
+                <a style={linkStyle} onClick={(e) => { handleShowSignup(e) }}>Don't have an account?</a>
 
                 <p style={{ textAlign: 'center' }}>
                 </p>

@@ -19,8 +19,9 @@ function Signup(props) {
         fontFamily: 'Inter',
         fontSize: '30px',
         fontStyle: 'normal',
-        fontWeight: 'bold', // Teksti lihavoitu
+        fontWeight: 900,
         lineHeight: 'normal',
+        textAlign: 'center', // Center the text horizontally
     };
 
     // Määritellään tyylit sisältösäiliölle
@@ -28,9 +29,8 @@ function Signup(props) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: 'calc(100vh - 10px)', // Säädettiin minHeight ottaen huomioon marginTop
-        marginTop: '100px', // Lisättiin marginTop siirtämään kaikkea alaspäin 10px
+        justifyContent: 'center', // Center vertically
+        minHeight: '100vh',
     };
 
     // Määritellään tyylit kirjautumistekstille
@@ -41,6 +41,7 @@ function Signup(props) {
         fontFamily: 'Inter',
         marginBottom: '-200px',
         marginTop: '110px',
+        textAlign: 'center', // Center the text horizontally
     };
 
     // Määritellään tyylit syötekentille
@@ -77,7 +78,7 @@ function Signup(props) {
         height: '38px',
         backgroundColor: '#1DAEFF',
         color: '#FFF',
-        fontFamily: 'Roboto',
+        fontFamily: 'Inter',
         fontSize: '32px',
         fontStyle: 'normal',
         fontWeight: 'bold', // Teksti lihavoitu
@@ -205,7 +206,6 @@ function Signup(props) {
         <div>
             <h1 style={headingStyle}>FITNESS TRACKER</h1>
             <p style={logintxtStyle}>SIGN UP</p>
-
             <div style={containerStyle}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <input
