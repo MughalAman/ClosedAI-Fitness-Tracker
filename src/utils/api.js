@@ -1,69 +1,71 @@
-const createUser = async (name, email, password, weight, height, gender) => {
-        await fetch('https://fitness-api-wlzk.onrender.com/user/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            //tänne userin tietoja
-            "name": name,
-            "email": email,
-            "password": password,
-            "height": height,
-            "weight": weight,
-            "gender": gender
-          }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          return data;
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+// api.js
+
+export async function createUser(name, email, password, weight, height, gender) {
+  try {
+    const response = await fetch('https://fitness-api-wlzk.onrender.com/user/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        height,
+        weight,
+        gender,
+      }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Failed to create user');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
 
-const loginUser = async (email, password) => {
-            fetch('https://fitness-api-wlzk.onrender.com/token', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          //tänne username salasana(jos on)
-          body: `username=${email}&password=${password}`,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data?.access_token);
-            return data?.access_token;
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
+export async function loginUser(email, password) {
+  try {
+    const response = await fetch('https://fitness-api-wlzk.onrender.com/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${email}&password=${password}`,
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data?.access_token;
+    } else {
+      throw new Error('Login failed');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
 
-const getUser = async (token) => {
-    fetch('https://fitness-api-wlzk.onrender.com/user/me', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        }
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          return data;
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+export async function getUser(token) {
+  try {
+    const response = await fetch('https://fitness-api-wlzk.onrender.com/user/me', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Failed to fetch user data');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
-
-
-export default {
-    createUser,
-    loginUser,
-    getUser
-};

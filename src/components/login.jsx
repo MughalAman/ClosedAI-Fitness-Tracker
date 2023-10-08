@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import {createUser, loginUser, getUser} from '../utils/api';
-
+import { loginUser, getUser } from '../utils/api';
 
 function Login(props) {
     const { setShowSignup, setIsLoggedIn, setUserData } = props;
@@ -118,10 +117,9 @@ function Login(props) {
 
 
     return (
-        <div>
+        <div style={{maxWidth: "1280px", textAlign: "center", padding: "2rem"}}>
             <h1 style={headingStyle}>FITNESS TRACKER</h1>
             <p style={logintxtStyle}>LOGIN</p>
-
             <div style={containerStyle}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <input
@@ -143,7 +141,6 @@ function Login(props) {
                 <p style={{ textAlign: 'center' }}>
                 </p>
             </div>
-
         </div>
     );
 }
