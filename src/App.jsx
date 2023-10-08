@@ -10,7 +10,7 @@ import WorkoutSettings from './components/WorkoutSettings';
 import MainPage from './components/MainPage';
 import Profile from './components/profile';
 
-import {createUser, loginUser, getUser} from './utils/api';
+import {getUser} from './utils/api';
 
 
 function App() {
