@@ -36,7 +36,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token && email) {
+    if (token) {
       handleUserLogin(token);
     }
   }
@@ -44,8 +44,8 @@ function App() {
 
   return (
     <>
-      {!isLoggedIn && !showSignup && <Login setIsLoggedIn={setIsLoggedIn} setShowSignup={setShowSignup} />}
-      {!isLoggedIn && showSignup && <Signup setShowSignup={setShowSignup} />}
+      {!isLoggedIn && !showSignup && <Login setIsLoggedIn={setIsLoggedIn} setShowSignup={setShowSignup} setUserData={setUserData} />}
+      {!isLoggedIn && showSignup && <Signup setIsLoggedIn={setIsLoggedIn} setShowSignup={setShowSignup} setUserData={setUserData} />}
       {isLoggedIn && <Profile userData={userData} />}
     </>
   );
