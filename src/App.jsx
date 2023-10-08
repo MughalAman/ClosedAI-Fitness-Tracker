@@ -10,49 +10,43 @@ import WorkoutSettings from './components/WorkoutSettings';
 //import MainPage from './components/MainPage';
 import Profile from './components/profile';
 
+import {createUser, loginUser, getUser} from './utils/api';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [userData, setUserData] = useState({});
 
-  const handleUserLogin = (email, token) => {
-    fetch('http://localhost:3000/api/v1/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        token: token
+  const handleUserLogin = (token) => {
+    getUser(token)
+      .then((data) => {
+        if (data) {
+          setUserData(data);
+          setIsLoggedIn(true);
+        }else{
+          setIsLoggedIn(false);
+        }
       })
-    })
-
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        setUserData(data.data);
-        setIsLoggedIn(true);
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
 
   useEffect(() => {
-    const email = localStorage.getItem('email');
     const token = localStorage.getItem('token');
     if (token && email) {
-      handleUserLogin(email, token);
+      handleUserLogin(token);
     }
   }
   , []);
 
   return (
     <>
-        {Profile()}
+      {!isLoggedIn && !showSignup && <Login setIsLoggedIn={setIsLoggedIn} setShowSignup={setShowSignup} />}
+      {!isLoggedIn && showSignup && <Signup setShowSignup={setShowSignup} />}
+      {isLoggedIn && <Profile userData={userData} />}
     </>
   );
 }

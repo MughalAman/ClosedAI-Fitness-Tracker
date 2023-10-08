@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
+import {createUser, loginUser, getUser} from '../utils/api';
 
 
 function Signup(props) {
-    const { setShowSignup } = props;
+    const { setShowSignup, setIsLoggedIn, setUserData } = props;
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordAgain, setPasswordAgain] = useState(''); // Lisätty toinen salasanakenttä
+    const [name, setName] = useState('');
+    const [weight, setWeight] = useState('');
+    const [height, setHeight] = useState('');
 
     // Määritellään tyylit otsikolle
     const headingStyle = {
@@ -134,11 +142,62 @@ function Signup(props) {
     };
 
     // Alustetaan valittu sukupuoli
-    const [selectedGender, setSelectedGender] = useState('');
+    const [selectedGender, setSelectedGender] = useState(''); // Gender can only be MALE, FEMALE or OTHER
 
     const handleShowSignup = (e) => {
         e.preventDefault();
         setShowSignup(false);
+    }
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+
+        // Tarkistetaan, että salasanat täsmäävät
+        if (password !== passwordAgain) {
+            alert('Passwords do not match!');
+            return;
+        }
+
+        // Tarkistetaan, että kaikki kentät on täytetty
+        if (!email || !password || !passwordAgain || !name || !weight || !height || !selectedGender) {
+            alert('Please fill out all fields!');
+            return;
+        }
+
+        // Luodaan käyttäjä
+        createUser(email, password, name, weight, height, selectedGender)
+            .then((data) => {
+                if (data) {
+                    loginUser(email, password)
+                        .then((data) => {
+                            if (data) {
+                                localStorage.setItem('token', data.token);
+                                getUser(data.token)
+                                    .then((data) => {
+                                        if (data) {
+                                            setUserData(data);
+                                            setIsLoggedIn(true);
+                                        } else {
+                                            setIsLoggedIn(false);
+                                        }
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                    });
+                            } else {
+                                setIsLoggedIn(false);
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    setIsLoggedIn(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     // Palautetaan komponentti
@@ -153,34 +212,38 @@ function Signup(props) {
                         type="text"
                         placeholder="Name"
                         style={inputStyle}
+                        onChange={(e) => setName(e.target.value)}
                     />
                     <input
                         type="email"
                         placeholder="Email"
                         style={inputStyle}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         type="password"
                         placeholder="Password"
                         style={inputStyle}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <input
                         type="password"
                         placeholder="Re-enter Password"
                         style={inputStyle}
+                        onChange={(e) => setPasswordAgain(e.target.value)}
                     />
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                         <div style={genderContainerStyle}>
-                            <button 
-                                style={genderButtonStyle(selectedGender === 'Male')} 
-                                onClick={() => setSelectedGender('Male')}
+                            <button
+                                style={genderButtonStyle(selectedGender === 'Male')}
+                                onClick={() => setSelectedGender('MALE')}
                             />
                             <span style={genderLabelStyle}>Male</span>
                         </div>
                         <div style={genderContainerStyle}>
-                            <button 
-                                style={genderButtonStyle(selectedGender === 'Female')} 
-                                onClick={() => setSelectedGender('Female')}
+                            <button
+                                style={genderButtonStyle(selectedGender === 'Female')}
+                                onClick={() => setSelectedGender('FEMALE')}
                             />
                             <span style={genderLabelStyle}>Female</span>
                         </div>
@@ -195,15 +258,17 @@ function Signup(props) {
                             type="text"
                             placeholder="Height"
                             style={inputStyle2}
+                            onChange={(e) => setHeight(e.target.value)}
                         />
                         <input
                             type="text"
                             placeholder="Weight"
                             style={inputStyle2}
+                            onChange={(e) => setWeight(e.target.value)}
                         />
                     </div>
                 </div>
-                <button style={buttonStyle}>Sign Up</button>
+                <button style={buttonStyle} onClick={(e) => {handleSignup(e)}}>Sign Up</button>
                 <a style={linkStyle} onClick={(e) => {handleShowSignup(e)}}>Already have an account? Login</a>
             </div>
         </div>

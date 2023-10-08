@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import {createUser, loginUser, getUser} from '../utils/api';
 
 
 function Login(props) {
-    const { setShowSignup } = props;
+    const { setShowSignup, setIsLoggedIn, setUserData } = props;
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const headingStyle = {
         color: '#1DAEFF',
@@ -77,7 +80,7 @@ function Login(props) {
         textDecorationLine: 'underline',
         cursor: 'pointer',
         marginBottom: '-200px', // Keep margin-bottom for the "LOGIN" text unchanged
-        marginTop: '110px', 
+        marginTop: '110px',
     };
 
 
@@ -85,7 +88,34 @@ function Login(props) {
         e.preventDefault();
         setShowSignup(true);
     };
-    
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        loginUser(email, password)
+            .then((data) => {
+                if (data) {
+                    localStorage.setItem('token', data.token);
+                    getUser(data.token)
+                        .then((data) => {
+                            if (data) {
+                                setUserData(data);
+                                setIsLoggedIn(true);
+                            } else {
+                                setIsLoggedIn(false);
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    setIsLoggedIn(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
 
     return (
         <div>
@@ -98,14 +128,16 @@ function Login(props) {
                         type="email"
                         placeholder="Email"
                         style={inputStyle}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         type="password"
                         placeholder="Password"
                         style={inputStyle}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button style={buttonStyle}>LOGIN</button>
+                <button style={buttonStyle} onClick={(e) => {handleLogin(e)}}>LOGIN</button>
                 <a style={linkStyle} onClick={(e) => {handleShowSignup(e)}}>Don't have an account?</a>
 
                 <p style={{ textAlign: 'center' }}>

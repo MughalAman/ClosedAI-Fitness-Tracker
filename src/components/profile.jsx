@@ -1,6 +1,7 @@
 import React, { useState, useRef  } from 'react';
 
 function Profile(props) {
+    const { userData } = props;
     const [unit, setUnit] = useState('kg');
     const [selectedWeightUnit, setSelectedWeightUnit] = useState(null);
     const [selectedPlate, setSelectedPlate] = useState(null);
@@ -17,11 +18,11 @@ function Profile(props) {
     const onImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             const reader = new FileReader();
-            
+
             reader.onload = (e) => {
                 setProfilePicture(e.target.result); // Update the image src when a new file is selected
             };
-            
+
             reader.readAsDataURL(e.target.files[0]); // Convert file to data URL
         }
     };
@@ -113,8 +114,8 @@ function Profile(props) {
             <h1 style={profileTxtStyle1}>Workout Settings</h1>
             <p style={txtStyle}>Weight measurement:</p>
             <div style={buttonContainerStyle}>
-                <button 
-                    style={selectedWeightUnit === 'lbs' ? buttonStyleActive : buttonStyle} 
+                <button
+                    style={selectedWeightUnit === 'lbs' ? buttonStyleActive : buttonStyle}
                     onClick={() => {
                         setUnit('lbs');
                         setSelectedWeightUnit('lbs');
@@ -122,9 +123,9 @@ function Profile(props) {
                 >
                     lbs
                 </button>
-                
-                <button 
-                    style={selectedWeightUnit === 'kg' ? buttonStyleActive : buttonStyle} 
+
+                <button
+                    style={selectedWeightUnit === 'kg' ? buttonStyleActive : buttonStyle}
                     onClick={() => {
                         setUnit('kg');
                         setSelectedWeightUnit('kg');
@@ -138,9 +139,9 @@ function Profile(props) {
             {unit === 'kg' && (
                 <>
                     {['2.5', '1.25', '1', '0.5'].map((value) => (
-                        <button 
+                        <button
                             key={value}
-                            style={selectedPlate === `${value}kg` ? buttonStyleActive : buttonStyle} 
+                            style={selectedPlate === `${value}kg` ? buttonStyleActive : buttonStyle}
                             onClick={() => setSelectedPlate(`${value}kg`)}
                         >
                             {value}kg
@@ -151,9 +152,9 @@ function Profile(props) {
             {unit === 'lbs' && (
                 <>
                     {['5.51', '2.76', '2.20', '1.10'].map((value) => (
-                        <button 
+                        <button
                             key={value}
-                            style={selectedPlate === `${value}lbs` ? buttonStyleActive : buttonStyle} 
+                            style={selectedPlate === `${value}lbs` ? buttonStyleActive : buttonStyle}
                             onClick={() => setSelectedPlate(`${value}lbs`)}
                         >
                             {value}lbs
@@ -163,7 +164,7 @@ function Profile(props) {
             )}
 
 
-            
+
         </div>
     );
 const saveButtonStyle = {
@@ -190,12 +191,12 @@ const textStyle = {
     fontStyle: 'normal',
     fontWeight: 900,
     lineHeight: '2',
-    
+
 };
-    
+
     const rightContent = (
         <div>
-          <h1 style={{ 
+          <h1 style={{
                 color: '#FFF',
                 fontFamily: 'Inter',
                 fontSize: '45px',
@@ -205,41 +206,41 @@ const textStyle = {
                 marginTop: '-30px',
             }}>Profile information</h1>
 
-            <img 
-                src={profilePicture} 
-                alt="Profile" 
+            <img
+                src={profilePicture}
+                alt="Profile"
                 onClick={onImageClick} // Add the onClick handler here
                 style={{width: '150px', height: '150px', borderRadius: '75px', cursor: 'pointer', justifyContent: 'flex-wrap', marginLeft: '115px', marginBottom: '30px', marginTop: '-170px'}}
             />
-            <input 
-                type="file" 
-                onChange={onImageChange} 
+            <input
+                type="file"
+                onChange={onImageChange}
                 style={{display: 'none'}} // Hide the file input
                 ref={fileInput} // Attach the ref here
             />
 
 
-        <p style={textStyle}>Friend Code</p>
-        <p style={textStyle}>Name</p>
+        <p style={textStyle}>Friend Code: {userData.friend_code}</p>
+        <p style={textStyle}>Name: {userData.name}</p>
         <p style={textStyle}>Age</p>
-        <p style={textStyle}>Sex</p>
-        <p style={textStyle}>Weight</p>
-        <p style={textStyle}>Height</p>
+        <p style={textStyle}>Sex: {userData.gender}</p>
+        <p style={textStyle}>Weight: {userData.weight}</p>
+        <p style={textStyle}>Height: {userData.height}</p>
         <p style={textStyle}>Profile Visibility:</p>
-            <input 
-                type="radio" 
-                value="private" 
-                checked={profileVisibility === 'private'} 
-                onChange={() => setProfileVisibility('private')} 
-                style={radioStyle} 
+            <input
+                type="radio"
+                value="private"
+                checked={profileVisibility === 'private'}
+                onChange={() => setProfileVisibility('private')}
+                style={radioStyle}
             />
             <label style={labelStyle}>Private</label>
-            <input 
-                type="radio" 
-                value="public" 
-                checked={profileVisibility === 'public'} 
-                onChange={() => setProfileVisibility('public')} 
-                style={radioStyle} 
+            <input
+                type="radio"
+                value="public"
+                checked={profileVisibility === 'public'}
+                onChange={() => setProfileVisibility('public')}
+                style={radioStyle}
             />
             <label style={labelStyle}>Public</label>
         </div>
