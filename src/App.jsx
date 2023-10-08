@@ -9,9 +9,8 @@ import TrainingDays from './components/TrainingDays';
 import WorkoutSettings from './components/WorkoutSettings';
 import MainPage from './components/MainPage';
 import Profile from './components/profile';
-
+import ExerciseComplete from './components/ExerciseComplete';
 import {getUser} from './utils/api';
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
