@@ -1,12 +1,35 @@
-import React, { useState, useRef  } from 'react';
+import { useState, useRef, useEffect  } from 'react';
+import {getUser} from '../utils/api';
 
-function Profile(props) {
-    const { userData } = props;
+function Profile() {
     const [unit, setUnit] = useState('kg');
     const [selectedWeightUnit, setSelectedWeightUnit] = useState(null);
     const [selectedPlate, setSelectedPlate] = useState(null);
     const [profileVisibility, setProfileVisibility] = useState('private');
     const [profilePicture, setProfilePicture] = useState('/pic.jpg'); // Set default picture path
+
+    const [userData, setUserData] = useState({});
+
+    const handleUserLogin = (token) => {
+      getUser(token)
+        .then((data) => {
+          if (data) {
+            setUserData(data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  
+  
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        handleUserLogin(token);
+      }
+    }
+    , []);
 
     const fileInput = useRef();  // Define the ref
 

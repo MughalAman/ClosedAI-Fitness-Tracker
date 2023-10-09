@@ -1,15 +1,9 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
-import Login from './components/login';
-import Signup from './components/signup';
-import TrainingGoal from './components/TrainingGoal';
-import TrainingExperience from './components/TrainingExperience';
-import TrainingDays from './components/TrainingDays';
-import WorkoutSettings from './components/WorkoutSettings';
-import MainPage from './components/MainPage';
-import Profile from './components/profile';
-import ExerciseComplete from './components/ExerciseComplete';
+import Login from './routes/login';
+import Signup from './routes/signup';
+import MainPage from './routes/MainPage';
 import {getUser} from './utils/api';
 
 function App() {
@@ -45,7 +39,7 @@ function App() {
     <>
       {!isLoggedIn && !showSignup && <Login setIsLoggedIn={setIsLoggedIn} setShowSignup={setShowSignup} setUserData={setUserData} />}
       {!isLoggedIn && showSignup && <Signup setIsLoggedIn={setIsLoggedIn} setShowSignup={setShowSignup} setUserData={setUserData} />}
-      {isLoggedIn && <Profile userData={userData} />}
+      {isLoggedIn && <MainPage userData={userData} />}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {createUser, loginUser, getUser} from '../utils/api';
+import {createUser, getUserToken, getUser} from '../utils/api';
 
 
 function Signup(props) {
@@ -166,14 +166,14 @@ function Signup(props) {
         }
 
         // Luodaan käyttäjä
-        createUser(email, password, name, weight, height, selectedGender)
+        createUser(name, email, password, weight, height, selectedGender)
             .then((data) => {
                 if (data) {
-                    loginUser(email, password)
+                    getUserToken(email, password)
                         .then((data) => {
                             if (data) {
-                                localStorage.setItem('token', data.token);
-                                getUser(data.token)
+                                localStorage.setItem('token', data);
+                                getUser(data)
                                     .then((data) => {
                                         if (data) {
                                             setUserData(data);

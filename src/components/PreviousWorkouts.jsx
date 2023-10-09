@@ -58,36 +58,64 @@ const tableCellStyles = {
   verticalAlign: 'top',
 };
 
-function PreviousWorkouts() {
+function PreviousWorkouts(props) {
+  const { userData } = props;
+
   return (
     <div>
       <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Previous Workouts</h2>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-        {workoutHistory.slice(0, 3).map((workout) => (
-          <div key={workout.id} style={boxStyles}>
-            <div style={tableStyles}>
-              <div style={tableRowStyles}>
-                <div style={tableCellStyles}>{workout.date}</div>
-                <div style={tableCellStyles}>Rating: {workout.rating}⭐</div>
-              </div>
-              <div style={tableRowStyles}>
-                <div style={tableCellStyles}>{workout.workoutName}</div>
-                <div style={tableCellStyles}>RPE: {workout.rpe}⚡</div>
-              </div>
-              <div style={tableRowStyles}>
-                <div style={tableCellStyles}>{workout.workoutType}</div>
-                <div style={tableCellStyles}></div>
-              </div>
-              <div style={tableRowStyles}>
-                <div style={tableCellStyles}>Duration: {workout.duration}🕛</div>
-                <div style={tableCellStyles}></div>
+        {userData['workouts'].slice(0, 3).map((workout) => {
+            // Calculate the total and average rating from the exercises' ratings
+            let totalRating = 0;
+            let ratedExercisesCount = 0;
+
+            workout.exercises.forEach((exercise) => {
+              if (exercise.ratings.length > 0) {
+                const exerciseRating = exercise.ratings.reduce((acc, rating) => acc + rating.rating, 0) / exercise.ratings.length;
+                totalRating += exerciseRating;
+                ratedExercisesCount += 1;
+              }
+            });
+
+            const averageRating = ratedExercisesCount > 0 
+              ? (totalRating / ratedExercisesCount).toFixed(1) 
+              : 'N/A';
+
+          // Calculate the total workout duration from the exercises' durations
+          const totalDuration = workout.exercises.reduce((acc, exercise) => acc + exercise.duration, 0);
+
+          // Calculate the total rpe from the exercises' rpes
+          const totalRpe = workout.exercises.reduce((acc, exercise) => acc + exercise.rpe, 0);
+          const averageRpe = (totalRpe / workout.exercises.length).toFixed(1);
+
+          return (
+            <div key={workout.workout_id} style={boxStyles}>
+              <div style={tableStyles}>
+                <div style={tableRowStyles}>
+                  <div style={tableCellStyles}>{workout.date}</div>
+                  <div style={tableCellStyles}>Rating: {averageRating}⭐</div>
+                </div>
+                <div style={tableRowStyles}>
+                  <div style={tableCellStyles}>{workout.name}</div>
+                  <div style={tableCellStyles}>RPE: {averageRpe}⚡</div>
+                </div>
+                <div style={tableRowStyles}>
+                  <div style={tableCellStyles}>{workout.workoutType}</div>
+                  <div style={tableCellStyles}></div>
+                </div>
+                <div style={tableRowStyles}>
+                  <div style={tableCellStyles}>Duration: {totalDuration / 60} min 🕛</div>
+                  <div style={tableCellStyles}></div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
 }
+
 
 export default PreviousWorkouts;

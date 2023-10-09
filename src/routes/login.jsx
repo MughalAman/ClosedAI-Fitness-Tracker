@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loginUser, getUser } from '../utils/api';
+import { getUser, getUserToken } from '../utils/api';
 
 function Login(props) {
     const { setShowSignup, setIsLoggedIn, setUserData } = props;
@@ -88,11 +88,11 @@ function Login(props) {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        loginUser(email, password)
+        getUserToken(email, password)
             .then((data) => {
                 if (data) {
-                    localStorage.setItem('token', data.token);
-                    getUser(data.token)
+                    localStorage.setItem('token', data);
+                    getUser(data)
                         .then((data) => {
                             if (data) {
                                 setUserData(data);

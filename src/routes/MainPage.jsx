@@ -1,6 +1,7 @@
 import React from 'react';
-import Navbar from './Navbar';
-import PreviousWorkouts from './PreviousWorkouts';
+import Navbar from '../components/Navbar';
+import PreviousWorkouts from '../components/PreviousWorkouts';
+import Workout from '../components/workout';
 
 const parentContainerStyles = {
   height: '100vh',
@@ -158,7 +159,11 @@ const myWorkouts = [
   // Add more workouts here
 ];
 
-function MainPage() {
+function MainPage(props) {
+
+  const {userData} = props;
+
+
   const friendActivities = [
     {
       id: 1,
@@ -173,69 +178,44 @@ function MainPage() {
     // Add more friend activities here
   ];
 
+  console.log(userData);
+
   return (
     <div style={parentContainerStyles}>
-      <Navbar />
+      <Navbar userData={userData}/>
       <div style={rootStyles}>
         <div style={friendActivityStyles}>
           <h2 style={titleStyles}>Friend Activity</h2>
-          {friendActivities.map((activity) => (
-            <div key={activity.id} style={activityItemStyles}>
+          {userData['friendships_received'].map((friendship) => (
+            <div key={friendship['user1']['workouts'][0].workout_id} style={activityItemStyles}>
               <a href="#">
                 <img
-                  src={activity.profilePicture}
-                  alt={`${activity.name}'s profile`}
+                  src={'../screenshot-202309051321371.png'}
+                  alt={`${friendship['user1'].name}'s profile`}
                   style={profilePictureStyles}
                 />
               </a>
               <div>
-                <p style={friendNameStyles}>{activity.name}</p>
-                <p>{activity.workoutName}</p>
-                <p>{activity.workoutType}</p>
+                <p style={friendNameStyles}>{friendship['user1'].name}</p>
+                <p>{friendship['user1']['workouts'][0].name}</p>
               </div>
               <div style={{ marginLeft: 'auto' }}>
-                <p>Rating: {activity.rating}⭐</p>
-                <p>Duration: {activity.duration}🕛</p>
-                <p>RPE: {activity.rpe}⚡</p>
+                {/* <p>Rating: {friendship['user1']['workouts'][0]['exercises'][0].rating}⭐</p> */}
+                {/* <p>Duration: {friendship['user1']['workouts'][0]['exercises'][0].duration}🕛</p> */}
+                {/* <p>RPE: {friendship['user1']['workouts'][0]['exercises'][0].rpe}⚡</p> */}
               </div>
             </div>
           ))}
         </div>
         <div style={rightContainerStyles}>
-          <div style={currentStreakStyles}>Current streak: 5🔥</div>
-          <div style={workoutStyles}>
-            <div style={workoutTitleStyles}>My workout</div>
-            <div style={exerciseListStyles}>
-              {myWorkouts.map((workout) => (
-                <div key={workout.id}>
-                  <p>Type: {workout.type}</p>
-                  <div style={tableStyles}>
-                    <div style={tableRowStyles}>
-                      <div style={tableCellStyles}>Exercise:</div>
-                      <div style={tableCellStyles}>Sets</div>
-                      <div style={tableCellStyles}>Reps</div>
-                    </div>
-                    {workout.exercises.map((exercise, index) => (
-                      <div key={index} style={tableRowStyles}>
-                        <div style={tableCellStyles}>{exercise.name}</div>
-                        <div style={tableCellStyles}>{exercise.sets}</div>
-                        <div style={tableCellStyles}>{exercise.reps}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div style={workoutLinkStyles}>
-              <a href="#">Click to see</a>
-            </div>
-          </div>
+          {/* <div style={currentStreakStyles}>Current streak: 5🔥</div> */}
+            {userData['workouts'].length > 0 && <Workout exercises={userData.workouts[0].exercises}/>}
         </div>
       </div>
       <div style={sectionStyles}>
-        <PreviousWorkouts />
+        <PreviousWorkouts userData={userData}/>
         <div style={buttonStyles}>
-          <a href="#">Go to plan builder</a>
+          <a href="/planbuilder">Go to plan builder</a>
         </div>
       </div>
     </div>

@@ -159,7 +159,7 @@ const Workout = (props) => {
                         {props.exercises.map((exercise)=>getExercise(exercise.id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url, true))}
                     </ul>
                         <div style={timerStyle}>
-                            {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={setsTotal} reps={repsTotal} weight={weightAvg} rpe={"rpeAvg"} rating={"ratingAvg"} />}
+                            {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={"setsTotal"} reps={"repsTotal"} weight={"weightAvg"} rpe={"rpeAvg"} rating={"ratingAvg"} />}
                             <Timer nextExercise={exerciseDone} exerciseNames={props.exercises} name={"exerciseName"} />
                         </div>
                     </div>

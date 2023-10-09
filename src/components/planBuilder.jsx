@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Workout from './workout';
-import { getUser, updateWorkout } from './apiUtils';
+import { getUser, updateWorkout } from '../utils/api';
 
 //ei ole vielä toteutettu
 const workoutList = [1,2,3,4,5,6,7,8,9,10];
 
-const planBuilder = (props) => {
+const PlanBuilder = (props) => {
 
 const div = document.createElement('div');
 const ul = document.createElement('ul');
@@ -264,4 +264,4 @@ return (
 );
 }
 
-export default planBuilder;
+export default PlanBuilder;

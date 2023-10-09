@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {createFriendship, getFriendship, updateFriendship} from '../utils/api';
+
 
 const navbarStyles = {
   display: 'flex',
@@ -51,13 +53,60 @@ const imageStyles = {
   marginRight: '4px',
 };
 
-function Navbar() {
+function Navbar(props) {
   const [searchText, setSearchText] = useState('');
+  const {userData} = props;
 
   const handleSearchClick = () => {
     // Handle search functionality here with the searchText state
     alert('Searching for: ' + searchText); // Replace with your actual search logic
   };
+
+  const handleAddFriend = () => {
+    // Check if the user is trying to add themselves
+    if (userData.friend_code === searchText) {
+      alert("You can't add yourself as a friend!");
+      return;
+    }
+  
+    // Check for existing friendships in both requested and received arrays
+    const existingFriendshipRequested = userData.friendships_requested.find(
+      (f) => f.user2.friend_code === searchText
+    );
+    const existingFriendshipReceived = userData.friendships_received.find(
+      (f) => f.user1.friend_code === searchText
+    );
+  
+    // Handle existing friendships
+    if (existingFriendshipRequested) {
+      alert('You have already sent a friend request to this user.');
+      return;
+    } else if (existingFriendshipReceived) {
+      if (existingFriendshipReceived.status === 'pending') {
+        updateFriendship(existingFriendshipReceived.user1_id, existingFriendshipReceived.user2_id, 'accepted')
+          .then(() => {
+            alert('Friend request accepted!');
+            // Update UI or state as needed
+          })
+          .catch((error) => {
+            console.error('Error updating friendship:', error);
+          });
+      } else {
+        alert('You are already friends.');
+      }
+      return;
+    }
+  
+    // Handle new friendship creation
+    createFriendship(userData.friend_code, searchText)
+    .then(() => {
+      alert('Friend request sent!');
+    })
+    .catch((error) => {
+      console.error('Error creating friendship:', error);
+    });
+  };
+  
 
   return (
     <nav style={navbarStyles}>
@@ -78,11 +127,18 @@ function Navbar() {
             }}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleAddFriend();
+                setSearchText('');
+              }
+            }
+            }
           />
         </div>
       </div>
       <div>
-        <a href="#">
+        <a href="/profile">
           <img
             src="../screenshot-202309051321371.png"
             alt="Profile"
