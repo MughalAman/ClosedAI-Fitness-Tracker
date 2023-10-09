@@ -146,9 +146,9 @@ async function updateWorkout(id, workoutData) {
   try {
     const data = await getWorkout(id);
     const updatedWorkoutData = {
-      name: workoutData.name || data.name,
-      date: workoutData.date || data.date,
-      user_id: workoutData.user_id || data.user_id
+      name: workoutData.name !== undefined ? workoutData.name : data.name,
+      date: workoutData.date !== undefined ? workoutData.date : data.date,
+      user_id: workoutData.user_id !== undefined ? workoutData.user_id : data.user_id
     };
     const result = await setWorkout(id, updatedWorkoutData);
     console.log(result);
@@ -315,4 +315,30 @@ async function updateFriendship(userId, friendId, status) {
   }
 }
 
-export {createUser, getUserToken, getUser, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, createFriendship, getFriendship, updateFriendship };
+function testi(name="NAME", date=null, userId) {
+  return fetch('https://fitness-api-wlzk.onrender.com/workout/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "name": name,
+      "date": date,
+      "user_id": userId
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then((data)=>{
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+export {createUser, getUserToken, getUser, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, createFriendship, getFriendship, updateFriendship, testi };

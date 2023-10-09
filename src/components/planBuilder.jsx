@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Workout from './workout';
-import { getUser, updateWorkout } from '../utils/api';
+import { getUser, updateWorkout, testi } from '../utils/api';
 
 //ei ole vielä toteutettu
 const workoutList = [1,2,3,4,5,6,7,8,9,10];
@@ -221,6 +221,7 @@ const dropToList = (e) => {
     e.preventDefault();
     const data = document.getElementById(e.dataTransfer.getData("text"));
     const target = e.target;
+    console.log(data.getAttribute('date'))
     updateWorkout(data.getAttribute('id'), {date: null});
     target.id === "workoutField" && target.insertBefore(data, target.childNodes[target.parentElement.children.length-2]);
 }
@@ -236,16 +237,25 @@ const dropWorkout = (e) => {
 
 const createUserWorkout = (value) => {
 	getUser(localStorage.getItem('token'))
-	.then((data)=>{createWorkout({name: value, date: null, userId: data.user_id})})
+	.then((data)=>{testi(value, null, data.user_id)});
 }
 
 const NewWorkoutModal = () =>{
     return (
         <div style={modalStyle}>
             <div style={modalContent}>
-                <input type='text' placeholder='Workout name' style={{color: "black"}} onKeyDown={(e) => {
+                <input
+            type="text"
+            placeholder="Workout name"
+            style={{color: "black"}}
+            onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                createUserWorkout(e.value);}}} />
+                createUserWorkout(e.target.value);
+
+              }
+            }
+            }
+          />
                 <button onClick={closeModal}>Cancel</button>
             </div>
         </div>
