@@ -236,7 +236,7 @@ const dropWorkout = (e) => {
 
 const createUserWorkout = (value) => {
 	getUser(localStorage.getItem('token'))
-	.then((data)=>{createWorkout({name: value, date: null, userId: data.user_id})
+	.then((data)=>{createWorkout({name: value, date: null, userId: data.user_id})})
 }
 
 const NewWorkoutModal = () =>{
@@ -245,7 +245,7 @@ const NewWorkoutModal = () =>{
             <div style={modalContent}>
                 <input type='text' placeholder='Workout name' style={{color: "black"}} onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                createUserWorkout(e.value);}} />
+                createUserWorkout(e.value);}}} />
                 <button onClick={closeModal}>Cancel</button>
             </div>
         </div>

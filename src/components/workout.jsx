@@ -63,7 +63,7 @@ const Workout = (props) => {
     const closeButton = {
         position: "absolute",
         top: "15px",
-        left: "15px",
+        left: "1500px",
     }
 
     const searchField = {
@@ -72,6 +72,7 @@ const Workout = (props) => {
         right: "15px",
         color: "black",
         padding: "5px",
+        fontFamily: "Inter",
     }
 
     const exerciseListStyle = {
@@ -86,7 +87,7 @@ const Workout = (props) => {
         display: "grid",
         gridTemplateColumns: "3fr 1fr 1fr",
         width: "100%",
-        
+        fontFamily: "Inter",
     }
 
     const workoutLabel = {
@@ -145,12 +146,13 @@ const Workout = (props) => {
                         <h2 style={workoutModalName}>NAME</h2>
                         <button onClick={closeModal} style={closeButton}>Close</button>
                         <label style={{...searchField, color: "white"}}>Add</label>
-                        <select style={searchField} id="fruit" name="fruit">
-                        <option value="default">Add workout</option>
-                        <option value="banana">Banana</option>
-                        <option value="cherry">Cherry</option>
-                        <option value="grape">Grape</option>
-                        <option value="kiwi">Kiwi</option>
+                        <select style={{ ...searchField, fontFamily: 'Inter' }} id="nameOfExercise" name="nameOfExercise">
+                            <option value="default">Add workout</option>
+                            <option value="squat">Squat</option>
+                            <option value="benchPress">Bench Press</option>
+                            <option value="deadlift">Deadlift</option>
+                            <option value="pullUps">Pull-Ups</option>
+                            <option value="plank">Plank</option>
                         </select>
                     </div>
                     <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>

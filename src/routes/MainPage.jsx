@@ -167,7 +167,7 @@ function MainPage(props) {
   const friendActivities = [
     {
       id: 1,
-      profilePicture: '../screenshot-202309051321371.png',
+      profilePicture: '../pic.jpg',
       name: 'Friend 1',
       workoutName: 'Morning Jog',
       workoutType: 'Running',
@@ -197,7 +197,7 @@ function MainPage(props) {
             <div key={friendship['user1']['workouts'][0].workout_id} style={activityItemStyles}>
               <a href="#">
                 <img
-                  src={'../screenshot-202309051321371.png'}
+                  src={'../pic.jpg'}
                   alt={`${friendship['user1'].name}'s profile`}
                   style={profilePictureStyles}
                 />
@@ -216,7 +216,18 @@ function MainPage(props) {
         </div>
         <div style={rightContainerStyles}>
           {/* <div style={currentStreakStyles}>Current streak: 5🔥</div> */}
-            {userData['workouts'].length > 0 && <Workout exercises={userData.workouts[0].exercises}/>}
+            {userData['workouts'].length > 0 && 
+            <Workout
+              exercises={userData.workouts[0].exercises}
+              workoutStyles={workoutStyles}
+              workoutTitleStyles={workoutTitleStyles}
+              exerciseListStyles={exerciseListStyles}
+              tableStyles={tableStyles}
+              tableRowStyles={tableRowStyles}
+              tableCellStyles={tableCellStyles}
+              workoutLinkStyles={workoutLinkStyles}
+            />
+          }
         </div>
       </div>
       <div style={sectionStyles}>

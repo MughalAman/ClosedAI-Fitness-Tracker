@@ -140,7 +140,7 @@ function Navbar(props) {
       <div>
         <a href="/profile">
           <img
-            src="../screenshot-202309051321371.png"
+            src="../pic.jpg"
             alt="Profile"
             style={imageStyles}
           />
