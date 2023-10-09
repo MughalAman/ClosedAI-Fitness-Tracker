@@ -45,23 +45,34 @@ function ExerciseComplete(props) {
     marginTop: 'auto',
   };
 
+  const background = {
+    minWidth: "100%", 
+    minHeight: "100%", 
+    position: "fixed",
+    backgroundColor: "black",
+    opacity: 0.99,
+    top: 0,
+    left: 0,
+}
+
   return (
+    <div style={background}>
     <div style={containerStyle}>
       <h1 style={titleStyle}>Exercise complete!</h1>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <ul style={listStyle}>
-          <li>Duration: 30 min</li>
-          <li>Sets: 999</li>
-          <li>Reps: 999</li>
-          <li>Weight: 99</li>
+          <li>Duration: {Math.floor(props.mills/1000/60)} min</li>
+          <li>Sets: {props.sets}</li>
+          <li>Reps: {props.reps}</li>
+          <li>Weight: {props.weight}</li>
         </ul>
         <ul style={listStyle}>
-          <li>RPE: 10</li>
-          <li>Rating: 5⭐</li>
+          <li>RPE: {props.rpe}</li>
+          <li>Rating: {props.rating}⭐</li>
         </ul>
       </div>
-      <button style={buttonStyle}>SAVE</button>
-    </div>
+      <button style={buttonStyle} onClick={props.closeWorkout}>SAVE</button>
+    </div></div>
   );
 }
 
