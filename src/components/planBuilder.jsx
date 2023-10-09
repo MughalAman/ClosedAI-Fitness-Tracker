@@ -234,11 +234,18 @@ const dropWorkout = (e) => {
     target.parentElement.id !== "workoutField" && dataParent.insertBefore(target, dataParent.childNodes[target.parentElement.children.length-1]);
 }
 
+const createUserWorkout = (value) => {
+	getUser(localStorage.getItem('token'))
+	.then((data)=>{createWorkout({name: value, date: null, userId: data.user_id})
+}
+
 const NewWorkoutModal = () =>{
     return (
         <div style={modalStyle}>
             <div style={modalContent}>
-                <input type='text' placeholder='Workout name' style={{color: "black"}} />
+                <input type='text' placeholder='Workout name' style={{color: "black"}} onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                createUserWorkout(e.value);}} />
                 <button onClick={closeModal}>Cancel</button>
             </div>
         </div>
