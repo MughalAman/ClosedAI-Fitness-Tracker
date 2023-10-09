@@ -58,13 +58,13 @@ function TrainingExperience(props) {
     <div>
       <h1 style={headingStyle}>What is your training experience?</h1>
       <div style={containerStyle}>
-        <a href="#" style={{ textDecoration: 'none' }}>
+        <a href="/trainingdays" style={{ textDecoration: 'none' }}>
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>Beginner</h2>
             <p style={pStyle}>You have not lifted consistently at all and you would like to learn the fundamentals.</p>
           </div>
         </a>
-        <a href="#" style={{ textDecoration: 'none' }}>
+        <a href="/trainingdays" style={{ textDecoration: 'none' }}>
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>Novice</h2>
             <p style={pStyle}>Under a year of consistent lifting or have trained before but you have taken a break for more than half a year.</p>
@@ -72,13 +72,13 @@ function TrainingExperience(props) {
         </a>
       </div>
       <div style={containerStyle}>
-        <a href="#" style={{ textDecoration: 'none' }}>
+        <a href="/trainingdays" style={{ textDecoration: 'none' }}>
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>Intermediate</h2>
             <p style={pStyle}>1-3 years of consistent lifting and you want to take it to the next level.</p>
           </div>
         </a>
-        <a href="#" style={{ textDecoration: 'none' }}>
+        <a href="/trainingdays" style={{ textDecoration: 'none' }}>
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>Advanced</h2>
             <p style={pStyle}>Over 3 years of consistent lifting and have completed many trainings in the past.</p>

@@ -58,19 +58,19 @@ function TrainingDays(props) {
     <div>
       <h1 style={headingStyle}>How many days per week would you like to train?</h1>
       <div style={containerStyle}>
-        <a href="/option-2"> {/* Set a unique URL for each option */}
+        <a href="/traininggoal"> {/* Set a unique URL for each option */}
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>2</h2>
             <p style={pStyle}>Typically for beginners.</p>
           </div>
         </a>
-        <a href="/option-3">
+        <a href="/traininggoal">
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>3</h2>
             <p style={pStyle}>Typically for novice to intermediate.</p>
           </div>
         </a>
-        <a href="/option-4">
+        <a href="/traininggoal">
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>4</h2>
             <p style={pStyle}>Typically for intermediate.</p>
@@ -78,13 +78,13 @@ function TrainingDays(props) {
         </a>
       </div>
       <div style={containerStyle}>
-        <a href="/option-5">
+        <a href="/traininggoal">
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>5</h2>
             <p style={pStyle}>Typically for intermediate to advanced.</p>
           </div>
         </a>
-        <a href="/option-6">
+        <a href="/traininggoal">
           <div style={innerContainerStyle}>
             <h2 style={txtStyle}>6</h2>
             <p style={pStyle}>Typically for intermediate to advanced.</p>

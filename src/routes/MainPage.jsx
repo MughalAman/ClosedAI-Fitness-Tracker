@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import PreviousWorkouts from '../components/PreviousWorkouts';
 import Workout from '../components/workout';
@@ -179,6 +179,13 @@ function MainPage(props) {
   ];
 
   console.log(userData);
+
+  useEffect(() => {
+    if(localStorage.getItem('showExtraQuestions') === 'true'){
+      window.location.href = '/trainingexperience';
+    }
+  }
+  , []);
 
   return (
     <div style={parentContainerStyles}>

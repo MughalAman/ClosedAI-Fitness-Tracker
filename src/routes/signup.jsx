@@ -199,6 +199,8 @@ function Signup(props) {
             .catch((err) => {
                 console.log(err);
             });
+
+            localStorage.setItem('showExtraQuestions', true);
     }
 
     // Palautetaan komponentti
