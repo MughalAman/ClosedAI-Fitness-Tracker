@@ -1,8 +1,47 @@
-# React + Vite
+# ClosedAI Fitness Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ClosedAI Fitness Tracker on monipuolinen kuntosalisovellus, joka auttaa käyttäjiä seuraamaan ja parantamaan fyysistä kuntoaan. Sovellus tarjoaa räätälöityjä harjoitusohjelmia, edistynyttä analytiikkaa ja käyttäjäystävällisen käyttöliittymän.
 
-Currently, two official plugins are available:
+## Vision
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Sovelluksemme tavoitteena on tarjota käyttäjilleen ainutlaatuinen harjoittelukokemus, joka perustuu räätälöityihin ohjelmiin ja asiantuntijaohjaukseen. ClosedAI Fitness Tracker pyrkii:
+
+- Kasvattamaan asiakkaiden sitoutumista ja siten lisäämään liiketoiminnan tuottoa.
+- Tarjoamaan mahdollisuuden tilausmalleihin tai premium-ominaisuuksiin liittyen.
+- Tukemaan datalähtöistä päätöksentekoa markkinoinnissa ja sisällöntuotannossa.
+
+## Kehitysympäristö
+
+Sovelluksemme on toteutettu seuraavilla teknologioilla:
+
+- **Front-end:**
+  - React
+  - Vite
+  - Tailwind CSS
+
+- **Back-end:**
+  - Python
+  - FastAPI
+
+## Asennus ja Konfigurointi
+
+Sovelluksen asentaminen ja konfigurointi on helppoa. Noudata seuraavia ohjeita:
+
+1. Kloonaa tämä Git-repo paikalliselle koneellesi.
+
+```bash
+git clone https://github.com/MughalAman/ClosedAI-Fitness-Tracker
+cd ClosedAI-Fitness-Tracker
+```
+
+2. Asenna riippuvuudet.
+
+```bash
+npm install
+```
+
+3. Käynnistä sovellus.
+
+```bash
+npm run dev
+```
