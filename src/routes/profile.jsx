@@ -1,6 +1,13 @@
 import { useState, useRef, useEffect  } from 'react';
 import {getUser} from '../utils/api';
 
+
+
+//lokalisaatio
+import LocalizedStrings from 'react-localization';
+
+
+
 function Profile() {
     const [unit, setUnit] = useState('kg');
     const [selectedWeightUnit, setSelectedWeightUnit] = useState(null);
@@ -9,6 +16,38 @@ function Profile() {
     const [profilePicture, setProfilePicture] = useState('/pic.jpg'); // Set default picture path
 
     const [userData, setUserData] = useState({});
+
+    let strings = new LocalizedStrings({
+        en:{
+          FriendCode:"FriendCode",
+          Name:"Name",
+          Age:"Age",
+          Sex:"Sex",
+          Weight:"Weight",
+          Height:"Height",
+          ProfileVisibility:"ProfileVisibility",
+        },
+        tr: {
+          ArkadasKodu:"ArkadasKodu",
+          Isim:"Isim",
+          Yas:"Yas",
+          Cinsiyet:"Cinsiyet",
+          Kilo:"Kilo",
+          Boy:"Boy",
+          ProfilGizliligi:"ProfilGizliligi",
+        }
+       });
+
+
+//Language
+    const [selectedLanguage, setSelectedLanguage] = useState('en'); // Default to English
+
+    const handleLanguageChange = (e) => {
+         setSelectedLanguage(e.target.value);
+     };
+
+
+
 
     const handleUserLogin = (token) => {
       getUser(token)
@@ -91,13 +130,15 @@ function Profile() {
     };
 
     const radioStyle = {
-        margin: '0 8px',
+        margin: '0 10px',
+        marginLeft: '45px',
     };
 
     const labelStyle = {
         color: '#FFF',
         fontSize: '16px',
-        margin: '0 8px',
+        margin: '0 10px',
+        marginLeft: '45px',
     };
 
     const containerStyle = {
@@ -188,6 +229,8 @@ function Profile() {
 
 
 
+
+
         </div>
     );
 const saveButtonStyle = {
@@ -214,11 +257,32 @@ const textStyle = {
     fontStyle: 'normal',
     fontWeight: 900,
     lineHeight: '2',
+    textAlign: 'center', // Center the text horizontally
 
 };
 
+   
+    const language = (
+        <div >
+        <label htmlFor="languageSelect">Select Language: </label>
+        <select
+            id="languageSelect"
+            value={selectedLanguage}
+            onChange={handleLanguageChange}
+        >
+            <option value="en">English</option>
+            <option value="tr">Turkish</option>
+        </select>
+        </div>
+        
+
+   );
+
+
+
+
     const rightContent = (
-        <div>
+        <div >
           <h1 style={{
                 color: '#FFF',
                 fontFamily: 'Inter',
@@ -242,6 +306,7 @@ const textStyle = {
                 ref={fileInput} // Attach the ref here
             />
 
+               
 
         <p style={textStyle}>Friend Code: {userData.friend_code}</p>
         <p style={textStyle}>Name: {userData.name}</p>
@@ -277,6 +342,9 @@ const textStyle = {
             </div>
             <div style={rightContentStyle}>
                 {rightContent}
+                {language}
+                
+                
             </div>
         </div>
     );
