@@ -37,11 +37,11 @@ function Signup(props) {
     const logintxtStyle = {
         color: '#FFF',
         fontSize: '32px',
-        fontWeight: 'bold', // Teksti lihavoitu
+        fontWeight: 'bold',
         fontFamily: 'Inter',
-        marginBottom: '-200px',
-        marginTop: '110px',
-        textAlign: 'center', // Center the text horizontally
+        marginTop: '20px', // Adjust this value
+        marginBottom: '20px', // Adjust this value
+        textAlign: 'center',
     };
 
     // Määritellään tyylit syötekentille
@@ -91,19 +91,16 @@ function Signup(props) {
 
     // Määritellään tyylit linkille
     const linkStyle = {
-        width: '340px',
-        height: '207px',
         color: '#FFF',
         textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         fontFamily: 'Inter',
         fontSize: '20px',
-        fontStyle: 'normal',
-        fontWeight: 'bold', // Teksti lihavoitu
+        fontWeight: 'bold',
         lineHeight: 'normal',
         textDecorationLine: 'underline',
         cursor: 'pointer',
-        marginBottom: '-200px',
-        marginTop: '110px',
+        marginTop: '20px', // Adjust this value
+        marginBottom: '20px', // Adjust this value
     };
 
     // Määritellään tyylit sukupuolipainikkeille
@@ -237,15 +234,15 @@ function Signup(props) {
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                         <div style={genderContainerStyle}>
                             <button
-                                style={genderButtonStyle(selectedGender === 'Male')}
-                                onClick={() => setSelectedGender('MALE')}
+                                style={genderButtonStyle(selectedGender === 'MALE')}
+                                onClick={() => setSelectedGender('MALE')} // Change 'Male' to 'MALE'
                             />
                             <span style={genderLabelStyle}>Male</span>
                         </div>
                         <div style={genderContainerStyle}>
                             <button
-                                style={genderButtonStyle(selectedGender === 'Female')}
-                                onClick={() => setSelectedGender('FEMALE')}
+                                style={genderButtonStyle(selectedGender === 'FEMALE')}
+                                onClick={() => setSelectedGender('FEMALE')} // Change 'Female' to 'FEMALE'
                             />
                             <span style={genderLabelStyle}>Female</span>
                         </div>
