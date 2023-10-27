@@ -16,38 +16,56 @@ function Profile() {
     const [profilePicture, setProfilePicture] = useState('/pic.jpg'); // Set default picture path
 
     const [userData, setUserData] = useState({});
-
-    let strings = new LocalizedStrings({
-        en:{
-          FriendCode:"FriendCode",
-          Name:"Name",
-          Age:"Age",
-          Sex:"Sex",
-          Weight:"Weight",
-          Height:"Height",
-          ProfileVisibility:"ProfileVisibility",
-        },
-        tr: {
-          ArkadasKodu:"ArkadasKodu",
-          Isim:"Isim",
-          Yas:"Yas",
-          Cinsiyet:"Cinsiyet",
-          Kilo:"Kilo",
-          Boy:"Boy",
-          ProfilGizliligi:"ProfilGizliligi",
-        }
-       });
-
-
-//Language
     const [selectedLanguage, setSelectedLanguage] = useState('en'); // Default to English
 
     const handleLanguageChange = (e) => {
-         setSelectedLanguage(e.target.value);
-     };
+      setSelectedLanguage(e.target.value);
+    };
+  
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        handleUserLogin(token);
+      }
+    }, []);
+  
+    let strings = new LocalizedStrings({
+      en: {
+        FriendCode: "FriendCode",
+        Name: "Name",
+        Age: "Age",
+        Sex: "Sex",
+        Weight: "Weight",
+        Height: "Height",
+        ProfileVisibility: "ProfileVisibility",
+        Profile: "Profile",
+        Workout: "Workout settings",
+        workoutMeasurment: "Weight measurement",
+        smallestPlate: "Smallest plate",
+        save: "Save",
+      },
+      tr: {
+        FriendCode: "Arkadaş Kodu",
+        Name: "Isim",
+        Age: "Yaş",
+        Sex: "Cinsiyet",
+        Weight: "Kilo",
+        Height: "Boy",
+        ProfileVisibility: "Profil Gizliliği",
+        Profile: "Profil",
+        Workout: "Antrenman ayarları",
+        workoutMeasurment: "Ağırlık ölçümü",
+        smallestPlate: "En küçük plaka",
+        save: "Kaydet",
 
-
-
+      }
+    });
+    if (selectedLanguage === 'tr') {
+        strings.setLanguage('tr');
+      } else {
+        strings.setLanguage('en');
+      }
+    
 
     const handleUserLogin = (token) => {
       getUser(token)
@@ -174,9 +192,9 @@ function Profile() {
 
     const leftContent = (
         <div>
-            <h1 style={profileTxtStyle}>Profile:</h1>
-            <h1 style={profileTxtStyle1}>Workout Settings</h1>
-            <p style={txtStyle}>Weight measurement:</p>
+            <h1 style={profileTxtStyle}>{strings.Profile}</h1>
+            <h1 style={profileTxtStyle1}>{strings.Workout}</h1>
+            <p style={txtStyle}>{strings.workoutMeasurment}</p>
             <div style={buttonContainerStyle}>
                 <button
                     style={selectedWeightUnit === 'lbs' ? buttonStyleActive : buttonStyle}
@@ -199,7 +217,7 @@ function Profile() {
                 </button>
             </div>
 
-            <p style={txtStyle}>Smallest Plate:</p>
+            <p style={txtStyle}>{strings.smallestPlate}</p>
             {unit === 'kg' && (
                 <>
                     {['2.5', '1.25', '1', '0.5'].map((value) => (
@@ -308,13 +326,14 @@ const textStyle = {
 
                
 
-        <p style={textStyle}>Friend Code: {userData.friend_code}</p>
-        <p style={textStyle}>Name: {userData.name}</p>
-        <p style={textStyle}>Age</p>
-        <p style={textStyle}>Sex: {userData.gender}</p>
-        <p style={textStyle}>Weight: {userData.weight}</p>
-        <p style={textStyle}>Height: {userData.height}</p>
-        <p style={textStyle}>Profile Visibility:</p>
+            <p style={textStyle}>{strings.FriendCode}: {userData.friend_code}</p>
+            <p style={textStyle}>{strings.Name}: {userData.name}</p>
+            <p style={textStyle}>{strings.Age}: </p>
+            <p style={textStyle}>{strings.Sex}: {userData.gender}</p>
+            <p style={textStyle}>{strings.Weight}: {userData.weight}</p>
+            <p style={textStyle}>{strings.Height}: {userData.height}</p>
+            <p style={textStyle}>{strings.ProfileVisibility}:</p>
+
             <input
                 type="radio"
                 value="private"
@@ -338,7 +357,7 @@ const textStyle = {
         <div style={containerStyle}>
             <div style={leftContentStyle}>
                 {leftContent}
-                <button style={saveButtonStyle}>Save</button>
+                <button style={saveButtonStyle}>{strings.save}</button>
             </div>
             <div style={rightContentStyle}>
                 {rightContent}
