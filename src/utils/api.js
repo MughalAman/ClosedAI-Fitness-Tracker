@@ -73,6 +73,24 @@ function getUser(token) {
       });
 }
 
+async function setUserLanguage(id, lang) {
+  try {
+    const data = await getUser(id);
+    const updatedUserData = {
+      name: data?.name,
+      email: data?.email,
+      height: data?.height,
+      weight: data?.weight,
+      gender: data?.gender,
+      extra_data: {"lang": lang},
+    };
+    const result = await setWorkout(id, updatedUserData);
+    console.log(result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 function createWorkout(name="NAME", date=null, userId) {
   return fetch('https://fitness-api-wlzk.onrender.com/workout/', {
     method: 'POST',
@@ -341,4 +359,4 @@ function testi(name="NAME", date=null, userId) {
     });
 }
 
-export {createUser, getUserToken, getUser, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, createFriendship, getFriendship, updateFriendship, testi };
+export {createUser, getUserToken, getUser, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, createFriendship, getFriendship, updateFriendship, testi, setUserLanguage};
