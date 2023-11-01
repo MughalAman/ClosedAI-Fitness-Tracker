@@ -91,6 +91,14 @@ async function setUserLanguage(id, lang) {
   }
 }
 
+async function getLanguage() {
+  const response = localStorage.getItem('token') !== null ? await getUser(localStorage.getItem('token')) : undefined;
+  const lang = await response?.extra_data.lang;
+  console.log(lang);
+  return response;
+}
+
+
 function createWorkout(name="NAME", date=null, userId) {
   return fetch('https://fitness-api-wlzk.onrender.com/workout/', {
     method: 'POST',
