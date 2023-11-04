@@ -73,6 +73,44 @@ function getUser(token) {
       });
 }
 
+async function getUserIdFromFriendcode(friendcode) {
+  try {
+    const response = await fetch(`https://fitness-api-wlzk.onrender.com/users/fc/${friendcode}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+async function getUserFromUserId(userId) {
+  try {
+    const response = await fetch(`https://fitness-api-wlzk.onrender.com/user/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
 async function setUserLanguage(id, lang) {
   try {
     const data = await getUser(id);
@@ -149,7 +187,7 @@ function setWorkout(id, workoutData) {
 
 function getWorkout(id) {
   return fetch(`https://fitness-api-wlzk.onrender.com/workout/${id}`, {
-    method: 'GET', 
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -260,6 +298,27 @@ function getExercise(id) {
     });
 }
 
+function getExerciseRating(id) {
+  return fetch(`https://fitness-api-wlzk.onrender.com/exercise/${id}/rating`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then((data)=>{
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
 async function updateExercise(id, exerciseData) {
   try {
     const data = await getExercise(id);
@@ -284,7 +343,7 @@ async function updateExercise(id, exerciseData) {
   }
 }
 
-async function createFriendship(requestorCode, receiverCode) {
+async function createFriendship(userId, friendId, statusId) {
   try{
     const response = await fetch('https://fitness-api-wlzk.onrender.com/friendship/', {
       method: 'POST',
@@ -292,8 +351,9 @@ async function createFriendship(requestorCode, receiverCode) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "requestor_friend_code": requestorCode,
-        "receiver_friend_code": receiverCode,
+        "user_id": userId,
+        "friend_id": friendId,
+        "status_id": statusId,
       }),
     });
     if (response.status === 200) {
@@ -307,8 +367,8 @@ async function createFriendship(requestorCode, receiverCode) {
   }
 }
 
-async function getFriendship(userId, friendId) {
-  const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendship/${userId}/${friendId}`, {
+async function getUserFriendships(userId) {
+  const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendships/user/${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -321,17 +381,38 @@ async function getFriendship(userId, friendId) {
   }
 }
 
-async function updateFriendship(userId, friendId, status) {
-  const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendship/${userId}/${friendId}`, {
-    method: 'PUT',
+async function getFriendship(friendshipId) {
+  const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendship/${friendshipId}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      "user1_id": userId,
-      "user2_id": friendId,
-      "status": status,
-    }),
+  });
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  }
+}
+
+async function deleteFriendship(friendshipId) {
+  const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendship/${friendshipId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status === 200) {
+    console.log('Friendship deleted');
+    const data = await response.json();
+    return data;
+  }
+}
+
+async function updateFriendship(friendshipId, statusId) {
+  const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendship/${friendshipId}/?status_id=${statusId}`, {
+    method: 'PUT'
   });
 
   if (response.status === 200) {
@@ -367,4 +448,4 @@ function testi(name="NAME", date=null, userId) {
     });
 }
 
-export {createUser, getUserToken, getUser, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, createFriendship, getFriendship, updateFriendship, testi, setUserLanguage};
+export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage};

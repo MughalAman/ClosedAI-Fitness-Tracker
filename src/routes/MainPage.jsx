@@ -1,7 +1,8 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import Navbar from '../components/Navbar';
 import PreviousWorkouts from '../components/PreviousWorkouts';
 import Workout from '../components/workout';
+import {getUserFriendships, getUserFromUserId, getExerciseRating} from '../utils/api';
 
 const parentContainerStyles = {
   height: '100vh',
@@ -142,50 +143,50 @@ const sectionStyles = {
   justifyContent: 'space-between', // Add this line to align items to the right
 };
 
-// Dataset for your workouts
-const myWorkouts = [
-  {
-    id: 1,
-    type: 'Push Pull Legs',
-    exercises: [
-      { name: 'Bench Press', sets: 4, reps: '8-10' },
-      { name: 'Incline Press', sets: 4, reps: '8-10' },
-      { name: 'Dumbbell Fly', sets: 4, reps: '8-10' },
-      { name: 'Peck Deck', sets: 4, reps: '8-10' },
-      { name: 'Lying Extension', sets: 4, reps: '8-10' },
-      { name: 'Rope Pushdown', sets: 4, reps: '8-10' },
-    ],
-  },
-  // Add more workouts here
-];
+const getRatingForExercise = async (exercise_id) => {
+  let rating = await getExerciseRating(exercise_id);
+  return rating;
+}
 
 function MainPage(props) {
 
   const {userData} = props;
 
-
-  const friendActivities = [
-    {
-      id: 1,
-      profilePicture: '../pic.jpg',
-      name: 'Friend 1',
-      workoutName: 'Morning Jog',
-      workoutType: 'Running',
-      rating: 4.5,
-      duration: '30 mins',
-      rpe: 6,
-    },
-    // Add more friend activities here
-  ];
+  const [userFriends, setUserFriends] = useState([]);
 
   console.log(userData);
 
   useEffect(() => {
-    if(localStorage.getItem('showExtraQuestions') === 'true'){
-      window.location.href = '/trainingexperience';
+    const fetchData = async () => {
+      if(localStorage.getItem('showExtraQuestions') === 'true'){
+        window.location.href = '/trainingexperience';
+      }
+
+      // Get the user's friends
+      let friends = await getUserFriendships(userData.user_id);
+
+      // Get the user data for each friend
+      let friendsData = [];
+
+      for (let i = 0; i < friends.length; i++) {
+        // Check if the user_id is the same as the user_id in the friendship
+        if (friends[i].user_id === userData.user_id) {
+          // Get the friend's data
+          let friendData = await getUserFromUserId(friends[i].friend_id);
+          friendsData.push(friendData);
+        }else if (friends[i].friend_id === userData.user_id) {
+          // Get the friend's data
+          let friendData = await getUserFromUserId(friends[i].user_id);
+          friendsData.push(friendData);
+        }
+      }
+
+      setUserFriends(friendsData);
+      console.log('Friends:', friendsData);
     }
-  }
-  , []);
+
+    fetchData();
+  }, [userData]);
 
   return (
     <div style={parentContainerStyles}>
@@ -193,30 +194,34 @@ function MainPage(props) {
       <div style={rootStyles}>
         <div style={friendActivityStyles}>
           <h2 style={titleStyles}>Friend Activity</h2>
-          {userData['friendships_received'].map((friendship) => (
-            <div key={friendship['user1']['workouts'][0].workout_id} style={activityItemStyles}>
+          {userFriends.map((friend) => (
+            <div key={friend['workouts'][0].workout_id} style={activityItemStyles}>
               <a href="#">
                 <img
                   src={'../pic.jpg'}
-                  alt={`${friendship['user1'].name}'s profile`}
+                  alt={`${friend.name}'s profile`}
                   style={profilePictureStyles}
                 />
               </a>
               <div>
-                <p style={friendNameStyles}>{friendship['user1'].name}</p>
-                <p>{friendship['user1']['workouts'][0].name}</p>
+                <p style={friendNameStyles}>{friend.name}</p>
+                <p>{friend['workouts'][0].name}</p>
               </div>
               <div style={{ marginLeft: 'auto' }}>
-                {/* <p>Rating: {friendship['user1']['workouts'][0]['exercises'][0].rating}⭐</p> */}
-                {/* <p>Duration: {friendship['user1']['workouts'][0]['exercises'][0].duration}🕛</p> */}
-                {/* <p>RPE: {friendship['user1']['workouts'][0]['exercises'][0].rpe}⚡</p> */}
+                {friend['workouts'][0].exercises.length > 0 &&
+                <>
+                  <p>Rating: {friend['workouts'][0].rating}⭐</p>
+                  <p>Duration: {friend['workouts'][0].exercises[0].duration}🕛</p>
+                  <p>RPE: {friend['workouts'][0].exercises[0].rpe}⚡</p>
+                 </>
+              }
               </div>
             </div>
           ))}
         </div>
         <div style={rightContainerStyles}>
           {/* <div style={currentStreakStyles}>Current streak: 5🔥</div> */}
-            {userData['workouts'].length > 0 && 
+            {userData['workouts'].length > 0 &&
             <Workout
               exercises={userData.workouts[0].exercises}
               workoutStyles={workoutStyles}

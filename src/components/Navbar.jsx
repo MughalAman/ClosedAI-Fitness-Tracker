@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import {createFriendship, getFriendship, updateFriendship} from '../utils/api';
+import {createFriendship, getUserIdFromFriendcode, getUserFriendships, updateFriendship} from '../utils/api';
 
 
 const navbarStyles = {
@@ -62,43 +62,62 @@ function Navbar(props) {
     alert('Searching for: ' + searchText); // Replace with your actual search logic
   };
 
-  const handleAddFriend = () => {
+  const handleAddFriend = async () => {
     // Check if the user is trying to add themselves
     if (userData.friend_code === searchText) {
       alert("You can't add yourself as a friend!");
       return;
     }
-  
-    // Check for existing friendships in both requested and received arrays
-    const existingFriendshipRequested = userData.friendships_requested.find(
-      (f) => f.user2.friend_code === searchText
-    );
-    const existingFriendshipReceived = userData.friendships_received.find(
-      (f) => f.user1.friend_code === searchText
-    );
-  
-    // Handle existing friendships
-    if (existingFriendshipRequested) {
-      alert('You have already sent a friend request to this user.');
-      return;
-    } else if (existingFriendshipReceived) {
-      if (existingFriendshipReceived.status === 'pending') {
-        updateFriendship(existingFriendshipReceived.user1_id, existingFriendshipReceived.user2_id, 'accepted')
+
+    // Check for existing friendships
+    let existingFriendships = await getUserFriendships(userData.user_id);
+
+    // Get the user id of the friend
+    let friendId = await getUserIdFromFriendcode(searchText);
+
+    console.log('Friend id:', friendId);
+
+
+    // Check if the user is trying to add friend that has already sent them a friend request
+    for (let i = 0; i < existingFriendships.length; i++) {
+      if (existingFriendships[i].user_id === friendId && existingFriendships[i].friend_id === userData.user_id) {
+        if (existingFriendships[i].status_id === 1) {
+          alert('You already have a friend request from this user! Accepting the request...');
+          updateFriendship(existingFriendships[i].friendship_id, 2)
           .then(() => {
             alert('Friend request accepted!');
-            // Update UI or state as needed
           })
           .catch((error) => {
-            console.error('Error updating friendship:', error);
+            console.error('Error accepting friend request:', error);
           });
-      } else {
-        alert('You are already friends.');
+          return;
+        }
+        else if (existingFriendships[i].status_id === 2) {
+          alert('You are already friends with this user!');
+          return;
+        }
       }
-      return;
     }
-  
+
+
+    // Check if the user is trying to add a friend they already have or if the friend code is invalid or if the friendship status is 0 (pending) or 1 (accepted)
+    for (let i = 0; i < existingFriendships.length; i++) {
+      console.log('Friendship:', existingFriendships[i]);
+      if (existingFriendships[i].friend_id === friendId) {
+        if (existingFriendships[i].status_id === 1) {
+          alert('Friend request already sent!');
+          return;
+        } else if (existingFriendships[i].status_id === 2) {
+          alert('You are already friends with this user!');
+          return;
+        }
+      }
+    }
+
+
+
     // Handle new friendship creation
-    createFriendship(userData.friend_code, searchText)
+    await createFriendship(userData.user_id, friendId, 1)
     .then(() => {
       alert('Friend request sent!');
     })
@@ -106,7 +125,7 @@ function Navbar(props) {
       console.error('Error creating friendship:', error);
     });
   };
-  
+
 
   return (
     <nav style={navbarStyles}>
