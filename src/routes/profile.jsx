@@ -16,12 +16,26 @@ function Profile() {
     const [profilePicture, setProfilePicture] = useState('/pic.jpg'); // Set default picture path
 
     const [userData, setUserData] = useState({});
-    const [selectedLanguage, setSelectedLanguage] = useState('en'); // Default to English
-
-    const handleLanguageChange = (e) => {
-      setSelectedLanguage(e.target.value);
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    const handleLanguageChange = (event) => {
+        setSelectedLanguage(event.target.value);
+        localStorage.setItem('selectedLanguage', event.target.value);
     };
-  
+    useEffect(() => {
+        const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+       
+        if (!storedSelectedLanguage) {
+           fetch('/api/language')
+             .then(response => response.json())
+             .then(data => {
+               const selectedLanguage = data.language;
+               setSelectedLanguage(selectedLanguage);
+               localStorage.setItem('selectedLanguage', selectedLanguage);
+             });
+        } else {
+           setSelectedLanguage(storedSelectedLanguage);
+        }
+       }, []);
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -31,6 +45,7 @@ function Profile() {
   
     let strings = new LocalizedStrings({
       en: {
+        profileinformation: "Profile information",
         FriendCode: "FriendCode",
         Name: "Name",
         Age: "Age",
@@ -45,6 +60,7 @@ function Profile() {
         save: "Save",
       },
       tr: {
+        profileinformation: "Profil bilgileri",
         FriendCode: "Arkadaş Kodu",
         Name: "Isim",
         Age: "Yaş",
@@ -58,14 +74,31 @@ function Profile() {
         smallestPlate: "En küçük plaka",
         save: "Kaydet",
 
-      }
+      },
+        ru: {
+        profileinformation: "Информация профиля",
+        FriendCode: "Код друга",
+        Name: "Имя",
+        Age: "Возраст",
+        Sex: "Пол",
+        Weight: "Вес",
+        Height: "Рост",
+        ProfileVisibility: "Видимость профиля",
+        Profile: "Профиль",
+        Workout: "Настройки тренировки",
+        workoutMeasurment: "Измерение веса",
+        smallestPlate: "Самая маленькая гиря",
+        save: "Сохранить"
+        }
     });
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
-      } else {
+      } else if (selectedLanguage === 'en') {
         strings.setLanguage('en');
+      } else {
+        strings.setLanguage('ru');
       }
-    
+      
 
     const handleUserLogin = (token) => {
       getUser(token)
@@ -79,7 +112,22 @@ function Profile() {
         });
     }
   
-  
+    async function getLanguage() {
+        const token = localStorage.getItem('token');
+      
+        if (token) {
+          const response = await getUser(token);
+      
+          if (response && response.extra_data) {
+            const lang = response.extra_data.lang;
+            console.log(lang);
+            return lang; // Return the language directly
+          }
+        }
+      
+        return 'defaultLanguage'; // Provide a default language in case of errors
+      }
+      
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -290,6 +338,7 @@ const textStyle = {
         >
             <option value="en">English</option>
             <option value="tr">Turkish</option>
+            <option value="ru">Russian</option>
         </select>
         </div>
         
@@ -309,7 +358,7 @@ const textStyle = {
                 fontWeight: 1000,
                 marginBottom: '180px',
                 marginTop: '-30px',
-            }}>Profile information</h1>
+            }}>{strings.profileinformation}</h1>
 
             <img
                 src={profilePicture}
