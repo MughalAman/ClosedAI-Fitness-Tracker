@@ -211,7 +211,7 @@ async function updateWorkout(id, workoutData) {
     const data = await getWorkout(id);
     const updatedWorkoutData = {
       name: workoutData.name !== undefined ? workoutData.name : data.name,
-      date: workoutData.date !== undefined ? workoutData.date : data.date,
+      dates: workoutData.dates !== undefined ? workoutData.dates : data.dates,
       user_id: workoutData.user_id !== undefined ? workoutData.user_id : data.user_id
     };
     const result = await setWorkout(id, updatedWorkoutData);
