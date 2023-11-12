@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect  } from 'react';
-import {getUser} from '../utils/api';
+import {getUser, updateUserProfilePicUrl} from '../utils/api';
+import { storage } from "../firebase-config";
+import {ref, getDownloadURL, uploadBytes} from "firebase/storage";
+import { v4 } from 'uuid';
 
 
 
@@ -21,6 +24,8 @@ function Profile() {
         setSelectedLanguage(event.target.value);
         localStorage.setItem('selectedLanguage', event.target.value);
     };
+
+
     useEffect(() => {
         const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
        
@@ -98,19 +103,20 @@ function Profile() {
       } else {
         strings.setLanguage('ru');
       }
-      
 
-    const handleUserLogin = (token) => {
-      getUser(token)
-        .then((data) => {
+      const handleUserLogin = async (token) => {
+        try {
+          const data = await getUser(token);
           if (data) {
             setUserData(data);
+            if (data.profile_pic_url) {
+              setProfilePicture(data.profile_pic_url);
+            }
           }
-        })
-        .catch((err) => {
+        } catch (err) {
           console.log(err);
-        });
-    }
+        }
+      }
   
     async function getLanguage() {
         const token = localStorage.getItem('token');
@@ -144,14 +150,21 @@ function Profile() {
     };
 
     const onImageChange = (e) => {
+
         if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
+            const token = localStorage.getItem('token');
+            const imageRef = ref(storage, `images/${e.target.files[0].name + v4()}`);
 
-            reader.onload = (e) => {
-                setProfilePicture(e.target.result); // Update the image src when a new file is selected
-            };
-
-            reader.readAsDataURL(e.target.files[0]); // Convert file to data URL
+            uploadBytes(imageRef, e.target.files[0]).then((snapshot) => {
+                console.log('Uploaded a blob or file!');
+                getDownloadURL(snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    
+                    updateUserProfilePicUrl(downloadURL, token).then(() => {
+                        setProfilePicture(downloadURL);
+                    });
+                });
+            });
         }
     };
     const profileTxtStyle = {
@@ -368,6 +381,7 @@ const textStyle = {
             />
             <input
                 type="file"
+                accept=".png, .jpg, .jpeg"
                 onChange={onImageChange}
                 style={{display: 'none'}} // Hide the file input
                 ref={fileInput} // Attach the ref here

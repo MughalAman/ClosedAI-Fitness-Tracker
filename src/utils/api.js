@@ -27,6 +27,34 @@ async function createUser(name, email, password, weight, height, gender) {
   }
 }
 
+
+async function updateUserProfilePicUrl(url, token) {
+  return fetch('https://fitness-api-wlzk.onrender.com/user/', {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+     },
+    body: JSON.stringify({
+      "profile_pic_url": url,
+    })
+  })
+    .then((response) => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+    })
+    .then((data) => {
+    console.log(data);
+    return data;
+    })
+    .catch((error) => {
+    console.error('Error:', error);
+    });
+}
+
+
 async function getUserToken(email, password) {
   try {
     const response = await fetch('https://fitness-api-wlzk.onrender.com/token', {
@@ -448,4 +476,4 @@ function testi(name="NAME", date=null, userId) {
     });
 }
 
-export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage};
+export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage, updateUserProfilePicUrl};

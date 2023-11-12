@@ -198,7 +198,7 @@ function MainPage(props) {
             <div key={friend['workouts'][0].workout_id} style={activityItemStyles}>
               <a href="#">
                 <img
-                  src={'../pic.jpg'}
+                  src={friend.profile_pic_url ? friend.profile_pic_url : '../pic.jpg'}
                   alt={`${friend.name}'s profile`}
                   style={profilePictureStyles}
                 />
