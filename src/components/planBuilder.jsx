@@ -1,12 +1,95 @@
 import React, {useState, useEffect} from 'react';
 import Workout from './workout';
 import { getUser, updateWorkout, testi } from '../utils/api';
+import LocalizedStrings from 'react-localization';
 
 //ei ole vielä toteutettu
 const workoutList = [1,2,3,4,5,6,7,8,9,10];
 
 const PlanBuilder = (props) => {
 
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    const handleLanguageChange = (event) => {
+        setSelectedLanguage(event.target.value);
+        localStorage.setItem('selectedLanguage', event.target.value);
+    };
+    useEffect(() => {
+        const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+       
+        if (!storedSelectedLanguage) {
+           fetch('/api/language')
+             .then(response => response.json())
+             .then(data => {
+               const selectedLanguage = data.language;
+               setSelectedLanguage(selectedLanguage);
+               localStorage.setItem('selectedLanguage', selectedLanguage);
+             });
+        } else {
+           setSelectedLanguage(storedSelectedLanguage);
+        }
+       }, []);
+
+
+       let strings = new LocalizedStrings({
+        en: {
+            monday: "Monday",
+            tuesday: "Tuesday",
+            wednesday: "Wednesday",
+            thursday: "Thursday",
+            friday: "Friday",
+            saturday: "Saturday",
+            sunday: "Sunday",
+            newWorkout: "NEW WORKOUT",
+            workoutName: "Workout name",
+            cancel: "Cancel",
+            planbuilder: "PLAN BUILDER",
+            new: "NEW",
+            workout: "WORKOUT",
+
+
+        },
+        tr: {
+            monday: "Pazartesi",
+            tuesday: "Salı",
+            wednesday: "Çarşamba",
+            thursday: "Perşembe",
+            friday: "Cuma",
+            saturday: "Cumartesi",
+            sunday: "Pazar",
+            newWorkout: "YENİ ANTRENMAN",
+            workoutName: "Antrenman adı",
+            cancel: "İptal",
+            planbuilder: "PLAN OLUŞTURUCU",
+            new: "YENİ",
+            workout: "ANTRENMAN",
+
+            
+
+        },
+          ru: {
+            monday: "Понедельник",
+            tuesday: "Вторник",
+            wednesday: "Среда",
+            thursday: "Четверг",
+            friday: "Пятница",
+            saturday: "Суббота",
+            sunday: "Воскресенье",
+            newWorkout: "НОВАЯ ТРЕНИРОВКА",
+            workoutName: "Название тренировки",
+            cancel: "Отмена",
+            planbuilder: "ПЛАНИРОВЩИК",
+            new: "НОВАЯ",
+            workout: "ТРЕНИРОВКА",
+          }
+      });
+      if (selectedLanguage === 'tr') {
+          strings.setLanguage('tr');
+        } else if (selectedLanguage === 'en') {
+          strings.setLanguage('en');
+        } else {
+          strings.setLanguage('ru');
+        }
+        
 const div = document.createElement('div');
 const ul = document.createElement('ul');
 div.appendChild(ul);
@@ -179,7 +262,7 @@ const getSegmentList = () => {
 }
 
 const segmentList = getSegmentList();
-const week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+const week = [strings.monday, strings.tuesday, strings.wednesday, strings.thursday, strings.friday, strings.saturday, strings.sunday]
 const weekDays = segmentList.map((mills)=>{
     const date = new Date(mills);
     return {day: week[date.getDay()], format: `${date.getFullYear()}-${date.getMonth()+1}-${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}`};
@@ -246,7 +329,7 @@ const NewWorkoutModal = () =>{
             <div style={modalContent}>
                 <input
             type="text"
-            placeholder="Workout name"
+            placeholder= {strings.workoutName}
             style={{color: "black"}}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -256,7 +339,7 @@ const NewWorkoutModal = () =>{
             }
             }
           />
-                <button onClick={closeModal}>Cancel</button>
+                <button onClick={closeModal}>{strings.cancel}</button>
             </div>
         </div>
     );
@@ -264,7 +347,7 @@ const NewWorkoutModal = () =>{
 
 return (
     <div style={{maxWidth: "1280px", margin: "auto"}}>
-        <h1 style={headingStyle}>PLAN BUILDER</h1>
+        <h1 style={headingStyle}>{strings.planbuilder}</h1>
         <div style={plannerBox}>
             <ul style={calendar}>
             {data?.workouts && weekDays.map((e, i) => createSegment(e, i))}
@@ -272,7 +355,7 @@ return (
             <ul style={workoutField} onDragOver={(e)=>allowDrop(e)} onDrop={(e)=>dropToList(e)} id="workoutField">
                 {data?.workouts && data.workouts.map((workout, i) => !workout?.date && createWorkout(i, workout.workout_id, workout.name, workout.exercises))}
                 {isModalOpen && <NewWorkoutModal />}
-                <li style={newWorkout} onClick={openModal}>NEW <br></br>WORKOUT</li>
+                <li style={newWorkout} onClick={openModal}>{strings.new} <br></br>{strings.workout}</li>
             </ul>
 
         </div>

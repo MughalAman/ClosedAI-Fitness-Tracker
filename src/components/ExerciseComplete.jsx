@@ -1,6 +1,81 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import LocalizedStrings from 'react-localization';
+
 
 function ExerciseComplete(props) {
+
+
+
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+  const handleLanguageChange = (event) => {
+      setSelectedLanguage(event.target.value);
+      localStorage.setItem('selectedLanguage', event.target.value);
+  };
+  useEffect(() => {
+      const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+     
+      if (!storedSelectedLanguage) {
+         fetch('/api/language')
+           .then(response => response.json())
+           .then(data => {
+             const selectedLanguage = data.language;
+             setSelectedLanguage(selectedLanguage);
+             localStorage.setItem('selectedLanguage', selectedLanguage);
+           });
+      } else {
+         setSelectedLanguage(storedSelectedLanguage);
+      }
+     }, []);
+
+
+     let strings = new LocalizedStrings({
+      en: {
+        ExerciseComplete: "Exercise Complete!",
+        Duration: "Duration",
+        Sets: "Sets",
+        Reps: "Reps",
+        Weight: "Weight",
+        RPE: "RPE",
+        Rating: "Rating",
+        Save: "SAVE",
+        min: "min",
+      },
+      tr: {
+        ExerciseComplete: "Egzersiz Tamamlandı!",
+        Duration: "Süre",
+        Sets: "Setler",
+        Reps: "Tekrarlar",
+        Weight: "Ağırlık",
+        RPE: "RPE",
+        Rating: "Değerlendirme",
+        Save: "KAYDET",
+        min: "dakika",
+       
+      },
+        ru: {
+          ExerciseComplete: "Упражнение завершено!",
+          Duration: "Продолжительность",
+          Sets: "Наборы",
+          Reps: "Повторы",
+          Weight: "Вес",
+          RPE: "RPE",
+          Rating: "Рейтинг",
+          Save: "СОХРАНИТЬ",
+          min: "минут",
+         
+        }
+    });
+    if (selectedLanguage === 'tr') {
+        strings.setLanguage('tr');
+      } else if (selectedLanguage === 'en') {
+        strings.setLanguage('en');
+      } else {
+        strings.setLanguage('ru');
+      }
+
+
+
+
   const containerStyle = {
     width: '862px',
     height: '764px',
@@ -58,17 +133,17 @@ function ExerciseComplete(props) {
   return (
     <div style={background}>
     <div style={containerStyle}>
-      <h1 style={titleStyle}>Exercise complete!</h1>
+      <h1 style={titleStyle}>{strings.ExerciseComplete}</h1>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <ul style={listStyle}>
-          <li>Duration: {Math.floor(props.mills/1000/60)} min</li>
-          <li>Sets: {props.sets}</li>
-          <li>Reps: {props.reps}</li>
-          <li>Weight: {props.weight}</li>
+          <li>{strings.Duration} {Math.floor(props.mills/1000/60)} {strings.min}</li>
+          <li>{strings.Sets}  {props.sets}</li>
+          <li>{strings.Reps} {props.reps}</li>
+          <li>{strings.Weight} {props.weight}</li>
         </ul>
         <ul style={listStyle}>
-          <li>RPE: {props.rpe}</li>
-          <li>Rating: {props.rating}⭐</li>
+          <li>{strings.RPE}  {props.rpe}</li>
+          <li>{stringsr.rating}{props.rating}⭐</li>
         </ul>
       </div>
       <button style={buttonStyle} onClick={props.closeWorkout}>SAVE</button>

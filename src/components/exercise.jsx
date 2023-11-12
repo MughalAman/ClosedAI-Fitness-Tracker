@@ -1,6 +1,85 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import LocalizedStrings from 'react-localization';
+
 
 const exercise = (props) => {
+
+
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    const handleLanguageChange = (event) => {
+        setSelectedLanguage(event.target.value);
+        localStorage.setItem('selectedLanguage', event.target.value);
+    };
+    useEffect(() => {
+        const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+       
+        if (!storedSelectedLanguage) {
+           fetch('/api/language')
+             .then(response => response.json())
+             .then(data => {
+               const selectedLanguage = data.language;
+               setSelectedLanguage(selectedLanguage);
+               localStorage.setItem('selectedLanguage', selectedLanguage);
+             });
+        } else {
+           setSelectedLanguage(storedSelectedLanguage);
+        }
+       }, []);
+  
+  
+       let strings = new LocalizedStrings({
+        en: {
+            close: "Close",
+            exercisehistory: "Exercise history",
+            sets: "Sets",
+            reps: "Reps",
+            weight: "Weight",
+            RECENT: "RECENT",
+
+         
+        },
+        tr: {
+            close: "Kapat",
+            exercisehistory: "Egzersiz geçmişi",
+            sets: "Setler",
+            reps: "Tekrarlar",
+            weight: "Ağırlık",
+            RECENT: "SON",
+
+
+         
+        },
+          ru: {
+            close: "Закрыть",
+            exercisehistory: "История упражнений",
+            sets: "Наборы",
+            reps: "Повторы",
+            weight: "Вес",
+            RECENT: "ПОСЛЕДНИЕ",
+
+           
+          }
+      });
+      if (selectedLanguage === 'tr') {
+          strings.setLanguage('tr');
+        } else if (selectedLanguage === 'en') {
+          strings.setLanguage('en');
+        } else {
+          strings.setLanguage('ru');
+        }
+  
+  
+  
+
+
+
+
+
+
+
+
+
 
     const exerciseStyle = {
         color: "white",
@@ -100,16 +179,16 @@ const exercise = (props) => {
                 <div style={modalContent}>
                     <div style={topBar}>
                         <h2 style={exerciseName}>{props.name}</h2>
-                        <button onClick={closeModal} style={closeButton}>Close</button>
+                        <button onClick={closeModal} style={closeButton}>{strings.close}</button>
                     </div>
                   <div style={{padding: "20px"}}>
-                  <div style={video}><iframe width="100%" height="100%" src={props.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe><div style={exerciseInfo}><p>Sets: {props.sets}</p><p>Reps: {props.reps}</p><p>Weight: {props.weight}</p></div></div>
+                  <div style={video}><iframe width="100%" height="100%" src={props.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe><div style={exerciseInfo}><p>{strings.sets}: {props.sets}</p><p>{strings.reps}: {props.reps}</p><p>{strings.weight}: {props.weight}</p></div></div>
                   <div style={history}>
                     <ul>
-                        <p>Exercise history</p>
-                        <li>RECENT1</li>
-                        <li>RECENT2</li>
-                        <li>RECENT3</li>
+                        <p>{strings.exercisehistory}</p>
+                        <li>{strings.RECENT}1</li>
+                        <li>{strings.RECENT}2</li>
+                        <li>{strings.RECENT}3</li>
                     </ul>
                   </div>
                   </div>

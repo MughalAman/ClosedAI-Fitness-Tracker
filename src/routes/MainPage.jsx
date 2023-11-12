@@ -1,8 +1,13 @@
-import {useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import LocalizedStrings from 'react-localization';
 import Navbar from '../components/Navbar';
 import PreviousWorkouts from '../components/PreviousWorkouts';
 import Workout from '../components/workout';
 import {getUserFriendships, getUserFromUserId, getExerciseRating} from '../utils/api';
+
+
+
+
 
 const parentContainerStyles = {
   height: '100vh',
@@ -148,16 +153,94 @@ const getRatingForExercise = async (exercise_id) => {
   return rating;
 }
 
+
+
+
+
+
+
+
+
 function MainPage(props) {
 
   const {userData} = props;
 
   const [userFriends, setUserFriends] = useState([]);
 
+
+  
+
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+
+  useEffect(() => {
+    async function fetchData() {
+      const lang = await getLanguage(); // Call the getLanguage function
+      setSelectedLanguage(lang); // Set the selected language based on the result
+    }
+
+    fetchData();
+  }, []);
+
+
   console.log(userData);
+
+
+    let strings = new LocalizedStrings({
+      en: {
+        mainPageTitle: "Main Page",
+        friendActivity: "Friend Activity",
+        currentStreak: "Current Streak: ",
+        previousWorkouts: "Previous Workouts",
+        goToPlanBuilder: "Go to plan builder",
+        rating: "Rating: ",
+        duration: "Duration: ",
+        rpe: "RPE: ",
+        clickToSee: "Click to see",
+        search: "Search",
+        addFriend: "Add Friend",
+      },
+      tr: {
+        mainPageTitle: "Ana Sayfa",
+        friendActivity: "Arkadaş Etkinliği",
+        currentStreak: "Geçerli Seri: ",
+        previousWorkouts: "Önceki Antrenmanlar",
+        goToPlanBuilder: "Plan oluşturmaya git",
+        rating: "Derecelendirme: ",
+        duration: "Süre: ",
+        rpe: "RPE: ",
+        clickToSee: "Görmek için tıklayın",
+        search: "Arama",
+        addFriend: "Arkadaş Ekle",
+
+      },
+        ru: {
+          mainPageTitle: "Главная страница",
+          friendActivity: "Деятельность друга",
+          currentStreak: "Текущая серия: ",
+          previousWorkouts: "Предыдущие тренировки",
+          goToPlanBuilder: "Перейти к построителю плана",
+          rating: "Рейтинг: ",
+          duration: "Продолжительность: ",
+          rpe: "RPE: ",
+          clickToSee: "Нажмите, чтобы увидеть",
+          search: "Поиск",
+          addFriend: "Добавить друга",
+        }
+    });
+    if (selectedLanguage === 'tr') {
+      strings.setLanguage('tr');
+    } else if (selectedLanguage === 'en') {
+      strings.setLanguage('en');
+    } else {
+      strings.setLanguage('ru');
+    }
+
+
 
   useEffect(() => {
     const fetchData = async () => {
+      
+
       if(localStorage.getItem('showExtraQuestions') === 'true'){
         window.location.href = '/trainingexperience';
       }
@@ -188,12 +271,33 @@ function MainPage(props) {
     fetchData();
   }, [userData]);
 
+
+
+  async function getLanguage() {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const response = await getUser(token);
+  
+      if (response && response.extra_data) {
+        const lang = response.extra_data.lang;
+        console.log(lang);
+        return lang; // Return the language directly
+      }
+    }
+  
+    return 'defaultLanguage'; // Provide a default language in case of errors
+  }
+  
+
+ 
+
   return (
     <div style={parentContainerStyles}>
       <Navbar userData={userData}/>
       <div style={rootStyles}>
         <div style={friendActivityStyles}>
-          <h2 style={titleStyles}>Friend Activity</h2>
+          <h2 style={titleStyles}>{strings.friendActivity}</h2>
           {userFriends.map((friend) => (
             <div key={friend['workouts'][0].workout_id} style={activityItemStyles}>
               <a href="#">
@@ -238,7 +342,7 @@ function MainPage(props) {
       <div style={sectionStyles}>
         <PreviousWorkouts userData={userData}/>
         <div style={buttonStyles}>
-          <a href="/planbuilder">Go to plan builder</a>
+        <a href="/planbuilder">{strings.goToPlanBuilder}</a>
         </div>
       </div>
     </div>

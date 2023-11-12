@@ -6,10 +6,16 @@ import Signup from './routes/signup';
 import MainPage from './routes/MainPage';
 import {getUser} from './utils/api';
 
+
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [userData, setUserData] = useState({});
+
+
+
+
 
   const handleUserLogin = (token) => {
     getUser(token)

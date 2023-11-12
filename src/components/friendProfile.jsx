@@ -1,8 +1,98 @@
 import React, { useState } from 'react';
 import PreviousWorkout2 from './PreviousWorkout2';
+import LocalizedStrings from 'react-localization';
 
 function FriendProfile(props) {
     const [profilePicture, setProfilePicture] = useState('/pic.jpg');
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    const handleLanguageChange = (event) => {
+        setSelectedLanguage(event.target.value);
+        localStorage.setItem('selectedLanguage', event.target.value);
+    };
+    useEffect(() => {
+        const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+       
+        if (!storedSelectedLanguage) {
+           fetch('/api/language')
+             .then(response => response.json())
+             .then(data => {
+               const selectedLanguage = data.language;
+               setSelectedLanguage(selectedLanguage);
+               localStorage.setItem('selectedLanguage', selectedLanguage);
+             });
+        } else {
+           setSelectedLanguage(storedSelectedLanguage);
+        }
+       }, []);
+
+
+       let strings = new LocalizedStrings({
+        en: {
+          profileinformation: "Profile information",
+          FriendCode: "FriendCode",
+          Name: "Name",
+          Age: "Age",
+          Sex: "Sex",
+          Weight: "Weight",
+          Height: "Height",
+          ProfileVisibility: "ProfileVisibility",
+          Profile: "Profile",
+          Workout: "Workout settings",
+          workoutMeasurment: "Weight measurement",
+          smallestPlate: "Smallest plate",
+          save: "Save",
+          profile: "Profile",
+        },
+        tr: {
+          profileinformation: "Profil bilgileri",
+          FriendCode: "Arkadaş Kodu",
+          Name: "Isim",
+          Age: "Yaş",
+          Sex: "Cinsiyet",
+          Weight: "Kilo",
+          Height: "Boy",
+          ProfileVisibility: "Profil Gizliliği",
+          Profile: "Profil",
+          Workout: "Antrenman ayarları",
+          workoutMeasurment: "Ağırlık ölçümü",
+          smallestPlate: "En küçük plaka",
+          save: "Kaydet",
+          profile: "Profil",
+  
+        },
+          ru: {
+          profileinformation: "Информация профиля",
+          FriendCode: "Код друга",
+          Name: "Имя",
+          Age: "Возраст",
+          Sex: "Пол",
+          Weight: "Вес",
+          Height: "Рост",
+          ProfileVisibility: "Видимость профиля",
+          Profile: "Профиль",
+          Workout: "Настройки тренировки",
+          workoutMeasurment: "Измерение веса",
+          smallestPlate: "Самая маленькая гиря",
+          save: "Сохранить",
+          profile: "Профиль",
+          }
+      });
+      if (selectedLanguage === 'tr') {
+          strings.setLanguage('tr');
+        } else if (selectedLanguage === 'en') {
+          strings.setLanguage('en');
+        } else {
+          strings.setLanguage('ru');
+        }
+
+
+
+
+
+
+
+
 
     const profileTxtStyle = {
         color: '#FFF',
@@ -48,8 +138,8 @@ function FriendProfile(props) {
     return (
         <div style={containerStyle}>
             <div style={leftContentStyle}>
-                <h1 style={profileTxtStyle}>Juha's Profile:</h1>
-                <h1 style={profileTxtStyle1}>Previous workouts:</h1>
+                <h1 style={profileTxtStyle}>Juha's {strings.profile}</h1>
+                <h1 style={profileTxtStyle1}>{strings.profileinformation}</h1>
                 <PreviousWorkout2 />
             </div>
             <div style={rightContentStyle}>
@@ -67,12 +157,12 @@ function FriendProfile(props) {
                         marginTop: '-170px'
                     }}
                 />
-                <p style={textStyle}>Friend Code</p>
-                <p style={textStyle}>Name</p>
-                <p style={textStyle}>Age</p>
-                <p style={textStyle}>Sex</p>
-                <p style={textStyle}>Weight</p>
-                <p style={textStyle}>Height</p>
+                <p style={textStyle}>{strings.FriendCode}: {userData.friend_code}</p>
+                <p style={textStyle}>{strings.Name}: {userData.name}</p>
+                <p style={textStyle}>{strings.Age}: </p>
+                <p style={textStyle}>{strings.Sex}: {userData.gender}</p>
+                <p style={textStyle}>{strings.Weight}: {userData.weight}</p>
+                <p style={textStyle}>{strings.Height}: {userData.height}</p>
             </div>
         </div>
     );

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import LocalizedStrings from 'react-localization';
+
 
 const workoutHistory = [
   {
@@ -60,10 +62,66 @@ const tableCellStyles = {
 
 function PreviousWorkouts(props) {
   const { userData } = props;
+  
+const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+const handleLanguageChange = (event) => {
+    setSelectedLanguage(event.target.value);
+    localStorage.setItem('selectedLanguage', event.target.value);
+};
+useEffect(() => {
+    const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+   
+    if (!storedSelectedLanguage) {
+       fetch('/api/language')
+         .then(response => response.json())
+         .then(data => {
+           const selectedLanguage = data.language;
+           setSelectedLanguage(selectedLanguage);
+           localStorage.setItem('selectedLanguage', selectedLanguage);
+         });
+    } else {
+       setSelectedLanguage(storedSelectedLanguage);
+    }
+   }, []);
+   
 
+const strings = new LocalizedStrings({
+  en: {
+    previousWorkouts: 'Previous Workouts',
+    date: 'Date',
+    rating: 'Rating',
+    rpe: 'RPE',
+    duration: 'Duration',
+    time: 'mins',
+  },
+  tr: {
+    previousWorkouts: 'Önceki Antrenmanlar',
+    date: 'Tarih',
+    rating: 'Değerlendirme',
+    rpe: 'RPE',
+    duration: 'Süre',
+    time: 'dakika',
+  },
+  ru:{
+    previousWorkouts: 'Предыдущие тренировки',  
+    date: 'Дата',
+    rating: 'Рейтинг',
+    rpe: 'RPE',
+    duration: 'Продолжительность',
+    time: 'минут',
+  }
+});
+
+if (selectedLanguage === 'tr') {
+  strings.setLanguage('tr');
+} else if (selectedLanguage === 'en') {
+  strings.setLanguage('en');
+} else {
+  strings.setLanguage('ru');
+}
   return (
     <div>
-      <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Previous Workouts</h2>
+      <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>{strings.previousWorkouts}</h2>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         {userData['workouts'].slice(0, 3).map((workout) => {
             // Calculate the total and average rating from the exercises' ratings
@@ -94,18 +152,18 @@ function PreviousWorkouts(props) {
               <div style={tableStyles}>
                 <div style={tableRowStyles}>
                   <div style={tableCellStyles}>{workout.date}</div>
-                  <div style={tableCellStyles}>Rating: {averageRating}⭐</div>
+                  <div style={tableCellStyles}>{strings.rating} {averageRating}⭐</div>
                 </div>
                 <div style={tableRowStyles}>
                   <div style={tableCellStyles}>{workout.name}</div>
-                  <div style={tableCellStyles}>RPE: {averageRpe}⚡</div>
+                  <div style={tableCellStyles}>{strings.rpe} {averageRpe}⚡</div>
                 </div>
                 <div style={tableRowStyles}>
                   <div style={tableCellStyles}>{workout.workoutType}</div>
                   <div style={tableCellStyles}></div>
                 </div>
                 <div style={tableRowStyles}>
-                  <div style={tableCellStyles}>Duration: {totalDuration / 60} min 🕛</div>
+                  <div style={tableCellStyles}>{strings.duration} {totalDuration / 60} {strings.time} 🕛</div>
                   <div style={tableCellStyles}></div>
                 </div>
               </div>

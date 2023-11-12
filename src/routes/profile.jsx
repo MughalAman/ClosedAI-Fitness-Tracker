@@ -7,6 +7,17 @@ import {getUser} from '../utils/api';
 import LocalizedStrings from 'react-localization';
 
 
+/*
+//firebase profilePic
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "your-firebase-config"; // Import your Firebase Storage configuration
+import { ref as dbRef, set as setDB } from "firebase/database";
+import { db } from "your-firebase-database-config"; // Import your Firebase Realtime Database configuration
+*/
+
+
+
+
 
 function Profile() {
     const [unit, setUnit] = useState('kg');
@@ -43,6 +54,60 @@ function Profile() {
       }
     }, []);
   
+
+
+
+
+
+
+    // Declare a state variable for the image
+const [image, setImage] = useState(null);
+
+const handleChange = (e) => {
+  if (e.target.files[0]) {
+    setImage(e.target.files[0]);
+  }
+};
+/*
+// Function to upload the selected image to Firebase Storage and update user data in Realtime Database
+const submitData = (userId, username, email) => {
+  if (image) {
+    const storageRef = ref(storage, "images/" + image.name);
+
+    uploadBytes(storageRef, image)
+      .then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+        // You can also get the download URL for the uploaded file here if needed
+        getDownloadURL(storageRef)
+          .then((url) => {
+            // Update the user data in Firebase Realtime Database
+            setDB(dbRef(db, 'users/' + userId), {
+              username: username,
+              email: email,
+              profile_picture: url // Use the retrieved URL here
+            });
+          })
+          .catch((error) => {
+            console.error('Error getting download URL:', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error uploading file:', error);
+      });
+  } else {
+    console.error('No image selected for upload');
+  }
+};
+
+
+*/
+
+
+
+
+
+
+
     let strings = new LocalizedStrings({
       en: {
         profileinformation: "Profile information",
@@ -58,6 +123,7 @@ function Profile() {
         workoutMeasurment: "Weight measurement",
         smallestPlate: "Smallest plate",
         save: "Save",
+        selectLanguage: "Select Language",
       },
       tr: {
         profileinformation: "Profil bilgileri",
@@ -73,6 +139,7 @@ function Profile() {
         workoutMeasurment: "Ağırlık ölçümü",
         smallestPlate: "En küçük plaka",
         save: "Kaydet",
+        selectLanguage: "Dil Seçiniz",
 
       },
         ru: {
@@ -88,7 +155,9 @@ function Profile() {
         Workout: "Настройки тренировки",
         workoutMeasurment: "Измерение веса",
         smallestPlate: "Самая маленькая гиря",
-        save: "Сохранить"
+        save: "Сохранить",
+        selectLanguage: "Выберите язык",
+
         }
     });
     if (selectedLanguage === 'tr') {
@@ -330,7 +399,7 @@ const textStyle = {
    
     const language = (
         <div >
-        <label htmlFor="languageSelect">Select Language: </label>
+        <label htmlFor="languageSelect">{strings.selectLanguage}: </label>
         <select
             id="languageSelect"
             value={selectedLanguage}
