@@ -223,7 +223,7 @@ function Navbar(props) {
       <div>
         <a href="/profile">
           <img
-            src="../pic.jpg"
+            src={userData.profile_pic_url ? userData.profile_pic_url : '../pic.jpg'}
             alt="Profile"
             style={imageStyles}
           />

@@ -27,6 +27,34 @@ async function createUser(name, email, password, weight, height, gender) {
   }
 }
 
+
+async function updateUserProfilePicUrl(url, token) {
+  return fetch('https://fitness-api-wlzk.onrender.com/user/', {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+     },
+    body: JSON.stringify({
+      "profile_pic_url": url,
+    })
+  })
+    .then((response) => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+    })
+    .then((data) => {
+    console.log(data);
+    return data;
+    })
+    .catch((error) => {
+    console.error('Error:', error);
+    });
+}
+
+
 async function getUserToken(email, password) {
   try {
     const response = await fetch('https://fitness-api-wlzk.onrender.com/token', {
@@ -217,7 +245,7 @@ async function updateWorkout(id, workoutData) {
     const data = await getWorkout(id);
     const updatedWorkoutData = {
       name: workoutData.name !== undefined ? workoutData.name : data.name,
-      date: workoutData.date !== undefined ? workoutData.date : data.date,
+      dates: workoutData.dates !== undefined ? workoutData.dates : data.dates,
       user_id: workoutData.user_id !== undefined ? workoutData.user_id : data.user_id
     };
     const result = await setWorkout(id, updatedWorkoutData);
@@ -454,4 +482,4 @@ function testi(name="NAME", date=null, userId) {
     });
 }
 
-export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage};
+export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage, updateUserProfilePicUrl};
