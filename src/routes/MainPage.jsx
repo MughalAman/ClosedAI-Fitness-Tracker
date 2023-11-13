@@ -3,11 +3,7 @@ import LocalizedStrings from 'react-localization';
 import Navbar from '../components/Navbar';
 import PreviousWorkouts from '../components/PreviousWorkouts';
 import Workout from '../components/workout';
-import {getUserFriendships, getUserFromUserId, getExerciseRating} from '../utils/api';
-
-
-
-
+import { getUserFriendships, getUserFromUserId, getExerciseRating, getUser } from '../utils/api';
 
 const parentContainerStyles = {
   height: '100vh',
@@ -152,25 +148,22 @@ const getRatingForExercise = async (exercise_id) => {
   let rating = await getExerciseRating(exercise_id);
   return rating;
 }
-
-
-
-
-
-
-
-
-
 function MainPage(props) {
 
-  const {userData} = props;
-
+  const { userData } = props;
   const [userFriends, setUserFriends] = useState([]);
-
-
-  
-
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+
+  useEffect(() => {
+    // This code runs when the component mounts
+    console.log('MainPage mounted');
+
+    // This is the cleanup code that runs when the component unmounts
+    return () => {
+      console.log('MainPage cleanup function');
+      // rest of the cleanup code
+    };
+  }, []); // The empty dependency array means this useEffect runs only once (on mount)
 
   useEffect(() => {
     async function fetchData() {
@@ -181,67 +174,66 @@ function MainPage(props) {
     fetchData();
   }, []);
 
-
   console.log(userData);
 
+  let strings = new LocalizedStrings({
+    en: {
+      mainPageTitle: "Main Page",
+      friendActivity: "Friend Activity",
+      currentStreak: "Current Streak: ",
+      previousWorkouts: "Previous Workouts",
+      goToPlanBuilder: "Go to plan builder",
+      rating: "Rating: ",
+      duration: "Duration: ",
+      rpe: "RPE: ",
+      clickToSee: "Click to see",
+      search: "Search",
+      addFriend: "Add Friend",
+    },
+    tr: {
+      mainPageTitle: "Ana Sayfa",
+      friendActivity: "Arkadaş Etkinliği",
+      currentStreak: "Geçerli Seri: ",
+      previousWorkouts: "Önceki Antrenmanlar",
+      goToPlanBuilder: "Plan oluşturmaya git",
+      rating: "Derecelendirme: ",
+      duration: "Süre: ",
+      rpe: "RPE: ",
+      clickToSee: "Görmek için tıklayın",
+      search: "Arama",
+      addFriend: "Arkadaş Ekle",
 
-    let strings = new LocalizedStrings({
-      en: {
-        mainPageTitle: "Main Page",
-        friendActivity: "Friend Activity",
-        currentStreak: "Current Streak: ",
-        previousWorkouts: "Previous Workouts",
-        goToPlanBuilder: "Go to plan builder",
-        rating: "Rating: ",
-        duration: "Duration: ",
-        rpe: "RPE: ",
-        clickToSee: "Click to see",
-        search: "Search",
-        addFriend: "Add Friend",
-      },
-      tr: {
-        mainPageTitle: "Ana Sayfa",
-        friendActivity: "Arkadaş Etkinliği",
-        currentStreak: "Geçerli Seri: ",
-        previousWorkouts: "Önceki Antrenmanlar",
-        goToPlanBuilder: "Plan oluşturmaya git",
-        rating: "Derecelendirme: ",
-        duration: "Süre: ",
-        rpe: "RPE: ",
-        clickToSee: "Görmek için tıklayın",
-        search: "Arama",
-        addFriend: "Arkadaş Ekle",
-
-      },
-        ru: {
-          mainPageTitle: "Главная страница",
-          friendActivity: "Деятельность друга",
-          currentStreak: "Текущая серия: ",
-          previousWorkouts: "Предыдущие тренировки",
-          goToPlanBuilder: "Перейти к построителю плана",
-          rating: "Рейтинг: ",
-          duration: "Продолжительность: ",
-          rpe: "RPE: ",
-          clickToSee: "Нажмите, чтобы увидеть",
-          search: "Поиск",
-          addFriend: "Добавить друга",
-        }
-    });
-    if (selectedLanguage === 'tr') {
-      strings.setLanguage('tr');
-    } else if (selectedLanguage === 'en') {
-      strings.setLanguage('en');
-    } else {
-      strings.setLanguage('ru');
+    },
+    ru: {
+      mainPageTitle: "Главная страница",
+      friendActivity: "Деятельность друга",
+      currentStreak: "Текущая серия: ",
+      previousWorkouts: "Предыдущие тренировки",
+      goToPlanBuilder: "Перейти к построителю плана",
+      rating: "Рейтинг: ",
+      duration: "Продолжительность: ",
+      rpe: "RPE: ",
+      clickToSee: "Нажмите, чтобы увидеть",
+      search: "Поиск",
+      addFriend: "Добавить друга",
     }
+  });
 
+console.log(selectedLanguage)
+
+  if (selectedLanguage === 'tr') {
+    strings.setLanguage('tr');
+  } else if (selectedLanguage === 'en') {
+    strings.setLanguage('en');
+  } else {
+    strings.setLanguage('ru');
+  }
 
 
   useEffect(() => {
     const fetchData = async () => {
-      
 
-      if(localStorage.getItem('showExtraQuestions') === 'true'){
+      if (localStorage.getItem('showExtraQuestions') === 'true') {
         window.location.href = '/trainingexperience';
       }
 
@@ -257,7 +249,7 @@ function MainPage(props) {
           // Get the friend's data
           let friendData = await getUserFromUserId(friends[i].friend_id);
           friendsData.push(friendData);
-        }else if (friends[i].friend_id === userData.user_id) {
+        } else if (friends[i].friend_id === userData.user_id) {
           // Get the friend's data
           let friendData = await getUserFromUserId(friends[i].user_id);
           friendsData.push(friendData);
@@ -270,8 +262,6 @@ function MainPage(props) {
 
     fetchData();
   }, [userData]);
-
-
 
   async function getLanguage() {
     const token = localStorage.getItem('token');
@@ -286,15 +276,12 @@ function MainPage(props) {
       }
     }
   
-    return 'defaultLanguage'; // Provide a default language in case of errors
+    return 'en'; // Provide a default language in case of errors
   }
-  
-
- 
 
   return (
     <div style={parentContainerStyles}>
-      <Navbar userData={userData}/>
+      <Navbar userData={userData} />
       <div style={rootStyles}>
         <div style={friendActivityStyles}>
           <h2 style={titleStyles}>{strings.friendActivity}</h2>
@@ -313,19 +300,19 @@ function MainPage(props) {
               </div>
               <div style={{ marginLeft: 'auto' }}>
                 {friend['workouts'][0].exercises.length > 0 &&
-                <>
-                  <p>Rating: {friend['workouts'][0].rating}⭐</p>
-                  <p>Duration: {friend['workouts'][0].exercises[0].duration}🕛</p>
-                  <p>RPE: {friend['workouts'][0].exercises[0].rpe}⚡</p>
-                 </>
-              }
+                  <>
+                    <p>Rating: {friend['workouts'][0].rating}⭐</p>
+                    <p>Duration: {friend['workouts'][0].exercises[0].duration}🕛</p>
+                    <p>RPE: {friend['workouts'][0].exercises[0].rpe}⚡</p>
+                  </>
+                }
               </div>
             </div>
           ))}
         </div>
         <div style={rightContainerStyles}>
           {/* <div style={currentStreakStyles}>Current streak: 5🔥</div> */}
-            {userData['workouts'].length > 0 &&
+          {userData['workouts'].length > 0 &&
             <Workout
               exercises={userData.workouts[0].exercises}
               workoutStyles={workoutStyles}
@@ -340,9 +327,9 @@ function MainPage(props) {
         </div>
       </div>
       <div style={sectionStyles}>
-        <PreviousWorkouts userData={userData}/>
+        <PreviousWorkouts userData={userData} />
         <div style={buttonStyles}>
-        <a href="/planbuilder">{strings.goToPlanBuilder}</a>
+          <a href="/planbuilder">{strings.goToPlanBuilder}</a>
         </div>
       </div>
     </div>

@@ -65,33 +65,33 @@ const tableCellStyles = {
 
 function PreviousWorkout2() {
   return (
-      <div>
-          <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Previous Workouts</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              {workoutHistory.slice(0, 3).map((workout) => (
-                  <div key={workout.id} style={boxStyles}>
-                      <div style={tableStyles}>
-                          <div style={tableRowStyles}>
-                              <div style={tableCellStyles}>{workout.date}</div>
-                              <div style={tableCellStyles}>Rating: {workout.rating}⭐</div>
-                          </div>
-                          <div style={tableRowStyles}>
-                              <div style={tableCellStyles}>{workout.workoutName}</div>
-                              <div style={tableCellStyles}>RPE: {workout.rpe}⚡</div>
-                          </div>
-                          <div style={tableRowStyles}>
-                              <div style={tableCellStyles}>{workout.workoutType}</div>
-                              <div style={tableCellStyles}></div>
-                          </div>
-                          <div style={tableRowStyles}>
-                              <div style={tableCellStyles}>Duration: {workout.duration}🕛</div>
-                              <div style={tableCellStyles}></div>
-                          </div>
-                      </div>
-                  </div>
-              ))}
+    <div>
+      <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Previous Workouts</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {workoutHistory.slice(0, 3).map((workout) => (
+          <div key={workout.id} style={boxStyles}>
+            <div style={tableStyles}>
+              <div style={tableRowStyles}>
+                <div style={tableCellStyles}>{workout.date}</div>
+                <div style={tableCellStyles}>Rating: {workout.rating}⭐</div>
+              </div>
+              <div style={tableRowStyles}>
+                <div style={tableCellStyles}>{workout.workoutName}</div>
+                <div style={tableCellStyles}>RPE: {workout.rpe}⚡</div>
+              </div>
+              <div style={tableRowStyles}>
+                <div style={tableCellStyles}>{workout.workoutType}</div>
+                <div style={tableCellStyles}></div>
+              </div>
+              <div style={tableRowStyles}>
+                <div style={tableCellStyles}>Duration: {workout.duration}🕛</div>
+                <div style={tableCellStyles}></div>
+              </div>
+            </div>
           </div>
+        ))}
       </div>
+    </div>
   );
 }
 

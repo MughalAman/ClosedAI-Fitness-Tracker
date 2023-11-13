@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {createUser, getUserToken, getUser} from '../utils/api';
+import { createUser, getUserToken, getUser } from '../utils/api';
 
 
 function Signup(props) {
@@ -197,7 +197,7 @@ function Signup(props) {
                 console.log(err);
             });
 
-            localStorage.setItem('showExtraQuestions', true);
+        localStorage.setItem('showExtraQuestions', true);
     }
 
     // Palautetaan komponentti
@@ -267,8 +267,8 @@ function Signup(props) {
                         />
                     </div>
                 </div>
-                <button style={buttonStyle} onClick={(e) => {handleSignup(e)}}>Sign Up</button>
-                <a style={linkStyle} onClick={(e) => {handleShowSignup(e)}}>Already have an account? Login</a>
+                <button style={buttonStyle} onClick={(e) => { handleSignup(e) }}>Sign Up</button>
+                <a style={linkStyle} onClick={(e) => { handleShowSignup(e) }}>Already have an account? Login</a>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import {createFriendship, getUserIdFromFriendcode, getUserFriendships, updateFriendship} from '../utils/api';
+import { createFriendship, getUserIdFromFriendcode, getUserFriendships, updateFriendship } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 
 
@@ -56,70 +56,70 @@ const imageStyles = {
 
 function Navbar(props) {
   const [searchText, setSearchText] = useState('');
-  const {userData} = props;
+  const { userData } = props;
 
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const handleLanguageChange = (event) => {
-      setSelectedLanguage(event.target.value);
-      localStorage.setItem('selectedLanguage', event.target.value);
+    setSelectedLanguage(event.target.value);
+    localStorage.setItem('selectedLanguage', event.target.value);
   };
   useEffect(() => {
-      const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
-     
-      if (!storedSelectedLanguage) {
-         fetch('/api/language')
-           .then(response => response.json())
-           .then(data => {
-             const selectedLanguage = data.language;
-             setSelectedLanguage(selectedLanguage);
-             localStorage.setItem('selectedLanguage', selectedLanguage);
-           });
-      } else {
-         setSelectedLanguage(storedSelectedLanguage);
-      }
-     }, []);
+    const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+
+    if (!storedSelectedLanguage) {
+      fetch('/api/language')
+        .then(response => response.json())
+        .then(data => {
+          const selectedLanguage = data.language;
+          setSelectedLanguage(selectedLanguage);
+          localStorage.setItem('selectedLanguage', selectedLanguage);
+        });
+    } else {
+      setSelectedLanguage(storedSelectedLanguage);
+    }
+  }, []);
 
 
-     let strings = new LocalizedStrings({
-      en: {
-        addfriend: "Add friend",
-        frienderror: "You can't add yourself as a friend!",
-        search: "Searching for",
-        alrfriend: "You already have a friend request from this user! Accepting the request...",
-        friendrequest: "Friend request accepted!",
-        alrfriend2: "You are already friends with this user!",
-        friendrequest2: "Friend request already sent!",
-        friendsent: "Friend request sent!",
-      },
-      tr: {
-        addfriend: "Arkadaş ekle",
-        frienderror: "Kendini arkadaş olarak ekleyemezsin!",
-        search: "Aranıyor",
-        alrfriend: "Bu kullanıcıdan zaten arkadaşlık isteğiniz var! İsteği kabul ediyorum...",
-        friendrequest: "Arkadaşlık isteği kabul edildi!",
-        alrfriend2: "Bu kullanıcıyla zaten arkadaşsınız!",
-        friendrequest2: "Arkadaşlık isteği zaten gönderildi!",
-        friendsent: "Arkadaşlık isteği gönderildi!",
-      },
-        ru: {
-          addfriend: "Добавить друга",
-          frienderror: "Вы не можете добавить себя в друзья!",
-          search: "Поиск",
-          alrfriend: "У вас уже есть запрос на дружбу от этого пользователя! Принимаю запрос...",
-          friendrequest: "Запрос на дружбу принят!",
-          alrfriend2: "Вы уже дружите с этим пользователем!",
-          friendrequest2: "Запрос на дружбу уже отправлен!",
-          friendsent: "Запрос на дружбу отправлен!",
-        }
-    });
-    if (selectedLanguage === 'tr') {
-        strings.setLanguage('tr');
-      } else if (selectedLanguage === 'en') {
-        strings.setLanguage('en');
-      } else {
-        strings.setLanguage('ru');
-      }
-      
+  let strings = new LocalizedStrings({
+    en: {
+      addfriend: "Add friend",
+      frienderror: "You can't add yourself as a friend!",
+      search: "Searching for",
+      alrfriend: "You already have a friend request from this user! Accepting the request...",
+      friendrequest: "Friend request accepted!",
+      alrfriend2: "You are already friends with this user!",
+      friendrequest2: "Friend request already sent!",
+      friendsent: "Friend request sent!",
+    },
+    tr: {
+      addfriend: "Arkadaş ekle",
+      frienderror: "Kendini arkadaş olarak ekleyemezsin!",
+      search: "Aranıyor",
+      alrfriend: "Bu kullanıcıdan zaten arkadaşlık isteğiniz var! İsteği kabul ediyorum...",
+      friendrequest: "Arkadaşlık isteği kabul edildi!",
+      alrfriend2: "Bu kullanıcıyla zaten arkadaşsınız!",
+      friendrequest2: "Arkadaşlık isteği zaten gönderildi!",
+      friendsent: "Arkadaşlık isteği gönderildi!",
+    },
+    ru: {
+      addfriend: "Добавить друга",
+      frienderror: "Вы не можете добавить себя в друзья!",
+      search: "Поиск",
+      alrfriend: "У вас уже есть запрос на дружбу от этого пользователя! Принимаю запрос...",
+      friendrequest: "Запрос на дружбу принят!",
+      alrfriend2: "Вы уже дружите с этим пользователем!",
+      friendrequest2: "Запрос на дружбу уже отправлен!",
+      friendsent: "Запрос на дружбу отправлен!",
+    }
+  });
+  if (selectedLanguage === 'tr') {
+    strings.setLanguage('tr');
+  } else if (selectedLanguage === 'en') {
+    strings.setLanguage('en');
+  } else {
+    strings.setLanguage('ru');
+  }
+
 
   const handleSearchClick = () => {
     // Handle search functionality here with the searchText state
@@ -148,12 +148,12 @@ function Navbar(props) {
         if (existingFriendships[i].status_id === 1) {
           alert(strings.alrfriend);
           updateFriendship(existingFriendships[i].friendship_id, 2)
-          .then(() => {
-            alert(strings.friendrequest);
-          })
-          .catch((error) => {
-            console.error('Error accepting friend request:', error);
-          });
+            .then(() => {
+              alert(strings.friendrequest);
+            })
+            .catch((error) => {
+              console.error('Error accepting friend request:', error);
+            });
           return;
         }
         else if (existingFriendships[i].status_id === 2) {
@@ -182,12 +182,12 @@ function Navbar(props) {
 
     // Handle new friendship creation
     await createFriendship(userData.user_id, friendId, 1)
-    .then(() => {
-      alert(strings.friendsent);
-    })
-    .catch((error) => {
-      console.error('Error creating friendship:', error);
-    });
+      .then(() => {
+        alert(strings.friendsent);
+      })
+      .catch((error) => {
+        console.error('Error creating friendship:', error);
+      });
   };
 
 
@@ -202,7 +202,7 @@ function Navbar(props) {
           />
           <input
             type="text"
-            placeholder= {strings.addfriend}
+            placeholder={strings.addfriend}
             style={{
               ...inputStyles,
               paddingLeft: '5px',

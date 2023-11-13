@@ -1,15 +1,11 @@
-import { useState, useRef, useEffect  } from 'react';
-import {getUser, updateUserProfilePicUrl} from '../utils/api';
+import { useState, useRef, useEffect } from 'react';
+import { getUser, updateUserProfilePicUrl, updateUserData } from '../utils/api';
 import { storage } from "../firebase-config";
-import {ref, getDownloadURL, uploadBytes} from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from 'uuid';
-
-
 
 //lokalisaatio
 import LocalizedStrings from 'react-localization';
-
-
 
 function Profile() {
     const [unit, setUnit] = useState('kg');
@@ -23,127 +19,125 @@ function Profile() {
     const handleLanguageChange = (event) => {
         setSelectedLanguage(event.target.value);
         localStorage.setItem('selectedLanguage', event.target.value);
+        updateUserData(localStorage.getItem('token'), {extra_data: {lang: event.target.value}})
     };
-
 
     useEffect(() => {
         const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
-       
-        if (!storedSelectedLanguage) {
-           fetch('/api/language')
-             .then(response => response.json())
-             .then(data => {
-               const selectedLanguage = data.language;
-               setSelectedLanguage(selectedLanguage);
-               localStorage.setItem('selectedLanguage', selectedLanguage);
-             });
-        } else {
-           setSelectedLanguage(storedSelectedLanguage);
-        }
-       }, []);
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        handleUserLogin(token);
-      }
-    }, []);
-  
-    let strings = new LocalizedStrings({
-      en: {
-        profileinformation: "Profile information",
-        FriendCode: "FriendCode",
-        Name: "Name",
-        Age: "Age",
-        Sex: "Sex",
-        Weight: "Weight",
-        Height: "Height",
-        ProfileVisibility: "ProfileVisibility",
-        Profile: "Profile",
-        Workout: "Workout settings",
-        workoutMeasurment: "Weight measurement",
-        smallestPlate: "Smallest plate",
-        save: "Save",
-      },
-      tr: {
-        profileinformation: "Profil bilgileri",
-        FriendCode: "Arkadaş Kodu",
-        Name: "Isim",
-        Age: "Yaş",
-        Sex: "Cinsiyet",
-        Weight: "Kilo",
-        Height: "Boy",
-        ProfileVisibility: "Profil Gizliliği",
-        Profile: "Profil",
-        Workout: "Antrenman ayarları",
-        workoutMeasurment: "Ağırlık ölçümü",
-        smallestPlate: "En küçük plaka",
-        save: "Kaydet",
 
-      },
+        if (!storedSelectedLanguage) {
+            fetch('/api/language')
+                .then(response => response.json())
+                .then(data => {
+                    const selectedLanguage = data.language;
+                    setSelectedLanguage(selectedLanguage);
+                    localStorage.setItem('selectedLanguage', selectedLanguage);
+                });
+        } else {
+            setSelectedLanguage(storedSelectedLanguage);
+        }
+    }, []);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            handleUserLogin(token);
+        }
+    }, []);
+
+    let strings = new LocalizedStrings({
+        en: {
+            profileinformation: "Profile information",
+            FriendCode: "FriendCode",
+            Name: "Name",
+            Age: "Age",
+            Sex: "Sex",
+            Weight: "Weight",
+            Height: "Height",
+            ProfileVisibility: "ProfileVisibility",
+            Profile: "Profile",
+            Workout: "Workout settings",
+            workoutMeasurment: "Weight measurement",
+            smallestPlate: "Smallest plate",
+            save: "Save",
+        },
+        tr: {
+            profileinformation: "Profil bilgileri",
+            FriendCode: "Arkadaş Kodu",
+            Name: "Isim",
+            Age: "Yaş",
+            Sex: "Cinsiyet",
+            Weight: "Kilo",
+            Height: "Boy",
+            ProfileVisibility: "Profil Gizliliği",
+            Profile: "Profil",
+            Workout: "Antrenman ayarları",
+            workoutMeasurment: "Ağırlık ölçümü",
+            smallestPlate: "En küçük plaka",
+            save: "Kaydet",
+
+        },
         ru: {
-        profileinformation: "Информация профиля",
-        FriendCode: "Код друга",
-        Name: "Имя",
-        Age: "Возраст",
-        Sex: "Пол",
-        Weight: "Вес",
-        Height: "Рост",
-        ProfileVisibility: "Видимость профиля",
-        Profile: "Профиль",
-        Workout: "Настройки тренировки",
-        workoutMeasurment: "Измерение веса",
-        smallestPlate: "Самая маленькая гиря",
-        save: "Сохранить"
+            profileinformation: "Информация профиля",
+            FriendCode: "Код друга",
+            Name: "Имя",
+            Age: "Возраст",
+            Sex: "Пол",
+            Weight: "Вес",
+            Height: "Рост",
+            ProfileVisibility: "Видимость профиля",
+            Profile: "Профиль",
+            Workout: "Настройки тренировки",
+            workoutMeasurment: "Измерение веса",
+            smallestPlate: "Самая маленькая гиря",
+            save: "Сохранить"
         }
     });
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
-      } else if (selectedLanguage === 'en') {
+    } else if (selectedLanguage === 'en') {
         strings.setLanguage('en');
-      } else {
+    } else {
         strings.setLanguage('ru');
-      }
+    }
 
-      const handleUserLogin = async (token) => {
+    const handleUserLogin = async (token) => {
         try {
-          const data = await getUser(token);
-          if (data) {
-            setUserData(data);
-            if (data.profile_pic_url) {
-              setProfilePicture(data.profile_pic_url);
+            const data = await getUser(token);
+            if (data) {
+                setUserData(data);
+                if (data.profile_pic_url) {
+                    setProfilePicture(data.profile_pic_url);
+                }
             }
-          }
         } catch (err) {
-          console.log(err);
+            console.log(err);
         }
-      }
-  
+    }
+
     async function getLanguage() {
         const token = localStorage.getItem('token');
-      
+
         if (token) {
-          const response = await getUser(token);
-      
-          if (response && response.extra_data) {
-            const lang = response.extra_data.lang;
-            console.log(lang);
-            return lang; // Return the language directly
-          }
+            const response = await getUser(token);
+
+            if (response && response.extra_data) {
+                const lang = response.extra_data.lang;
+                console.log(lang);
+                return lang; // Return the language directly
+            }
         }
-      
         return 'defaultLanguage'; // Provide a default language in case of errors
-      }
-      
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        handleUserLogin(token);
-      }
     }
-    , []);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            handleUserLogin(token);
+        }
+    }
+        , []);
 
     const fileInput = useRef();  // Define the ref
-
 
     const onImageClick = () => {
         fileInput.current.click(); // Trigger the file input when the image is clicked
@@ -159,7 +153,7 @@ function Profile() {
                 console.log('Uploaded a blob or file!');
                 getDownloadURL(snapshot.ref).then((downloadURL) => {
                     console.log('File available at', downloadURL);
-                    
+
                     updateUserProfilePicUrl(downloadURL, token).then(() => {
                         setProfilePicture(downloadURL);
                     });
@@ -233,7 +227,7 @@ function Profile() {
 
     const rightContentStyle = {
         marginLeft: '300px',
-        justifyContent: 'flex-end',lineHeight: '3',
+        justifyContent: 'flex-end', lineHeight: '3',
 
     };
 
@@ -305,65 +299,54 @@ function Profile() {
                     ))}
                 </>
             )}
-
-
-
-
-
         </div>
     );
-const saveButtonStyle = {
-    width: '253px',
-    height: '90px',
-    flexShrink: 0,
-    color: 'black',
-    fontFamily: 'Inter',
-    fontSize: '30px',
-    fontStyle: 'normal',
-    fontWeight: 700,
-    lineHeight: 'normal',
-    background: '#D9D9D9',
-    marginRight: '164px',
-    justifyContent: 'flex-start',
-};
+    const saveButtonStyle = {
+        width: '253px',
+        height: '90px',
+        flexShrink: 0,
+        color: 'black',
+        fontFamily: 'Inter',
+        fontSize: '30px',
+        fontStyle: 'normal',
+        fontWeight: 700,
+        lineHeight: 'normal',
+        background: '#D9D9D9',
+        marginRight: '164px',
+        justifyContent: 'flex-start',
+    };
 
-// ...
+    // ...
 
-const textStyle = {
-    color: '#FFF',
-    fontFamily: 'Inter',
-    fontSize: '30px',
-    fontStyle: 'normal',
-    fontWeight: 900,
-    lineHeight: '2',
-    textAlign: 'center', // Center the text horizontally
+    const textStyle = {
+        color: '#FFF',
+        fontFamily: 'Inter',
+        fontSize: '30px',
+        fontStyle: 'normal',
+        fontWeight: 900,
+        lineHeight: '2',
+        textAlign: 'center', // Center the text horizontally
 
-};
+    };
 
-   
     const language = (
         <div >
-        <label htmlFor="languageSelect">Select Language: </label>
-        <select
-            id="languageSelect"
-            value={selectedLanguage}
-            onChange={handleLanguageChange}
-        >
-            <option value="en">English</option>
-            <option value="tr">Turkish</option>
-            <option value="ru">Russian</option>
-        </select>
+            <label htmlFor="languageSelect">Select Language: </label>
+            <select
+                id="languageSelect"
+                value={selectedLanguage}
+                onChange={handleLanguageChange}
+            >
+                <option value="en">English</option>
+                <option value="tr">Turkish</option>
+                <option value="ru">Russian</option>
+            </select>
         </div>
-        
-
-   );
-
-
-
+    );
 
     const rightContent = (
         <div >
-          <h1 style={{
+            <h1 style={{
                 color: '#FFF',
                 fontFamily: 'Inter',
                 fontSize: '45px',
@@ -377,17 +360,15 @@ const textStyle = {
                 src={profilePicture}
                 alt="Profile"
                 onClick={onImageClick} // Add the onClick handler here
-                style={{width: '150px', height: '150px', borderRadius: '75px', cursor: 'pointer', justifyContent: 'flex-wrap', marginLeft: '115px', marginBottom: '30px', marginTop: '-170px'}}
+                style={{ width: '150px', height: '150px', borderRadius: '75px', cursor: 'pointer', justifyContent: 'flex-wrap', marginLeft: '115px', marginBottom: '30px', marginTop: '-170px' }}
             />
             <input
                 type="file"
                 accept=".png, .jpg, .jpeg"
                 onChange={onImageChange}
-                style={{display: 'none'}} // Hide the file input
+                style={{ display: 'none' }} // Hide the file input
                 ref={fileInput} // Attach the ref here
             />
-
-               
 
             <p style={textStyle}>{strings.FriendCode}: {userData.friend_code}</p>
             <p style={textStyle}>{strings.Name}: {userData.name}</p>
@@ -425,8 +406,6 @@ const textStyle = {
             <div style={rightContentStyle}>
                 {rightContent}
                 {language}
-                
-                
             </div>
         </div>
     );

@@ -5,7 +5,7 @@ import exercise from './exercise';
 import ExerciseComplete from './ExerciseComplete';
 
 //ei ole vielä toteutettu
-const exerciseList = [1,2,3,4,5,6];
+const exerciseList = [1, 2, 3, 4, 5, 6];
 
 const Workout = (props) => {
 
@@ -15,8 +15,8 @@ const Workout = (props) => {
     const openModal = () => {
         setModalOpen(true);
     };
-    
-      const closeModal = () => {
+
+    const closeModal = () => {
         setModalOpen(false);
     };
 
@@ -27,7 +27,7 @@ const Workout = (props) => {
         minWidth: "1100px",
         height: "100%",
         zIndex: 1,
-        left: 0, 
+        left: 0,
         top: 0,
         position: "fixed",
         fontSize: "32px",
@@ -101,7 +101,7 @@ const Workout = (props) => {
         height: "300px",
         position: "relative",
         cursor: "pointer",
-    
+
     }
 
     const fullWorkoutText = {
@@ -119,33 +119,33 @@ const Workout = (props) => {
         minWidth: "600px",
     }
 
-    const getExercise = (e, name="NAME", description="DESCRIPTION", sets=99, reps=99, weight=99, url="https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
+    const getExercise = (e, name = "NAME", description = "DESCRIPTION", sets = 99, reps = 99, weight = 99, url = "https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
         return React.createElement(
             'li',
-            { style: listItem, key: e},
-            React.createElement('div', {style: {textAlign: "left"}}, <Exercise name={name} description={description} sets={sets} reps={reps} weight={weight} videoUrl={url} clickable={isClickable} />),
+            { style: listItem, key: e },
+            React.createElement('div', { style: { textAlign: "left" } }, <Exercise name={name} description={description} sets={sets} reps={reps} weight={weight} videoUrl={url} clickable={isClickable} />),
             <p>{sets}</p>,
             <p>{reps}</p>,
         );
     }
 
-    let i=-2;
-    const names = props.exercises.map((exercise)=>exercise.name);
+    let i = -2;
+    const names = props.exercises.map((exercise) => exercise.name);
     const exerciseDone = (mills) => {
         i++
-        if(i>=names.length) setMills(mills);
+        if (i >= names.length) setMills(mills);
         return names[i];
     };
 
     const Modal = () => {
-        
-    return (
+
+        return (
             <div style={modalStyle}>
                 <div style={modalContent}>
                     <div style={topBar}>
                         <h2 style={workoutModalName}>NAME</h2>
                         <button onClick={closeModal} style={closeButton}>Close</button>
-                        <label style={{...searchField, color: "white"}}>Add</label>
+                        <label style={{ ...searchField, color: "white" }}>Add</label>
                         <select style={{ ...searchField, fontFamily: 'Inter' }} id="nameOfExercise" name="nameOfExercise">
                             <option value="default">Add workout</option>
                             <option value="squat">Squat</option>
@@ -155,13 +155,13 @@ const Workout = (props) => {
                             <option value="plank">Plank</option>
                         </select>
                     </div>
-                    <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
-                    <ul style={exerciseListStyle}>
-                        <li style={listItem}><div style={{textAlign: "left"}}>Exercise</div><div>Sets</div><div>Reps</div></li>
-                        {props.exercises.map((exercise)=>getExercise(exercise.id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url, true))}
-                    </ul>
+                    <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+                        <ul style={exerciseListStyle}>
+                            <li style={listItem}><div style={{ textAlign: "left" }}>Exercise</div><div>Sets</div><div>Reps</div></li>
+                            {props.exercises.map((exercise) => getExercise(exercise.id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url, true))}
+                        </ul>
                         <div style={timerStyle}>
-                            {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={"setsTotal"} reps={"repsTotal"} weight={"weightAvg"} rpe={"rpeAvg"} rating={"ratingAvg"} />}
+                            {getMills > 0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={"setsTotal"} reps={"repsTotal"} weight={"weightAvg"} rpe={"rpeAvg"} rating={"ratingAvg"} />}
                             <Timer nextExercise={exerciseDone} exerciseNames={props.exercises} name={"exerciseName"} />
                         </div>
                     </div>
@@ -170,18 +170,18 @@ const Workout = (props) => {
         );
     }
 
-return (
-    <>
-        {isModalOpen && <Modal />}
-        <div onClick={openModal} style={workoutLabel}>
-        <h1 style={workoutName}>{props.name}</h1>
-        <ul style={{width: "100%"}}>
-        <p style={fullWorkoutText}>Click to see full workout</p>
-            <li style={listItem}><div style={{textAlign: "left"}}>Exercise</div><div>Sets</div><div>Reps</div></li>
-            {props.exercises.map((exercise, id)=>getExercise(id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url))}
-        </ul>
-        </div>
-    </>
-);
+    return (
+        <>
+            {isModalOpen && <Modal />}
+            <div onClick={openModal} style={workoutLabel}>
+                <h1 style={workoutName}>{props.name}</h1>
+                <ul style={{ width: "100%" }}>
+                    <p style={fullWorkoutText}>Click to see full workout</p>
+                    <li style={listItem}><div style={{ textAlign: "left" }}>Exercise</div><div>Sets</div><div>Reps</div></li>
+                    {props.exercises.map((exercise, id) => getExercise(id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url))}
+                </ul>
+            </div>
+        </>
+    );
 }
 export default Workout;

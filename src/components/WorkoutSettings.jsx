@@ -76,7 +76,7 @@ function WorkoutSettings(props) {
     borderRadius: '5px',
     border: 'none',
     cursor: 'pointer',
-};
+  };
 
   const handleWeightUnitClick = (unit) => {
     setSelectedWeightUnit(unit);

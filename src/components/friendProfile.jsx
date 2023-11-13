@@ -12,79 +12,79 @@ function FriendProfile(props) {
     };
     useEffect(() => {
         const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
-       
+
         if (!storedSelectedLanguage) {
-           fetch('/api/language')
-             .then(response => response.json())
-             .then(data => {
-               const selectedLanguage = data.language;
-               setSelectedLanguage(selectedLanguage);
-               localStorage.setItem('selectedLanguage', selectedLanguage);
-             });
+            fetch('/api/language')
+                .then(response => response.json())
+                .then(data => {
+                    const selectedLanguage = data.language;
+                    setSelectedLanguage(selectedLanguage);
+                    localStorage.setItem('selectedLanguage', selectedLanguage);
+                });
         } else {
-           setSelectedLanguage(storedSelectedLanguage);
+            setSelectedLanguage(storedSelectedLanguage);
         }
-       }, []);
+    }, []);
 
 
-       let strings = new LocalizedStrings({
+    let strings = new LocalizedStrings({
         en: {
-          profileinformation: "Profile information",
-          FriendCode: "FriendCode",
-          Name: "Name",
-          Age: "Age",
-          Sex: "Sex",
-          Weight: "Weight",
-          Height: "Height",
-          ProfileVisibility: "ProfileVisibility",
-          Profile: "Profile",
-          Workout: "Workout settings",
-          workoutMeasurment: "Weight measurement",
-          smallestPlate: "Smallest plate",
-          save: "Save",
-          profile: "Profile",
+            profileinformation: "Profile information",
+            FriendCode: "FriendCode",
+            Name: "Name",
+            Age: "Age",
+            Sex: "Sex",
+            Weight: "Weight",
+            Height: "Height",
+            ProfileVisibility: "ProfileVisibility",
+            Profile: "Profile",
+            Workout: "Workout settings",
+            workoutMeasurment: "Weight measurement",
+            smallestPlate: "Smallest plate",
+            save: "Save",
+            profile: "Profile",
         },
         tr: {
-          profileinformation: "Profil bilgileri",
-          FriendCode: "Arkadaş Kodu",
-          Name: "Isim",
-          Age: "Yaş",
-          Sex: "Cinsiyet",
-          Weight: "Kilo",
-          Height: "Boy",
-          ProfileVisibility: "Profil Gizliliği",
-          Profile: "Profil",
-          Workout: "Antrenman ayarları",
-          workoutMeasurment: "Ağırlık ölçümü",
-          smallestPlate: "En küçük plaka",
-          save: "Kaydet",
-          profile: "Profil",
-  
+            profileinformation: "Profil bilgileri",
+            FriendCode: "Arkadaş Kodu",
+            Name: "Isim",
+            Age: "Yaş",
+            Sex: "Cinsiyet",
+            Weight: "Kilo",
+            Height: "Boy",
+            ProfileVisibility: "Profil Gizliliği",
+            Profile: "Profil",
+            Workout: "Antrenman ayarları",
+            workoutMeasurment: "Ağırlık ölçümü",
+            smallestPlate: "En küçük plaka",
+            save: "Kaydet",
+            profile: "Profil",
+
         },
-          ru: {
-          profileinformation: "Информация профиля",
-          FriendCode: "Код друга",
-          Name: "Имя",
-          Age: "Возраст",
-          Sex: "Пол",
-          Weight: "Вес",
-          Height: "Рост",
-          ProfileVisibility: "Видимость профиля",
-          Profile: "Профиль",
-          Workout: "Настройки тренировки",
-          workoutMeasurment: "Измерение веса",
-          smallestPlate: "Самая маленькая гиря",
-          save: "Сохранить",
-          profile: "Профиль",
-          }
-      });
-      if (selectedLanguage === 'tr') {
-          strings.setLanguage('tr');
-        } else if (selectedLanguage === 'en') {
-          strings.setLanguage('en');
-        } else {
-          strings.setLanguage('ru');
+        ru: {
+            profileinformation: "Информация профиля",
+            FriendCode: "Код друга",
+            Name: "Имя",
+            Age: "Возраст",
+            Sex: "Пол",
+            Weight: "Вес",
+            Height: "Рост",
+            ProfileVisibility: "Видимость профиля",
+            Profile: "Профиль",
+            Workout: "Настройки тренировки",
+            workoutMeasurment: "Измерение веса",
+            smallestPlate: "Самая маленькая гиря",
+            save: "Сохранить",
+            profile: "Профиль",
         }
+    });
+    if (selectedLanguage === 'tr') {
+        strings.setLanguage('tr');
+    } else if (selectedLanguage === 'en') {
+        strings.setLanguage('en');
+    } else {
+        strings.setLanguage('ru');
+    }
 
 
 
@@ -133,8 +133,8 @@ function FriendProfile(props) {
         textAlign: 'center',
 
     };
-    
-    
+
+
     return (
         <div style={containerStyle}>
             <div style={leftContentStyle}>
@@ -144,9 +144,9 @@ function FriendProfile(props) {
             </div>
             <div style={rightContentStyle}>
                 <h1 style={{ fontSize: '45px', marginBottom: '180px', marginTop: '-30px', fontFamily: 'Inter', fontWeight: 900 }}>Profile information</h1>
-                <img 
-                    src={profilePicture} 
-                    alt="Profile" 
+                <img
+                    src={profilePicture}
+                    alt="Profile"
                     style={{
                         width: '150px',
                         height: '150px',

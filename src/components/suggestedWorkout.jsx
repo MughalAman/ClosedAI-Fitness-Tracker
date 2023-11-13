@@ -3,7 +3,7 @@ import Exercise from './exercise';
 import Workout from './workout';
 
 //ei ole vielä toteutettu
-const exerciseList = [1,2,3,4,5,6];
+const exerciseList = [1, 2, 3, 4, 5, 6];
 
 const suggestedWorkout = (props) => {
 
@@ -12,8 +12,8 @@ const suggestedWorkout = (props) => {
     const openModal = () => {
         setModalOpen(true);
     };
-    
-      const closeModal = () => {
+
+    const closeModal = () => {
         setModalOpen(false);
     };
 
@@ -22,7 +22,7 @@ const suggestedWorkout = (props) => {
         width: "100%",
         height: "100%",
         zIndex: 1,
-        left: 0, 
+        left: 0,
         top: 0,
         position: "fixed",
         margin: "auto",
@@ -53,18 +53,18 @@ const suggestedWorkout = (props) => {
     }
 
     const modalBackground = {
-        width: "100%", 
-        height: "100%", 
+        width: "100%",
+        height: "100%",
         position: "absolute",
         backgroundColor: "black",
         opacity: 0.7,
         zIndex: -1,
     }
 
-    
+
     const Modal = () => {
-    //max 5 workouttia
-    return (
+        //max 5 workouttia
+        return (
             <div style={modalStyle}>
                 <div style={modalBackground}></div>
                 <div style={modalContent}>
@@ -79,11 +79,11 @@ const suggestedWorkout = (props) => {
         );
     }
 
-return (
-    <>
-        <button onClick={openModal} style={{color: "white"}}>Click for cookie</button>
-        {isModalOpen && <Modal />}
-    </>
-);
+    return (
+        <>
+            <button onClick={openModal} style={{ color: "white" }}>Click for cookie</button>
+            {isModalOpen && <Modal />}
+        </>
+    );
 }
 export default suggestedWorkout;

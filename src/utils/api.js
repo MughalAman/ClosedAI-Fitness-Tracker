@@ -27,6 +27,51 @@ async function createUser(name, email, password, weight, height, gender) {
   }
 }
 
+async function updateUserData(token, newData) {
+  try {
+    // Fetch the existing user data
+    const existingUserData = await getUser(token);
+
+    console.log('Existing User Data:', existingUserData.extra_data);
+
+    // Parse the existing extra_data string into an object
+    const existingExtraData = existingUserData.extra_data;
+
+    console.log('Existing Extra Data:', existingExtraData);
+
+    // Merge the existing extra_data with the new data
+    const updatedExtraData = {
+      ...existingExtraData,
+      ...newData.extra_data,
+    };
+
+    console.log('Updated Extra Data:', updatedExtraData);
+
+    // Update the user data with the updated extra_data
+    const updatedUserData = {
+      ...existingUserData,
+      extra_data: updatedExtraData,
+    };
+
+    console.log('Updated User Data:', updatedUserData);
+
+      const response = await fetch('https://fitness-api-wlzk.onrender.com/user/', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedUserData),
+      });
+
+      if (!response.ok) {
+          console.error('Failed to save questionnaire data');
+      }
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 async function getUserToken(email, password) {
   try {
@@ -480,4 +525,4 @@ function testi(name="NAME", date=null, userId) {
     });
 }
 
-export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage, updateUserProfilePicUrl};
+export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage, updateUserProfilePicUrl, updateUserData};
