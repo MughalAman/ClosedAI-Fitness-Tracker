@@ -214,7 +214,7 @@ async function getLanguage() {
 }
 
 
-function createWorkout(name="NAME", date=null, userId) {
+function createWorkout(name="NAME", dates=[], userId) {
   return fetch('https://fitness-api-wlzk.onrender.com/workout/', {
     method: 'POST',
     headers: {
@@ -222,7 +222,7 @@ function createWorkout(name="NAME", date=null, userId) {
     },
     body: JSON.stringify({
       "name": name,
-      "date": date,
+      "dates": dates,
       "user_id": userId
     }),
   })
