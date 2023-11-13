@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Workout from './workout';
-import { getUser, updateWorkout, testi } from '../utils/api';
+import { getUser, updateWorkout, createWorkout } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 
 //ei ole vielä toteutettu
@@ -222,7 +222,7 @@ const PlanBuilder = (props) => {
         display: "flex",
     }
 
-    const createWorkout = (i, id, name = "Workout", exercises = [0, 1, 2, 3]) => {
+    const createWorkoutLabel = (i, id, name = "Workout", exercises = [0, 1, 2, 3]) => {
         return React.createElement(
             'li',
             { draggable: true, onDragStart: drag, key: i, id: id, onDrop: dropWorkout, onDragOver: allowDrop, className: "draggableLabel" },
@@ -233,7 +233,7 @@ const PlanBuilder = (props) => {
     const createSegment = (date, i) => {
         let savedWorkout;
         for (const workout of data.workouts) {
-            workout.date === date.format && (savedWorkout = createWorkout(i, workout.workout_id, workout.name, workout.exercises));
+            workout.date === date.format && (savedWorkout = createWorkoutLabel(i, workout.workout_id, workout.name, workout.exercises));
         }
         return (
             <li style={segment} id={"segment"} key={i}><div style={dateBox}>{date.day}</div><div style={workoutBox} onDragOver={(e) => allowDrop(e)} onDrop={(e) => dropToPlanner(e)} date={date.format}>{savedWorkout}</div></li>
@@ -320,7 +320,7 @@ const PlanBuilder = (props) => {
 
     const createUserWorkout = (value) => {
         getUser(localStorage.getItem('token'))
-            .then((data) => { testi(value, null, data.user_id) });
+            .then((data) => { createWorkout(value, null, data.user_id) });
     }
 
     const NewWorkoutModal = () => {
@@ -353,7 +353,7 @@ const PlanBuilder = (props) => {
                     {data?.workouts && weekDays.map((e, i) => createSegment(e, i))}
                 </ul>
                 <ul style={workoutField} onDragOver={(e) => allowDrop(e)} onDrop={(e) => dropToList(e)} id="workoutField">
-                    {data?.workouts && data.workouts.map((workout, i) => !workout?.date && createWorkout(i, workout.workout_id, workout.name, workout.exercises))}
+                    {data?.workouts && data.workouts.map((workout, i) => !workout?.date && createWorkoutLabel(i, workout.workout_id, workout.name, workout.exercises))}
                     {isModalOpen && <NewWorkoutModal />}
                     <li style={newWorkout} onClick={openModal}>{strings.new} <br></br>{strings.workout}</li>
                 </ul>
