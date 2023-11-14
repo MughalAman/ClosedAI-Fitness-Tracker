@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Exercise from './exercise';
 import Timer from './timer';
-import exercise from './exercise';
 import ExerciseComplete from './ExerciseComplete';
 import LocalizedStrings from 'react-localization';
-
-//ei ole vielä toteutettu
-const exerciseList = [1, 2, 3, 4, 5, 6];
 
 const Workout = (props) => {
     
@@ -149,7 +145,6 @@ const Workout = (props) => {
         height: "100%",
         minHeight: "20000px",
         margin: "auto",
-
     }
 
     const topBar = {

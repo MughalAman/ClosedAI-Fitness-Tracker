@@ -223,10 +223,10 @@ console.log(selectedLanguage)
 
   if (selectedLanguage === 'tr') {
     strings.setLanguage('tr');
-  } else if (selectedLanguage === 'en') {
-    strings.setLanguage('en');
-  } else {
+  } else if (selectedLanguage === 'ru') {
     strings.setLanguage('ru');
+  } else {
+    strings.setLanguage('en');
   }
 
 
@@ -315,6 +315,7 @@ console.log(selectedLanguage)
           {userData['workouts'].length > 0 &&
             <Workout
               exercises={userData.workouts[0].exercises}
+              name={userData.workouts[0].name}
               workoutStyles={workoutStyles}
               workoutTitleStyles={workoutTitleStyles}
               exerciseListStyles={exerciseListStyles}

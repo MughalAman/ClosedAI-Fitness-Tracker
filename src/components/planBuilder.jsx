@@ -3,9 +3,6 @@ import Workout from './workout';
 import { getUser, updateWorkout, createWorkout } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 
-//ei ole vielä toteutettu
-const workoutList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
 const PlanBuilder = (props) => {
 
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
