@@ -1,6 +1,80 @@
 import React, { useState, useEffect } from 'react';
+import LocalizedStrings from 'react-localization';
+
 
 const Timer = (props) => {
+
+  
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+  const handleLanguageChange = (event) => {
+      setSelectedLanguage(event.target.value);
+      localStorage.setItem('selectedLanguage', event.target.value);
+  };
+  useEffect(() => {
+      const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+
+      if (!storedSelectedLanguage) {
+          fetch('/api/language')
+              .then(response => response.json())
+              .then(data => {
+                  const selectedLanguage = data.language;
+                  setSelectedLanguage(selectedLanguage);
+                  localStorage.setItem('selectedLanguage', selectedLanguage);
+              });
+      } else {
+          setSelectedLanguage(storedSelectedLanguage);
+      }
+  }, []);
+
+
+  let strings = new LocalizedStrings({
+      en: {
+        start: "START",
+        stop: "STOP",
+        currentexercise: "Current exercise",
+        nextexercise: "Next exercise",
+        currentexerciseduration: "Current exercise duration",
+        min: "min",
+        sec: "s",
+         
+
+
+
+      },
+      tr: {
+        start: "BAŞLA",
+        stop: "DUR",
+        currentexercise: "Mevcut egzersiz",
+        nextexercise: "Sonraki egzersiz",
+        currentexerciseduration: "Mevcut egzersiz süresi",
+        min: "dk",
+        sec: "sn",
+
+         
+
+
+      },
+      ru: {
+        start: "НАЧАТЬ",
+        stop: "СТОП",
+        currentexercise: "Текущее упражнение",
+        nextexercise: "Следующее упражнение",
+        currentexerciseduration: "Продолжительность текущего упражнения",
+        min: "мин",
+        sec: "сек",
+              
+           
+      }
+  });
+  if (selectedLanguage === 'tr') {
+      strings.setLanguage('tr');
+  } else if (selectedLanguage === 'en') {
+      strings.setLanguage('en');
+  } else {
+      strings.setLanguage('ru');
+  }
+
+
 
   const timerStyle = {
     display: "flex",
@@ -44,7 +118,7 @@ const Timer = (props) => {
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${minutes}min ${seconds}s`;
+    return `${minutes}${strings.min} ${seconds}${strings.sec}`;
   };
 
   const timerLogic = () => {
@@ -56,11 +130,11 @@ const Timer = (props) => {
 
   return (
     <div style={timerStyle}>
-      <p>{isRunning ? "Current exercise" : "Next exercise"}: {nextName}</p>
+      <p>{isRunning ? strings.currentexercise : strings.nextexercise}: {nextName}</p>
       <button style={{ ...timerButton, backgroundColor: buttonColor }} onClick={timerLogic}>
-        {isRunning ? "STOP" : "START"}
+        {isRunning ? strings.stop : strings.start}
       </button>
-      <p>Current exercise duration: {formatTime(Math.floor(elapsedTime / 1000))}</p>
+      <p>{strings.currentexerciseduration}: {formatTime(Math.floor(elapsedTime / 1000))}</p>
     </div>
   );
 };

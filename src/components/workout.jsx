@@ -3,11 +3,119 @@ import Exercise from './exercise';
 import Timer from './timer';
 import exercise from './exercise';
 import ExerciseComplete from './ExerciseComplete';
+import LocalizedStrings from 'react-localization';
 
 //ei ole vielä toteutettu
 const exerciseList = [1, 2, 3, 4, 5, 6];
 
 const Workout = (props) => {
+    
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    const handleLanguageChange = (event) => {
+        setSelectedLanguage(event.target.value);
+        localStorage.setItem('selectedLanguage', event.target.value);
+    };
+    useEffect(() => {
+        const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+
+        if (!storedSelectedLanguage) {
+            fetch('/api/language')
+                .then(response => response.json())
+                .then(data => {
+                    const selectedLanguage = data.language;
+                    setSelectedLanguage(selectedLanguage);
+                    localStorage.setItem('selectedLanguage', selectedLanguage);
+                });
+        } else {
+            setSelectedLanguage(storedSelectedLanguage);
+        }
+    }, []);
+
+
+    let strings = new LocalizedStrings({
+        en: {
+            seeworkout: "Click to see full workout",
+            exercise: "Exercise",
+            sets: "Sets",
+            reps: "Reps",
+            name: "NAME",
+            close: "Close",
+            add: "Add",
+            addw: "Add workout",
+            squat: "Squat",
+            benchpress: "Bench Press",
+            deadlift: "Deadlift",   
+            pullups: "Pull-Ups",
+            plank: "Plank",
+
+
+
+        },
+        tr: {
+
+            seeworkout: "Tam antrenmanı görmek için tıklayın",
+            exercise: "Egzersiz",
+            sets: "Setler",
+            reps: "Tekrarlar",
+            name: "İSİM",
+            close: "Kapat",
+            add: "Ekle",
+            addw: "Antrenman ekle",
+            squat: "Çömelme",
+            benchpress: "Bench Press",
+            deadlift: "Deadlift",
+            pullups: "Çekme",
+            plank: "Plank",
+
+
+        },
+        ru: {
+                
+                seeworkout: "Нажмите, чтобы увидеть полную тренировку",
+                exercise: "Упражнение",
+                sets: "Подходы",
+                reps: "Повторы",
+                name: "ИМЯ",
+                close: "Закрыть",
+                add: "Добавить",
+                addw: "Добавить тренировку",
+                squat: "Приседания",
+                benchpress: "Жим лежа",
+                deadlift: "Становая тяга",
+                pullups: "Подтягивания",
+                plank: "Планка",
+    
+        }
+    });
+    if (selectedLanguage === 'tr') {
+        strings.setLanguage('tr');
+    } else if (selectedLanguage === 'en') {
+        strings.setLanguage('en');
+    } else {
+        strings.setLanguage('ru');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const [isModalOpen, setModalOpen] = useState(false);
     const [getMills, setMills] = useState(0);
@@ -143,21 +251,21 @@ const Workout = (props) => {
             <div style={modalStyle}>
                 <div style={modalContent}>
                     <div style={topBar}>
-                        <h2 style={workoutModalName}>NAME</h2>
-                        <button onClick={closeModal} style={closeButton}>Close</button>
-                        <label style={{ ...searchField, color: "white" }}>Add</label>
+                        <h2 style={workoutModalName}>{strings.name}</h2>
+                        <button onClick={closeModal} style={closeButton}>{strings.close}</button>
+                        <label style={{ ...searchField, color: "white" }}>{strings.add}</label>
                         <select style={{ ...searchField, fontFamily: 'Inter' }} id="nameOfExercise" name="nameOfExercise">
-                            <option value="default">Add workout</option>
-                            <option value="squat">Squat</option>
-                            <option value="benchPress">Bench Press</option>
-                            <option value="deadlift">Deadlift</option>
-                            <option value="pullUps">Pull-Ups</option>
-                            <option value="plank">Plank</option>
+                            <option value="default">{strings.addw}</option>
+                            <option value="squat">{strings.squat}</option>
+                            <option value="benchPress">{strings.benchpress}</option>
+                            <option value="deadlift">{strings.deadlift}</option>
+                            <option value="pullUps">{strings.pullups}</option>
+                            <option value="plank">{strings.plank}</option>
                         </select>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
                         <ul style={exerciseListStyle}>
-                            <li style={listItem}><div style={{ textAlign: "left" }}>Exercise</div><div>Sets</div><div>Reps</div></li>
+                            <li style={listItem}><div style={{ textAlign: "left" }}>{strings.exercise}</div><div>{strings.sets}</div><div>{strings.reps}</div></li>
                             {props.exercises.map((exercise) => getExercise(exercise.id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url, true))}
                         </ul>
                         <div style={timerStyle}>
@@ -176,8 +284,8 @@ const Workout = (props) => {
             <div onClick={openModal} style={workoutLabel}>
                 <h1 style={workoutName}>{props.name}</h1>
                 <ul style={{ width: "100%" }}>
-                    <p style={fullWorkoutText}>Click to see full workout</p>
-                    <li style={listItem}><div style={{ textAlign: "left" }}>Exercise</div><div>Sets</div><div>Reps</div></li>
+                    <p style={fullWorkoutText}>{strings.seeworkout}</p>
+                    <li style={listItem}><div style={{ textAlign: "left" }}>{strings.exercise}</div><div>{strings.sets}</div><div>{strings.reps}</div></li>
                     {props.exercises.map((exercise, id) => getExercise(id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url))}
                 </ul>
             </div>
