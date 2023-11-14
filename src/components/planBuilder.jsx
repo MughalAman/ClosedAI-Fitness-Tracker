@@ -356,7 +356,7 @@ const PlanBuilder = (props) => {
                 </ul>
 
             </div>
-
+             <p style={{textAlign: "center", color: "white", fontFamily: 'Inter', fontSize: "24px"}}><a href='/'>Return to the main page</a></p>
         </div>
     );
 }
