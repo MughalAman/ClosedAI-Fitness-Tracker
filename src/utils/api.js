@@ -499,16 +499,15 @@ async function updateFriendship(friendshipId, statusId) {
   }
 }
 
-function testi(name="NAME", date=null, userId) {
-  return fetch('https://fitness-api-wlzk.onrender.com/workout/', {
+async function createWorkoutDate(workoutID, date){
+  return fetch('https://fitness-api-wlzk.onrender.com/workout/date/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "name": name,
       "date": date,
-      "user_id": userId
+      "workout_id": workoutID
     }),
   })
     .then((response) => {
@@ -525,4 +524,24 @@ function testi(name="NAME", date=null, userId) {
     });
 }
 
-export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, testi, setUserLanguage, updateUserProfilePicUrl, updateUserData};
+async function deleteWorkoutDate(dateID){
+  return fetch(`https://fitness-api-wlzk.onrender.com/workout/date/${dateID}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then((data)=>{
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate};
