@@ -279,6 +279,11 @@ console.log(selectedLanguage)
     return 'en'; // Provide a default language in case of errors
   }
 
+  const date = new Date();
+  const format = `${date.getFullYear()}-${date.getMonth()+1}-${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}`
+  let workout;
+  userData.workouts.forEach(x=>x.dates.forEach(y=>y.date===format && (workout = x)));
+
   return (
     <div style={parentContainerStyles}>
       <Navbar userData={userData} />
@@ -312,19 +317,7 @@ console.log(selectedLanguage)
         </div>
         <div style={rightContainerStyles}>
           {/* <div style={currentStreakStyles}>Current streak: 5🔥</div> */}
-          {userData['workouts'].length > 0 &&
-            <Workout
-              exercises={userData.workouts[0].exercises}
-              name={userData.workouts[0].name}
-              workoutStyles={workoutStyles}
-              workoutTitleStyles={workoutTitleStyles}
-              exerciseListStyles={exerciseListStyles}
-              tableStyles={tableStyles}
-              tableRowStyles={tableRowStyles}
-              tableCellStyles={tableCellStyles}
-              workoutLinkStyles={workoutLinkStyles}
-            />
-          }
+          {workout && <Workout data={workout} id={workout.workout_id} />}
         </div>
       </div>
       <div style={sectionStyles}>
