@@ -254,14 +254,14 @@ const getSegmentList = () => {
     const currentDate = new Date();
     for(let i=0; i<21; i++) {
         const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate()+i-1);
+        newDate.setDate(currentDate.getDate()+i);
         segmentList[i] = newDate.getTime();
     }
     return segmentList;
 }
 
 const segmentList = getSegmentList();
-const week = [strings.monday, strings.tuesday, strings.wednesday, strings.thursday, strings.friday, strings.saturday, strings.sunday];
+const week = [strings.sunday, strings.monday, strings.tuesday, strings.wednesday, strings.thursday, strings.friday, strings.saturday];
 const weekDays = segmentList.map((mills)=>{
     const date = new Date(mills);
     return {day: week[date.getDay()], format: `${date.getFullYear()}-${date.getMonth()+1}-${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}`};
