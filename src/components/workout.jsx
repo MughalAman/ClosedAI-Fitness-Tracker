@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Exercise from './exercise';
 import Timer from './timer';
 import ExerciseComplete from './ExerciseComplete';
+import { getWorkout } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 
 const Workout = (props) => {
     
-    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'ru');
     const handleLanguageChange = (event) => {
         setSelectedLanguage(event.target.value);
         localStorage.setItem('selectedLanguage', event.target.value);
@@ -91,36 +92,14 @@ const Workout = (props) => {
         strings.setLanguage('ru');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const [isModalOpen, setModalOpen] = useState(false);
     const [getMills, setMills] = useState(0);
 
     const openModal = () => {
         setModalOpen(true);
     };
-
-    const closeModal = () => {
+    
+      const closeModal = () => {
         setModalOpen(false);
     };
 
@@ -131,7 +110,7 @@ const Workout = (props) => {
         minWidth: "1100px",
         height: "100%",
         zIndex: 1,
-        left: 0,
+        left: 0, 
         top: 0,
         position: "fixed",
         fontSize: "32px",
@@ -145,12 +124,15 @@ const Workout = (props) => {
         height: "100%",
         minHeight: "20000px",
         margin: "auto",
+
     }
 
     const topBar = {
         backgroundColor: "black",
         width: "100%",
         padding: "15px",
+        display: "flex",
+        alignItems: "center",
     }
 
     const workoutName = {
@@ -160,19 +142,11 @@ const Workout = (props) => {
     }
 
     const workoutModalName = {
-        top: 0,
+        position: "relative",
     }
 
-    const closeButton = {
-        position: "absolute",
-        top: "15px",
-        left: "1500px",
-    }
 
     const searchField = {
-        position: "absolute",
-        top: "10px",
-        right: "15px",
         color: "black",
         padding: "5px",
         fontFamily: "Inter",
@@ -204,7 +178,7 @@ const Workout = (props) => {
         height: "300px",
         position: "relative",
         cursor: "pointer",
-
+    
     }
 
     const fullWorkoutText = {
@@ -222,50 +196,71 @@ const Workout = (props) => {
         minWidth: "600px",
     }
 
-    const getExercise = (e, name = "NAME", description = "DESCRIPTION", sets = 99, reps = 99, weight = 99, url = "https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
+const [data, setData] = useState(null);
+const [exerciseData, setExercises] = useState([]);
+const [update, setTrigger] = useState(false);
+
+const fetchData = async () => {
+    const response = await getWorkout(props.id);
+                                //    \|/tänne se MAIN workoutin id, josta otetaan kaikki valmiit exerciset
+    const exercises = await getWorkout(6).then((data)=>{return data?.exercises.map((e, i)=> React.createElement("option", {value: e.exercise_id, key: i}, e.name))});
+    setData(response);
+    setExercises(exercises);
+};
+
+useEffect(() => {
+  fetchData(); 
+  setTrigger(false);
+
+}, [update]);
+
+    const getExercise = (e, name="NAME", description="DESCRIPTION", sets=99, reps=99, weight=99, url="https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
         return React.createElement(
             'li',
-            { style: listItem, key: e },
-            React.createElement('div', { style: { textAlign: "left" } }, <Exercise name={name} description={description} sets={sets} reps={reps} weight={weight} videoUrl={url} clickable={isClickable} />),
+            { style: listItem, key: e},
+            React.createElement('div', {style: {textAlign: "left"}}, <Exercise name={name} description={description} sets={sets} reps={reps} weight={weight} videoUrl={url} clickable={isClickable} />),
             <p>{sets}</p>,
             <p>{reps}</p>,
         );
     }
 
-    let i = -2;
-    const names = props.exercises.map((exercise) => exercise.name);
+    const Modal = () => {
+    let i=-2;
+    const names = data.exercises.map((exercise)=>exercise.name);
     const exerciseDone = (mills) => {
         i++
-        if (i >= names.length) setMills(mills);
+        if(i>=names.length) setMills(mills);
         return names[i];
     };
 
-    const Modal = () => {
-
-        return (
+    return (
             <div style={modalStyle}>
                 <div style={modalContent}>
                     <div style={topBar}>
-                        <h2 style={workoutModalName}>{strings.name}</h2>
-                        <button onClick={closeModal} style={closeButton}>{strings.close}</button>
-                        <label style={{ ...searchField, color: "white" }}>{strings.add}</label>
-                        <select style={{ ...searchField, fontFamily: 'Inter' }} id="nameOfExercise" name="nameOfExercise">
-                            <option value="default">{strings.addw}</option>
-                            <option value="squat">{strings.squat}</option>
-                            <option value="benchPress">{strings.benchpress}</option>
-                            <option value="deadlift">{strings.deadlift}</option>
-                            <option value="pullUps">{strings.pullups}</option>
-                            <option value="plank">{strings.plank}</option>
-                        </select>
+                        <button onClick={closeModal} style={{flex: 1, textAlign: "left"}}>{strings.close}</button>
+                        <h2 style={{...workoutModalName, flex: 1, textAlign: "center"}}>{props.data.name}</h2>
+                        <div style={{flex: 1, textAlign: "right"}}>
+                            <select style={{ ...searchField, fontFamily: 'Inter'}} id="nameOfExercise" name="nameOfExercise">
+                                <option value="default">{strings.addw}</option>
+                                {exerciseData}
+                                <option value="squat">{strings.squat}</option>
+                                <option value="benchPress">{strings.benchpress}</option>
+                                <option value="deadlift">{strings.deadlift}</option>
+                                <option value="pullUps">{strings.pullups}</option>
+                                <option value="plank">{strings.plank}</option>
+                                <option value="new">New Exercise</option>
+                            </select>
+                            <button onClick={(e)=>{console.log(e.target.parentElement.firstChild.options[e.target.parentElement.firstChild.selectedIndex].value)}}>{strings.add}</button>
+                        </div>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-                        <ul style={exerciseListStyle}>
-                            <li style={listItem}><div style={{ textAlign: "left" }}>{strings.exercise}</div><div>{strings.sets}</div><div>{strings.reps}</div></li>
-                            {props.exercises.map((exercise) => getExercise(exercise.id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url, true))}
-                        </ul>
+                    <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
+                    <ul style={exerciseListStyle}>
+                        <li style={listItem}><div style={{textAlign: "left"}}>{strings.exercise}</div><div>{strings.sets}</div><div>{strings.reps}</div></li>
+                        {data.exercises.map((exercise)=>getExercise(exercise.exercise_id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.weight, exercise.video_url, true))}
+                    </ul>
                         <div style={timerStyle}>
-                            {getMills > 0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={"setsTotal"} reps={"repsTotal"} weight={"weightAvg"} rpe={"rpeAvg"} rating={"ratingAvg"} />}
-                            <Timer nextExercise={exerciseDone} exerciseNames={props.exercises} name={"exerciseName"} />
+                            {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={"setsTotal"} reps={"repsTotal"} weight={"weightAvg"} rpe={"rpeAvg"} rating={"ratingAvg"} />}
+                            <Timer nextExercise={exerciseDone} />
                         </div>
                     </div>
                 </div>
@@ -273,18 +268,18 @@ const Workout = (props) => {
         );
     }
 
-    return (
-        <>
-            {isModalOpen && <Modal />}
-            <div onClick={openModal} style={workoutLabel}>
-                <h1 style={workoutName}>{props.name}</h1>
-                <ul style={{ width: "100%" }}>
-                    <p style={fullWorkoutText}>{strings.seeworkout}</p>
-                    <li style={listItem}><div style={{ textAlign: "left" }}>{strings.exercise}</div><div>{strings.sets}</div><div>{strings.reps}</div></li>
-                    {props.exercises.map((exercise, id) => getExercise(id, exercise.name, exercise.description, exercise.sets, exercise.reps, exercise.weight, exercise.url))}
-                </ul>
-            </div>
-        </>
-    );
+return (
+    <>
+        {isModalOpen && <Modal />}
+        <div onClick={openModal} style={workoutLabel}>
+        <h1 style={workoutName}>{data?.name}</h1>
+        <ul style={{width: "100%"}}>
+        <p style={fullWorkoutText}>Click to see full workout</p>
+            <li style={listItem}><div style={{textAlign: "left"}}>Exercise</div><div>Sets</div><div>Reps</div></li>
+            {data?.exercises.map((exercise, id)=>getExercise(id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.weight, exercise.video_url))}
+        </ul>
+        </div>
+    </>
+);
 }
 export default Workout;
