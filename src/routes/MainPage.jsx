@@ -301,7 +301,7 @@ console.log(selectedLanguage)
               </a>
               <div>
                 <p style={friendNameStyles}>{friend.name}</p>
-                <p>{friend['workouts'][0].name}</p>
+                <p>{friend['workouts'] && friend['workouts'].length > 0 ? friend['workouts'][0].name : 'No Workouts'}</p>
               </div>
               <div style={{ marginLeft: 'auto' }}>
                 {friend['workouts'][0].exercises.length > 0 &&
