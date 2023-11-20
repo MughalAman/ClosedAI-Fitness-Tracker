@@ -322,9 +322,9 @@ console.log(selectedLanguage)
       </div>
       <div style={sectionStyles}>
         <PreviousWorkouts userData={userData} />
-        <div style={buttonStyles}>
-          <a href="/planbuilder">{strings.goToPlanBuilder}</a>
-        </div>
+        <a href="/planbuilder"><div style={buttonStyles}>
+          <p>Go to plan builder</p>
+        </div></a>
       </div>
     </div>
   );
