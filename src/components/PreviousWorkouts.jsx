@@ -1,36 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
 
-
-const workoutHistory = [
-  {
-    id: 1,
-    date: '2023-10-01',
-    workoutName: 'Chest Day',
-    workoutType: 'Strength Training',
-    duration: '1 h',
-    rating: 4.5,
-    rpe: 7,
-  },
-  {
-    id: 2,
-    date: '2023-09-28',
-    workoutName: 'Morning Run',
-    workoutType: 'Running',
-    duration: '30 mins',
-    rating: 4.0,
-    rpe: 6,
-  },
-  {
-    id: 3,
-    date: '2023-09-25',
-    workoutName: 'Leg Day',
-    workoutType: 'Strength Training',
-    duration: '1.5 h',
-    rating: 4.7,
-    rpe: 8,
-  },
-];
 
 const boxStyles = {
   width: '400px',
@@ -61,7 +31,7 @@ const tableCellStyles = {
 };
 
 function PreviousWorkouts(props) {
-  const { userData } = props;
+  const { userData, showAsColumn } = props;
 
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const handleLanguageChange = (event) => {
@@ -83,6 +53,8 @@ function PreviousWorkouts(props) {
       setSelectedLanguage(storedSelectedLanguage);
     }
   }, []);
+
+  
 
 
   const strings = new LocalizedStrings({
@@ -122,7 +94,7 @@ function PreviousWorkouts(props) {
   return (
     <div>
       <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>{strings.previousWorkouts}</h2>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', flexDirection: showAsColumn ? 'column': 'row', gap: '1em', justifyContent: 'space-between' }}>
         {userData['workouts'].slice(0, 3).map((workout) => {
           // Calculate the total and average rating from the exercises' ratings
           let totalRating = 0;

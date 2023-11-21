@@ -292,7 +292,7 @@ console.log(selectedLanguage)
           <h2 style={titleStyles}>{strings.friendActivity}</h2>
           {userFriends.map((friend) => (
             <div key={friend['workouts'][0].workout_id} style={activityItemStyles}>
-              <a href="#">
+              <a href={"/friendprofile/" + friend.user_id}>
                 <img
                   src={friend.profile_pic_url ? friend.profile_pic_url : '../pic.jpg'}
                   alt={`${friend.name}'s profile`}

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import Profile from './routes/profile.jsx';
+import FriendProfile from './components/friendProfile.jsx';
 import PlanBuilder from './components/planBuilder.jsx';
 import TrainingGoal from './components/TrainingGoal.jsx';
 import TrainingDays from './components/TrainingDays.jsx';
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />,
+  },
+  {
+    path: '/friendprofile/:id',
+    element: <FriendProfile />,
   },
   {
     path: '/planbuilder',
