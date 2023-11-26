@@ -420,6 +420,17 @@ async function updateExercise(id, exerciseData) {
   }
 }
 
+const cloneExercise = async (exerciseId, workoutId, userId) => {
+  try {
+    let exercise = await getExercise(exerciseId);
+    exercise.workout_id = workoutId;
+    exercise.user_id = userId;
+    createExercise(...Object.values(exercise));
+  } catch (error) {
+    console.log("Error:", error)
+  }
+}
+
 async function createFriendship(userId, friendId, statusId) {
   try{
     const response = await fetch('https://fitness-api-wlzk.onrender.com/friendship/', {
@@ -544,4 +555,4 @@ async function deleteWorkoutDate(dateID){
     });
 }
 
-export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate};
+export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate, cloneExercise};
