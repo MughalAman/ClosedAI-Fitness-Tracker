@@ -214,7 +214,6 @@ const newWorkout = {
 const calendar = {
     listStyle: "none",
     overflowX: "auto",
-    whiteSpace: "nowrap",
     margin: "auto",
     with: "100%",
     display: "flex",
