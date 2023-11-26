@@ -4,25 +4,6 @@ import LocalizedStrings from 'react-localization';
 
 function ExerciseComplete(props) {
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
-  const handleLanguageChange = (event) => {
-    setSelectedLanguage(event.target.value);
-    localStorage.setItem('selectedLanguage', event.target.value);
-  };
-  useEffect(() => {
-    const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
-
-    if (!storedSelectedLanguage) {
-      fetch('/api/language')
-        .then(response => response.json())
-        .then(data => {
-          const selectedLanguage = data.language;
-          setSelectedLanguage(selectedLanguage);
-          localStorage.setItem('selectedLanguage', selectedLanguage);
-        });
-    } else {
-      setSelectedLanguage(storedSelectedLanguage);
-    }
-  }, []);
 
   let strings = new LocalizedStrings({
     en: {
