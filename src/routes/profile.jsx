@@ -209,7 +209,7 @@ function Profile() {
 
     const labelStyle = {
         color: '#FFF',
-        fontSize: '16px',
+        fontSize: '32px',
         margin: '0 10px',
         marginLeft: '45px',
     };
@@ -329,13 +329,37 @@ function Profile() {
 
     };
 
+    const languageSelectStyle = {
+        width: '120px',
+        height: '50px',
+        alignItems: 'center',
+        borderRadius: '5px',
+        background: 'black',
+        border: 'none',
+        padding: '8px',
+        fontSize: '25px',
+        margin: '5px 0',
+        fontWeight: 'bold', // Teksti lihavoitu
+    };
+
+    const selectedLanguageStyle = {
+        color: '#FFF',
+        fontFamily: 'Inter',
+        fontSize: '30px',
+        fontStyle: 'normal',
+        fontWeight: 900,
+        lineHeight: '2',
+        textAlign: 'center', // Center the text horizontally
+    };
+
     const language = (
         <div >
-            <label htmlFor="languageSelect">Select Language: </label>
+            <label htmlFor="languageSelect" style={selectedLanguageStyle}>Select Language: </label>
             <select
                 id="languageSelect"
                 value={selectedLanguage}
                 onChange={handleLanguageChange}
+                style={languageSelectStyle}
             >
                 <option value="en">English</option>
                 <option value="tr">Turkish</option>
