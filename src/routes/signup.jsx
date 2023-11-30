@@ -11,6 +11,7 @@ function Signup(props) {
     const [name, setName] = useState('');
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
+    const [birthDate, setBirthDate] = useState('');
 
     // Määritellään tyylit otsikolle
     const headingStyle = {
@@ -157,13 +158,13 @@ function Signup(props) {
         }
 
         // Tarkistetaan, että kaikki kentät on täytetty
-        if (!email || !password || !passwordAgain || !name || !weight || !height || !selectedGender) {
+        if (!email || !password || !passwordAgain || !name || !weight || !height || !selectedGender || !birthDate) {
             alert('Please fill out all fields!');
             return;
         }
 
         // Luodaan käyttäjä
-        createUser(name, email, password, weight, height, selectedGender)
+        createUser(name, email, password, weight, height, selectedGender, birthDate)
             .then((data) => {
                 if (data) {
                     getUserToken(email, password)
@@ -251,6 +252,7 @@ function Signup(props) {
                         type="text"
                         placeholder="Birthdate mm/dd/yyyy"
                         style={inputStyle}
+                        onChange={(e)=>setBirthDate(e.target.value)}
                     />
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <input
