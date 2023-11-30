@@ -1,6 +1,6 @@
 // api.js
 
-async function createUser(name, email, password, weight, height, gender) {
+async function createUser(name, email, password, weight, height, gender, birth_date) {
   try {
     const response = await fetch('https://fitness-api-wlzk.onrender.com/user/', {
       method: 'POST',
@@ -14,6 +14,7 @@ async function createUser(name, email, password, weight, height, gender) {
         height,
         weight,
         gender,
+        birth_date
       }),
     });
     if (response.status === 200) {
