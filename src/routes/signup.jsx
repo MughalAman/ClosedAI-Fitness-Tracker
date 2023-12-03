@@ -250,7 +250,7 @@ function Signup(props) {
                     </div>
                     <input
                         type="text"
-                        placeholder="Birthdate mm/dd/yyyy"
+                        placeholder="Birthdate yyyy-mm-dd"
                         style={inputStyle}
                         onChange={(e)=>setBirthDate(e.target.value)}
                     />
