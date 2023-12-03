@@ -141,6 +141,38 @@ function FriendProfile() {
     textAlign: "center",
   };
 
+  const calculateAgeFromDateOfBirth = (dateOfBirth) => {
+    // The date of birth may be in the format of "YYYY-MM-DD"
+    // Split the string to get the year, month and day
+    const dateOfBirthArray = dateOfBirth.split('-');
+    const year = dateOfBirthArray[0];
+    const month = dateOfBirthArray[1];
+    const day = dateOfBirthArray[2];
+
+    // Get the current date
+    const currentDate = new Date();
+
+    // Get the current year, month and day
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+
+    // Calculate the age
+    let age = currentYear - year;
+
+    // If the current month is before the birth month, the age is one year less
+    if (currentMonth < month) {
+        age--;
+    }
+
+    // If the current month is the same as the birth month, but the current day is before the birth day, the age is one year less
+    if (currentMonth === month && currentDay < day) {
+        age--;
+    }
+
+    return age;
+}
+
   return (
     friendData && (
       <div style={containerStyle}>
@@ -181,7 +213,7 @@ function FriendProfile() {
           <p style={textStyle}>
             {strings.Name}: {friendData.name}
           </p>
-          <p style={textStyle}>{strings.Age}: 20</p>
+          <p style={textStyle}>{strings.Age}: {friendData.birth_date ? calculateAgeFromDateOfBirth(friendData.birth_date) : "N/A"}</p>
           <p style={textStyle}>
             {strings.Sex}: {friendData.gender}
           </p>

@@ -161,6 +161,40 @@ function Profile() {
             });
         }
     };
+
+
+    const calculateAgeFromDateOfBirth = (dateOfBirth) => {
+        // The date of birth may be in the format of "YYYY-MM-DD"
+        // Split the string to get the year, month and day
+        const dateOfBirthArray = dateOfBirth.split('-');
+        const year = dateOfBirthArray[0];
+        const month = dateOfBirthArray[1];
+        const day = dateOfBirthArray[2];
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Get the current year, month and day
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1;
+        const currentDay = currentDate.getDate();
+
+        // Calculate the age
+        let age = currentYear - year;
+
+        // If the current month is before the birth month, the age is one year less
+        if (currentMonth < month) {
+            age--;
+        }
+
+        // If the current month is the same as the birth month, but the current day is before the birth day, the age is one year less
+        if (currentMonth === month && currentDay < day) {
+            age--;
+        }
+
+        return age;
+    }
+
     const profileTxtStyle = {
         color: '#FFF',
         fontFamily: 'Inter',
@@ -396,7 +430,7 @@ function Profile() {
 
             <p style={textStyle}>{strings.FriendCode}: {userData.friend_code}</p>
             <p style={textStyle}>{strings.Name}: {userData.name}</p>
-            <p style={textStyle}>{strings.Age}: </p>
+            <p style={textStyle}>{strings.Age}: {userData.birth_date ? calculateAgeFromDateOfBirth(userData.birth_date) : "N/A"}</p>
             <p style={textStyle}>{strings.Sex}: {userData.gender}</p>
             <p style={textStyle}>{strings.Weight}: {userData.weight}</p>
             <p style={textStyle}>{strings.Height}: {userData.height}</p>

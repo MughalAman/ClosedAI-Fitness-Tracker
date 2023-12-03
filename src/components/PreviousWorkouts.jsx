@@ -101,23 +101,24 @@ function PreviousWorkouts(props) {
           let ratedExercisesCount = 0;
 
           workout.exercises.forEach((exercise) => {
-            if (exercise.ratings.length > 0) {
+            if (exercise.ratings && exercise.ratings.length > 0) {
               const exerciseRating = exercise.ratings.reduce((acc, rating) => acc + rating.rating, 0) / exercise.ratings.length;
               totalRating += exerciseRating;
               ratedExercisesCount += 1;
             }
           });
-
+          
           const averageRating = ratedExercisesCount > 0
             ? (totalRating / ratedExercisesCount).toFixed(1)
             : 'N/A';
-
+          
           // Calculate the total workout duration from the exercises' durations
           const totalDuration = workout.exercises.reduce((acc, exercise) => acc + exercise.duration, 0);
-
+          
           // Calculate the total rpe from the exercises' rpes
           const totalRpe = workout.exercises.reduce((acc, exercise) => acc + exercise.rpe, 0);
           const averageRpe = (totalRpe / workout.exercises.length).toFixed(1);
+          
 
           return (
             <div key={workout.workout_id} style={boxStyles}>
