@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import PreviousWorkouts from '../components/PreviousWorkouts';
 import Workout from '../components/workout';
 import { getUserFriendships, getUserFromUserId, getExerciseRating, getUser } from '../utils/api';
+import ChatBot from '../components/chatBot';
 
 const parentContainerStyles = {
   height: '100vh',
@@ -153,6 +154,7 @@ function MainPage(props) {
   const { userData } = props;
   const [userFriends, setUserFriends] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     // This code runs when the component mounts
@@ -322,6 +324,11 @@ console.log(selectedLanguage)
       </div>
       <div style={sectionStyles}>
         <PreviousWorkouts userData={userData} />
+        
+        <div>
+            <ChatBot />
+        </div>
+
         <a href="/planbuilder"><div style={buttonStyles}>
           <p>Go to plan builder</p>
         </div></a>
