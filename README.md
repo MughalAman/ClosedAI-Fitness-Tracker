@@ -22,6 +22,10 @@ Sovelluksemme on toteutettu seuraavilla teknologioilla:
 - **Back-end:**
   - Python
   - FastAPI
+  - ChatGpt 3.5 API
+  - Azure DB
+  - Postgress SQL
+  - Google Firebase
 
 ## Asennus ja Konfigurointi
 
