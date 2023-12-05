@@ -519,7 +519,8 @@ async function createWorkoutDate(workoutID, date){
     },
     body: JSON.stringify({
       "date": date,
-      "workout_id": workoutID
+      "workout_id": workoutID,
+      "completed": false,
     }),
   })
     .then((response) => {
