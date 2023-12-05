@@ -253,7 +253,7 @@ function Signup(props) {
                         pattern="\d{4}-\d{2}-\d{2}" required
                         placeholder="Birthdate mm/dd/yyyy"
                         style={inputStyle}
-                        onChange={(e) => {setBirthDate(e.target.value), console.log(e.target.value)}}
+                        onChange={(e) => setBirthDate(e.target.value)}
                     />
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <input
