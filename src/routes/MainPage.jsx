@@ -68,59 +68,6 @@ const rightContainerStyles = {
   marginLeft: 'auto',
 };
 
-const currentStreakStyles = {
-  fontSize: '30px',
-  fontWeight: 'bold',
-  marginBottom: '16px',
-  color: 'white',
-};
-
-const workoutStyles = {
-  width: '478px',
-  height: '619px',
-  backgroundColor: '#404040',
-  borderRadius: '4px',
-  padding: '16px',
-  color: 'white',
-  textAlign: 'left',
-  fontSize: '30px',
-  fontWeight: 'bold',
-  display: 'flex',
-  flexDirection: 'column',
-};
-
-const workoutTitleStyles = {
-  color: 'white',
-  textAlign: 'center',
-  marginBottom: '12px',
-  fontSize: '30px',
-};
-
-const exerciseListStyles = {
-  marginBottom: '12px',
-};
-
-const tableStyles = {
-  display: 'table',
-  width: '100%',
-};
-
-const tableRowStyles = {
-  display: 'table-row',
-};
-
-const tableCellStyles = {
-  display: 'table-cell',
-  padding: '8px',
-};
-
-const workoutLinkStyles = {
-  textDecoration: 'underline',
-  cursor: 'pointer',
-  textAlign: 'center',
-  marginTop: 'auto', // Push "Click to see" to the bottom
-};
-
 const buttonStyles = {
   width: '478px',
   height: '162px',
@@ -136,6 +83,25 @@ const buttonStyles = {
   cursor: 'pointer',
   position: 'absolute', // Set the position to absolute
   bottom: '0px', // Adjust the distance from the bottom
+  right: '0px', // Adjust the distance from the right
+};
+
+const chatButtonStyles = {
+  width: '300px',
+  height: '100px',
+  marginRight: '75px',
+  backgroundColor: 'white',
+  borderRadius: '4px',
+  fontSize: '32px',
+  fontWeight: 'bold',
+  textDecoration: 'underline',
+  color: 'black',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer',
+  position: 'absolute', // Set the position to absolute
+  bottom: '200px', // Adjust the distance from the bottom
   right: '0px', // Adjust the distance from the right
 };
 
@@ -155,6 +121,10 @@ function MainPage(props) {
   const [userFriends, setUserFriends] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
 
   useEffect(() => {
     // This code runs when the component mounts
@@ -322,16 +292,22 @@ console.log(selectedLanguage)
           {workout && <Workout data={workout} id={workout.workout_id} />}
         </div>
       </div>
+
       <div style={sectionStyles}>
         <PreviousWorkouts userData={userData} />
-        
-        <div>
-            <ChatBot />
+        <div style={chatButtonStyles}>
+          <button onClick={toggleChat}>
+            Toggle Chat
+          </button>
         </div>
 
-        <a href="/planbuilder"><div style={buttonStyles}>
-          <p>Go to plan builder</p>
-        </div></a>
+        {isChatOpen && <ChatBot closeChat={toggleChat} strings={strings} isChatOpen={isChatOpen} />}
+
+        <a href="/planbuilder">
+          <div style={buttonStyles}>
+            <p>Go to plan builder</p>
+          </div>
+        </a>
       </div>
     </div>
   );

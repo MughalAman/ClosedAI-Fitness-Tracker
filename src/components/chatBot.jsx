@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const API_KEY = import.meta.env.VITE_CHAT_GPT_API_KEY;
 
-function ChatBot() {
+function ChatBot({ closeChat, strings, isChatOpen }) {
     const [typing, setTyping] = useState(false);
     const [messages, setMessages] = useState([
         {
@@ -77,24 +77,35 @@ function ChatBot() {
  }
 
   return (
-    <div style={{position: "absolute", height: "800px", width: "700px"}}>
-        <MainContainer>
-            <ChatContainer>
-                <MessageList 
-                    scrollBehavior="smooth"
-                    typingIndicator={typing ? <TypingIndicator content="Typing..." /> : null}>
-                    {messages.map((message, index) => (
-                        <Message
-                            key={index}
-                            model={message}
-                        />
-                    ))}
-                </MessageList>
-                <MessageInput placeholder="Type message here" onSend={handleSend} />
-            </ChatContainer>
-        </MainContainer>
-    </div>
-  )
+    <div
+      style={{
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '400px', // Adjust width as needed
+        height: '600px', // Adjust height as needed
+        display: isChatOpen ? 'block' : 'none',
+      }}
+    >
+    {isChatOpen && (
+      <MainContainer>
+        <ChatContainer>
+          <MessageList
+                scrollBehavior="smooth"
+                typingIndicator={typing ? <TypingIndicator content="Typing..." /> : null}
+            >
+                {messages.map((message, index) => (
+                    <Message key={index} model={message} />
+                ))}
+                    </MessageList>
+                    <MessageInput placeholder="Type message here" onSend={handleSend} />
+                 </ChatContainer>
+                </MainContainer>
+            )}
+            <button onClick={closeChat}>{strings.clickToSee}</button>
+        </div>
+    );
 }
 
 export default ChatBot
