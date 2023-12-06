@@ -111,10 +111,6 @@ const sectionStyles = {
   justifyContent: 'space-between', // Add this line to align items to the right
 };
 
-const getRatingForExercise = async (exercise_id) => {
-  let rating = await getExerciseRating(exercise_id);
-  return rating;
-}
 function MainPage(props) {
 
   const { userData } = props;
@@ -174,7 +170,6 @@ function MainPage(props) {
       clickToSee: "Görmek için tıklayın",
       search: "Arama",
       addFriend: "Arkadaş Ekle",
-
     },
     ru: {
       mainPageTitle: "Главная страница",
@@ -301,7 +296,11 @@ console.log(selectedLanguage)
           </button>
         </div>
 
-        {isChatOpen && <ChatBot closeChat={toggleChat} strings={strings} isChatOpen={isChatOpen} />}
+        {isChatOpen && (
+  <ChatBot closeChat={toggleChat} strings={strings} isChatOpen={isChatOpen}>
+    <button onClick={toggleChat}></button>
+  </ChatBot>
+)}
 
         <a href="/planbuilder">
           <div style={buttonStyles}>

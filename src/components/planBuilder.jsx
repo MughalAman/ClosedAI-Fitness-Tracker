@@ -26,7 +26,6 @@ const PlanBuilder = (props) => {
         }
     }, []);
 
-
     let strings = new LocalizedStrings({
         en: {
             monday: "Monday",
@@ -42,8 +41,6 @@ const PlanBuilder = (props) => {
             planbuilder: "PLAN BUILDER",
             new: "NEW",
             workout: "WORKOUT",
-
-
         },
         tr: {
             monday: "Pazartesi",
@@ -59,9 +56,6 @@ const PlanBuilder = (props) => {
             planbuilder: "PLAN OLUŞTURUCU",
             new: "YENİ",
             workout: "ANTRENMAN",
-
-
-
         },
         ru: {
             monday: "Понедельник",
@@ -155,7 +149,6 @@ const plannerBox = {
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
-    
 }
 
 const dateBox = {
@@ -215,7 +208,7 @@ const calendar = {
     listStyle: "none",
     overflowX: "auto",
     margin: "auto",
-    with: "100%",
+    width: "100%",
     display: "flex",
 }
 

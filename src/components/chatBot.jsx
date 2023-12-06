@@ -13,7 +13,6 @@ function ChatBot({ closeChat, strings, isChatOpen }) {
         }
     ]);
 
-
     const handleSend = async (message) => {
         const newMessage = {
             message: message,
@@ -103,7 +102,6 @@ function ChatBot({ closeChat, strings, isChatOpen }) {
                  </ChatContainer>
                 </MainContainer>
             )}
-            <button onClick={closeChat}>{strings.clickToSee}</button>
         </div>
     );
 }

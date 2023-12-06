@@ -19,18 +19,9 @@ const Workout = (props) => {
             name: "NAME",
             close: "Close",
             add: "Add",
-            addw: "Add workout",
-            squat: "Squat",
-            benchpress: "Bench Press",
-            deadlift: "Deadlift",   
-            pullups: "Pull-Ups",
-            plank: "Plank",
-
-
-
+            addw: "Add Workout",
         },
         tr: {
-
             seeworkout: "Tam antrenmanı görmek için tıklayın",
             exercise: "Egzersiz",
             sets: "Setler",
@@ -39,16 +30,8 @@ const Workout = (props) => {
             close: "Kapat",
             add: "Ekle",
             addw: "Antrenman ekle",
-            squat: "Çömelme",
-            benchpress: "Bench Press",
-            deadlift: "Deadlift",
-            pullups: "Çekme",
-            plank: "Plank",
-
-
         },
         ru: {
-                
                 seeworkout: "Нажмите, чтобы увидеть полную тренировку",
                 exercise: "Упражнение",
                 sets: "Подходы",
@@ -57,12 +40,6 @@ const Workout = (props) => {
                 close: "Закрыть",
                 add: "Добавить",
                 addw: "Добавить тренировку",
-                squat: "Приседания",
-                benchpress: "Жим лежа",
-                deadlift: "Становая тяга",
-                pullups: "Подтягивания",
-                plank: "Планка",
-    
         }
     });
     if (selectedLanguage === 'tr') {
@@ -242,14 +219,9 @@ const workoutRef = useRef();
                         <h2 style={{...workoutModalName, flex: 1, textAlign: "center"}}>{props.data.name}</h2>
                         <div style={{flex: 1, textAlign: "right"}}>
                             <select style={{ ...searchField, fontFamily: 'Inter'}} id="nameOfExercise" name="nameOfExercise">
-                                <option value="default">{strings.addw}</option>
+                                <option style={{fontFamily: 'Inter'}} value="default">{strings.addw}</option>
                                 {exerciseData}
-                                <option value="squat">{strings.squat}</option>
-                                <option value="benchPress">{strings.benchpress}</option>
-                                <option value="deadlift">{strings.deadlift}</option>
-                                <option value="pullUps">{strings.pullups}</option>
-                                <option value="plank">{strings.plank}</option>
-                                <option value="new">New Exercise</option>
+                                <option style={{fontFamily: 'Inter'}} value="new">New Exercise</option>
                             </select>
                             <button onClick={(e)=>{handleExerciseOption(e.target.parentElement.firstChild.options[e.target.parentElement.firstChild.selectedIndex].value)}}>{strings.add}</button>
                         </div>
