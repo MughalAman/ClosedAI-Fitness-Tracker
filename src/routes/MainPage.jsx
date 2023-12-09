@@ -3,6 +3,7 @@ import LocalizedStrings from 'react-localization';
 import Navbar from '../components/Navbar';
 import PreviousWorkouts from '../components/PreviousWorkouts';
 import Workout from '../components/workout';
+import MainPageWorkoutList from '../components/MainPageWorkoutList';
 import { getUserFriendships, getUserFromUserId, getExerciseRating, getUser } from '../utils/api';
 import ChatBot from '../components/chatBot';
 
@@ -283,8 +284,7 @@ console.log(selectedLanguage)
           ))}
         </div>
         <div style={rightContainerStyles}>
-          {/* <div style={currentStreakStyles}>Current streak: 5🔥</div> */}
-          {workout && <Workout data={workout} id={workout.workout_id} />}
+        {workout && <MainPageWorkoutList data={workout} id={workout.workout_id} />}
         </div>
       </div>
 

@@ -4,7 +4,6 @@ import LocalizedStrings from 'react-localization';
 
 const Timer = (props) => {
 
-  
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const handleLanguageChange = (event) => {
       setSelectedLanguage(event.target.value);
@@ -36,10 +35,6 @@ const Timer = (props) => {
         currentexerciseduration: "Current exercise duration",
         min: "min",
         sec: "s",
-         
-
-
-
       },
       tr: {
         start: "BAŞLA",
@@ -49,10 +44,6 @@ const Timer = (props) => {
         currentexerciseduration: "Mevcut egzersiz süresi",
         min: "dk",
         sec: "sn",
-
-         
-
-
       },
       ru: {
         start: "НАЧАТЬ",
@@ -62,8 +53,6 @@ const Timer = (props) => {
         currentexerciseduration: "Продолжительность текущего упражнения",
         min: "мин",
         sec: "сек",
-              
-           
       }
   });
   if (selectedLanguage === 'tr') {
@@ -74,14 +63,14 @@ const Timer = (props) => {
       strings.setLanguage('ru');
   }
 
-
-
   const timerStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     color: "white",
-    fontSize: "30px",
+    fontSize: "2vw",
+    padding: "2vh", 
+    minWidth: "30vw", 
   };
 
   const timerButton = {
@@ -89,6 +78,7 @@ const Timer = (props) => {
     borderRadius: "50%",
     textAlign: "center",
     cursor: "pointer",
+    fontSize: "6vw",
   };
 
   const [startTime, setStartTime] = useState(null);

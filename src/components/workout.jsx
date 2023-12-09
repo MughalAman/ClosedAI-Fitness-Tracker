@@ -19,7 +19,7 @@ const Workout = (props) => {
             name: "NAME",
             close: "Close",
             add: "Add",
-            addw: "Add Workout",
+            addE: "Add exercise",
         },
         tr: {
             seeworkout: "Tam antrenmanı görmek için tıklayın",
@@ -29,17 +29,17 @@ const Workout = (props) => {
             name: "İSİM",
             close: "Kapat",
             add: "Ekle",
-            addw: "Antrenman ekle",
+            addE: "Egzersiz ekle",
         },
         ru: {
-                seeworkout: "Нажмите, чтобы увидеть полную тренировку",
-                exercise: "Упражнение",
-                sets: "Подходы",
-                reps: "Повторы",
-                name: "ИМЯ",
-                close: "Закрыть",
-                add: "Добавить",
-                addw: "Добавить тренировку",
+            seeworkout: "Нажмите, чтобы увидеть полную тренировку",
+            exercise: "Упражнение",
+            sets: "Подходы",
+            reps: "Повторы",
+            name: "ИМЯ",
+            close: "Закрыть",
+            add: "Добавить",
+            addE: "Добавить упражнение",
         }
     });
     if (selectedLanguage === 'tr') {
@@ -84,7 +84,7 @@ const Workout = (props) => {
         left: 0, 
         top: 0,
         position: "fixed",
-        fontSize: "32px",
+        fontSize: "2vw",
         fontWeight: 300,
         fontFamily: "Inter",
         draggable: false,
@@ -94,7 +94,7 @@ const Workout = (props) => {
         backgroundColor: "#0F0E0E",
         width: "100%",
         height: "100%",
-        minHeight: "20000px",
+        minHeight: "80vh",
         margin: "auto",
 
     }
@@ -102,7 +102,7 @@ const Workout = (props) => {
     const topBar = {
         backgroundColor: "black",
         width: "100%",
-        padding: "15px",
+        padding: "2vh",
         display: "flex",
         alignItems: "center",
     }
@@ -115,6 +115,7 @@ const Workout = (props) => {
 
     const workoutModalName = {
         position: "relative",
+        fontSize: "2vw",
     }
 
 
@@ -163,9 +164,9 @@ const Workout = (props) => {
         float: "right",
         position: "relative",
         margin: "auto",
-        padding: "20px",
         width: "30%",
-        minWidth: "600px",
+        padding: "2vh",
+        minWidth: "30vw",
     }
 
 const [data, setData] = useState(null);
@@ -219,7 +220,7 @@ const workoutRef = useRef();
                         <h2 style={{...workoutModalName, flex: 1, textAlign: "center"}}>{props.data.name}</h2>
                         <div style={{flex: 1, textAlign: "right"}}>
                             <select style={{ ...searchField, fontFamily: 'Inter'}} id="nameOfExercise" name="nameOfExercise">
-                                <option style={{fontFamily: 'Inter'}} value="default">{strings.addw}</option>
+                                <option style={{fontFamily: 'Inter'}} value="default">{strings.addE}</option>
                                 {exerciseData}
                                 <option style={{fontFamily: 'Inter'}} value="new">New Exercise</option>
                             </select>
