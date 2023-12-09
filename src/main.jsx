@@ -9,6 +9,8 @@ import TrainingDays from './components/TrainingDays.jsx';
 import TrainingExperience from './components/TrainingExperience.jsx';
 
 import './index.css';
+
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -49,3 +51,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </RouterProvider>
   </React.StrictMode>,
 );
+

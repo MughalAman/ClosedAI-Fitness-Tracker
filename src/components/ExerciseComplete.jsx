@@ -1,47 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
+import localizationData from '../assets/localization.json';
 
 
 function ExerciseComplete(props) {
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+  const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
-  let strings = new LocalizedStrings({
-    en: {
-      ExerciseComplete: "Exercise Complete!",
-      Duration: "Duration",
-      Sets: "Sets",
-      Reps: "Reps",
-      Weight: "Weight",
-      RPE: "RPE",
-      Rating: "Rating",
-      Save: "SAVE",
-      min: "min",
-    },
-    tr: {
-      ExerciseComplete: "Egzersiz Tamamlandı!",
-      Duration: "Süre",
-      Sets: "Setler",
-      Reps: "Tekrarlar",
-      Weight: "Ağırlık",
-      RPE: "RPE",
-      Rating: "Değerlendirme",
-      Save: "KAYDET",
-      min: "dakika",
-
-    },
-    ru: {
-      ExerciseComplete: "Упражнение завершено!",
-      Duration: "Продолжительность",
-      Sets: "Наборы",
-      Reps: "Повторы",
-      Weight: "Вес",
-      RPE: "RPE",
-      Rating: "Рейтинг",
-      Save: "СОХРАНИТЬ",
-      min: "минут",
-
+  useEffect(() => {
+    async function fetchData() {
+        const lang = await getLanguage(); // Call the getLanguage function
+        setSelectedLanguage(lang); // Set the selected language based on the result
+        setStrings(prevStrings => {
+            const newStrings = new LocalizedStrings(localizationData);
+            newStrings.setLanguage(lang);
+            return newStrings;
+        });
     }
-  });
+
+    fetchData();
+}, []);
+
   if (selectedLanguage === 'tr') {
     strings.setLanguage('tr');
   } else if (selectedLanguage === 'en') {

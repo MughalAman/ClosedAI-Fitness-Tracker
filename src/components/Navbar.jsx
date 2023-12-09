@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { createFriendship, getUserIdFromFriendcode, getUserFriendships, updateFriendship } from '../utils/api';
 import LocalizedStrings from 'react-localization';
+import localizationData from '../assets/localization.json';
 
 
 const navbarStyles = {
@@ -79,39 +80,24 @@ function Navbar(props) {
     }
   }, []);
 
+  const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
-  let strings = new LocalizedStrings({
-    en: {
-      addfriend: "Add friend",
-      frienderror: "You can't add yourself as a friend!",
-      search: "Searching for",
-      alrfriend: "You already have a friend request from this user! Accepting the request...",
-      friendrequest: "Friend request accepted!",
-      alrfriend2: "You are already friends with this user!",
-      friendrequest2: "Friend request already sent!",
-      friendsent: "Friend request sent!",
-    },
-    tr: {
-      addfriend: "Arkadaş ekle",
-      frienderror: "Kendini arkadaş olarak ekleyemezsin!",
-      search: "Aranıyor",
-      alrfriend: "Bu kullanıcıdan zaten arkadaşlık isteğiniz var! İsteği kabul ediyorum...",
-      friendrequest: "Arkadaşlık isteği kabul edildi!",
-      alrfriend2: "Bu kullanıcıyla zaten arkadaşsınız!",
-      friendrequest2: "Arkadaşlık isteği zaten gönderildi!",
-      friendsent: "Arkadaşlık isteği gönderildi!",
-    },
-    ru: {
-      addfriend: "Добавить друга",
-      frienderror: "Вы не можете добавить себя в друзья!",
-      search: "Поиск",
-      alrfriend: "У вас уже есть запрос на дружбу от этого пользователя! Принимаю запрос...",
-      friendrequest: "Запрос на дружбу принят!",
-      alrfriend2: "Вы уже дружите с этим пользователем!",
-      friendrequest2: "Запрос на дружбу уже отправлен!",
-      friendsent: "Запрос на дружбу отправлен!",
+  useEffect(() => {
+    async function fetchData() {
+        const lang = await getLanguage(); // Call the getLanguage function
+        setSelectedLanguage(lang); // Set the selected language based on the result
+        setStrings(prevStrings => {
+            const newStrings = new LocalizedStrings(localizationData);
+            newStrings.setLanguage(lang);
+            return newStrings;
+        });
     }
-  });
+
+    fetchData();
+}, []);
+
+
+
   if (selectedLanguage === 'tr') {
     strings.setLanguage('tr');
   } else if (selectedLanguage === 'en') {

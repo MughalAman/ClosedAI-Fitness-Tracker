@@ -39,7 +39,7 @@
       "profile": "Profile",
       "addfriend": "Add friend",
       "frienderror": "You can't add yourself as a friend!",
-      "search": "Searching for",
+      "search": "Searching for: ",
       "alrfriend": "You already have a friend request from this user! Accepting the request...",
       "friendrequest": "Friend request accepted!",
       "alrfriend2": "You are already friends with this user!",
@@ -83,7 +83,12 @@
       "benchpress": "Bench Press",
       "deadlift": "Deadlift",
       "pullups": "Pull-Ups",
-      "plank": "Plank"
+      "plank": "Plank",
+      "GotoPlanBuilder": "Go to Plan Builder",
+      "togglechat": "Toggle Chat",
+      "newExercise": "New Exercise",
+      "addE": "Add Exercise"
+    
     },
     "tr": {
         "name": "İsim",
@@ -125,7 +130,7 @@
         "profile": "Profil",
         "addfriend": "Arkadaş ekle",
         "frienderror": "Kendini arkadaş olarak ekleyemezsin!",
-        "search": "Aranıyor",
+        "search": "Aranıyor: ",
         "alrfriend": "Bu kullanıcıdan zaten arkadaşlık isteğiniz var! İsteği kabul ediyorum...",
         "friendrequest": "Arkadaşlık isteği kabul edildi!",
         "alrfriend2": "Bu kullanıcıyla zaten arkadaşsınız!",
@@ -169,7 +174,11 @@
         "benchpress": "Bench Press",
         "deadlift": "Deadlift",
         "pullups": "Çekme",
-        "plank": "Plank"
+        "plank": "Plank",
+        "GotoPlanBuilder": "Plan Oluşturucuya Git",
+        "togglechat": "Sohbeti Aç/Kapat",
+        "newExercise": "Yeni Egzersiz",
+        "addE": "Egzersiz Ekle"
     },
     "ru": {
             "name": "Имя",
@@ -211,7 +220,7 @@
             "profile": "Профиль",
             "addfriend": "Добавить друга",
             "frienderror": "Вы не можете добавить себя в друзья!",
-            "search": "Поиск",
+            "search": "Поиск: ",
             "alrfriend": "У вас уже есть запрос на дружбу от этого пользователя! Принимаю запрос...",
             "friendrequest": "Запрос на дружбу принят!",
             "alrfriend2": "Вы уже дружите с этим пользователем!",
@@ -255,6 +264,10 @@
             "benchpress": "Жим лежа",
             "deadlift": "Становая тяга",
             "pullups": "Подтягивания",
-            "plank": "Планка"
+            "plank": "Планка",
+            "GotoPlanBuilder": "Перейти к планировщику",
+            "togglechat": "Переключить чат",
+            "newExercise": "Новое упражнение",
+            "addE": "Добавить упражнение"
      }
 }

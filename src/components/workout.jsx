@@ -5,43 +5,27 @@ import ExerciseComplete from './ExerciseComplete';
 import AddExercise from './addExercise';
 import { getWorkout, cloneExercise } from '../utils/api';
 import LocalizedStrings from 'react-localization';
+import localizationData from '../assets/localization.json';
 
 const Workout = (props) => {
     
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
-    let strings = new LocalizedStrings({
-        en: {
-            seeworkout: "Click to see full workout",
-            exercise: "Exercise",
-            sets: "Sets",
-            reps: "Reps",
-            name: "NAME",
-            close: "Close",
-            add: "Add",
-            addE: "Add exercise",
-        },
-        tr: {
-            seeworkout: "Tam antrenmanı görmek için tıklayın",
-            exercise: "Egzersiz",
-            sets: "Setler",
-            reps: "Tekrarlar",
-            name: "İSİM",
-            close: "Kapat",
-            add: "Ekle",
-            addE: "Egzersiz ekle",
-        },
-        ru: {
-            seeworkout: "Нажмите, чтобы увидеть полную тренировку",
-            exercise: "Упражнение",
-            sets: "Подходы",
-            reps: "Повторы",
-            name: "ИМЯ",
-            close: "Закрыть",
-            add: "Добавить",
-            addE: "Добавить упражнение",
-        }
-    });
+    useEffect(() => {
+      async function fetchData() {
+          const lang = await getLanguage(); // Call the getLanguage function
+          setSelectedLanguage(lang); // Set the selected language based on the result
+          setStrings(prevStrings => {
+              const newStrings = new LocalizedStrings(localizationData);
+              newStrings.setLanguage(lang);
+              return newStrings;
+          });
+      }
+  
+      fetchData();
+  }, []);
+  
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
     } else if (selectedLanguage === 'en') {
@@ -222,7 +206,7 @@ const workoutRef = useRef();
                             <select style={{ ...searchField, fontFamily: 'Inter'}} id="nameOfExercise" name="nameOfExercise">
                                 <option style={{fontFamily: 'Inter'}} value="default">{strings.addE}</option>
                                 {exerciseData}
-                                <option style={{fontFamily: 'Inter'}} value="new">New Exercise</option>
+                                <option style={{fontFamily: 'Inter'}} value="new">{strings.newExercise}</option>
                             </select>
                             <button onClick={(e)=>{handleExerciseOption(e.target.parentElement.firstChild.options[e.target.parentElement.firstChild.selectedIndex].value)}}>{strings.add}</button>
                         </div>
@@ -250,8 +234,8 @@ return (
         <div onClick={openModal} style={workoutLabel}>
         <h1 style={workoutName}>{data?.name}</h1>
         <ul style={{width: "100%"}}>
-        <p style={fullWorkoutText}>Click to see full workout</p>
-            <li style={listItem}><div style={{textAlign: "left"}}>Exercise</div><div>Sets</div><div>Reps</div></li>
+        <p style={fullWorkoutText}>{strings.seeworkout}</p>
+            <li style={listItem}><div style={{textAlign: "left"}}>{strings.exercise}</div><div>{strings.sets}</div><div>{strings.reps}</div></li>
             {data?.exercises.map((exercise, id)=>getExercise(id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.weight, exercise.video_url))}
         </ul>
         </div>

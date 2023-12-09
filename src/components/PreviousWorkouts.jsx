@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
+import localizationData from '../assets/localization.json';
 
 
 const boxStyles = {
@@ -57,32 +58,23 @@ function PreviousWorkouts(props) {
   
 
 
-  const strings = new LocalizedStrings({
-    en: {
-      previousWorkouts: 'Previous Workouts',
-      date: 'Date',
-      rating: 'Rating',
-      rpe: 'RPE',
-      duration: 'Duration',
-      time: 'mins',
-    },
-    tr: {
-      previousWorkouts: 'Önceki Antrenmanlar',
-      date: 'Tarih',
-      rating: 'Değerlendirme',
-      rpe: 'RPE',
-      duration: 'Süre',
-      time: 'dakika',
-    },
-    ru: {
-      previousWorkouts: 'Предыдущие тренировки',
-      date: 'Дата',
-      rating: 'Рейтинг',
-      rpe: 'RPE',
-      duration: 'Продолжительность',
-      time: 'минут',
+  const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
+
+  useEffect(() => {
+    async function fetchData() {
+        const lang = await getLanguage(); // Call the getLanguage function
+        setSelectedLanguage(lang); // Set the selected language based on the result
+        setStrings(prevStrings => {
+            const newStrings = new LocalizedStrings(localizationData);
+            newStrings.setLanguage(lang);
+            return newStrings;
+        });
     }
-  });
+
+    fetchData();
+}, []);
+
+
 
   if (selectedLanguage === 'tr') {
     strings.setLanguage('tr');

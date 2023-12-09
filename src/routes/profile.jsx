@@ -3,6 +3,7 @@ import { getUser, updateUserProfilePicUrl, updateUserData } from '../utils/api';
 import { storage } from "../firebase-config";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from 'uuid';
+import localizationData from '../assets/localization.json';
 
 //lokalisaatio
 import LocalizedStrings from 'react-localization';
@@ -44,54 +45,25 @@ function Profile() {
         }
     }, []);
 
-    let strings = new LocalizedStrings({
-        en: {
-            profileinformation: "Profile information",
-            FriendCode: "FriendCode",
-            Name: "Name",
-            Age: "Age",
-            Sex: "Sex",
-            Weight: "Weight",
-            Height: "Height",
-            ProfileVisibility: "ProfileVisibility",
-            Profile: "Profile",
-            Workout: "Workout settings",
-            workoutMeasurment: "Weight measurement",
-            smallestPlate: "Smallest plate",
-            save: "Save",
-        },
-        tr: {
-            profileinformation: "Profil bilgileri",
-            FriendCode: "Arkadaş Kodu",
-            Name: "Isim",
-            Age: "Yaş",
-            Sex: "Cinsiyet",
-            Weight: "Kilo",
-            Height: "Boy",
-            ProfileVisibility: "Profil Gizliliği",
-            Profile: "Profil",
-            Workout: "Antrenman ayarları",
-            workoutMeasurment: "Ağırlık ölçümü",
-            smallestPlate: "En küçük plaka",
-            save: "Kaydet",
 
-        },
-        ru: {
-            profileinformation: "Информация профиля",
-            FriendCode: "Код друга",
-            Name: "Имя",
-            Age: "Возраст",
-            Sex: "Пол",
-            Weight: "Вес",
-            Height: "Рост",
-            ProfileVisibility: "Видимость профиля",
-            Profile: "Профиль",
-            Workout: "Настройки тренировки",
-            workoutMeasurment: "Измерение веса",
-            smallestPlate: "Самая маленькая гиря",
-            save: "Сохранить"
+    const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
+
+    useEffect(() => {
+        async function fetchData() {
+            const lang = await getLanguage(); // Call the getLanguage function
+            setSelectedLanguage(lang); // Set the selected language based on the result
+            setStrings(prevStrings => {
+                const newStrings = new LocalizedStrings(localizationData);
+                newStrings.setLanguage(lang);
+                return newStrings;
+            });
         }
-    });
+    
+        fetchData();
+    }, []);
+
+    
+
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
     } else if (selectedLanguage === 'en') {

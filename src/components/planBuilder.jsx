@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Workout from './workout';
 import { getUser, updateWorkout, createWorkout, createWorkoutDate, deleteWorkoutDate, getWorkout } from '../utils/api';
 import LocalizedStrings from 'react-localization';
+import localizationData from '../assets/localization.json';
 
 const PlanBuilder = (props) => {
 
@@ -25,54 +26,23 @@ const PlanBuilder = (props) => {
             setSelectedLanguage(storedSelectedLanguage);
         }
     }, []);
+    const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
-    let strings = new LocalizedStrings({
-        en: {
-            monday: "Monday",
-            tuesday: "Tuesday",
-            wednesday: "Wednesday",
-            thursday: "Thursday",
-            friday: "Friday",
-            saturday: "Saturday",
-            sunday: "Sunday",
-            newWorkout: "NEW WORKOUT",
-            workoutName: "Workout name",
-            cancel: "Cancel",
-            planbuilder: "PLAN BUILDER",
-            new: "NEW",
-            workout: "WORKOUT",
-        },
-        tr: {
-            monday: "Pazartesi",
-            tuesday: "Salı",
-            wednesday: "Çarşamba",
-            thursday: "Perşembe",
-            friday: "Cuma",
-            saturday: "Cumartesi",
-            sunday: "Pazar",
-            newWorkout: "YENİ ANTRENMAN",
-            workoutName: "Antrenman adı",
-            cancel: "İptal",
-            planbuilder: "PLAN OLUŞTURUCU",
-            new: "YENİ",
-            workout: "ANTRENMAN",
-        },
-        ru: {
-            monday: "Понедельник",
-            tuesday: "Вторник",
-            wednesday: "Среда",
-            thursday: "Четверг",
-            friday: "Пятница",
-            saturday: "Суббота",
-            sunday: "Воскресенье",
-            newWorkout: "НОВАЯ ТРЕНИРОВКА",
-            workoutName: "Название тренировки",
-            cancel: "Отмена",
-            planbuilder: "ПЛАНИРОВЩИК",
-            new: "НОВАЯ",
-            workout: "ТРЕНИРОВКА",
-        }
-    });
+    useEffect(() => {
+      async function fetchData() {
+          const lang = await getLanguage(); // Call the getLanguage function
+          setSelectedLanguage(lang); // Set the selected language based on the result
+          setStrings(prevStrings => {
+              const newStrings = new LocalizedStrings(localizationData);
+              newStrings.setLanguage(lang);
+              return newStrings;
+          });
+      }
+  
+      fetchData();
+  }, []);
+  
+  
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
     } else if (selectedLanguage === 'en') {

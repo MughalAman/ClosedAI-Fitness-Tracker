@@ -7,6 +7,9 @@ import MainPageWorkoutList from '../components/MainPageWorkoutList';
 import { getUserFriendships, getUserFromUserId, getExerciseRating, getUser } from '../utils/api';
 import ChatBot from '../components/chatBot';
 
+import localizationData from '../assets/localization.json';
+
+
 const parentContainerStyles = {
   height: '100vh',
   width: '100%',
@@ -112,7 +115,27 @@ const sectionStyles = {
   justifyContent: 'space-between', // Add this line to align items to the right
 };
 
+
 function MainPage(props) {
+
+
+
+  const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
+
+  useEffect(() => {
+      async function fetchData() {
+          const lang = await getLanguage(); // Call the getLanguage function
+          setSelectedLanguage(lang); // Set the selected language based on the result
+          setStrings(prevStrings => {
+              const newStrings = new LocalizedStrings(localizationData);
+              newStrings.setLanguage(lang);
+              return newStrings;
+          });
+      }
+  
+      fetchData();
+  }, []);
+  
 
   const { userData } = props;
   const [userFriends, setUserFriends] = useState([]);
@@ -144,59 +167,6 @@ function MainPage(props) {
   }, []);
 
   console.log(userData);
-
-  let strings = new LocalizedStrings({
-    en: {
-      mainPageTitle: "Main Page",
-      friendActivity: "Friend Activity",
-      currentStreak: "Current Streak: ",
-      previousWorkouts: "Previous Workouts",
-      goToPlanBuilder: "Go to plan builder",
-      rating: "Rating: ",
-      duration: "Duration: ",
-      rpe: "RPE: ",
-      clickToSee: "Click to see",
-      search: "Search",
-      addFriend: "Add Friend",
-    },
-    tr: {
-      mainPageTitle: "Ana Sayfa",
-      friendActivity: "Arkadaş Etkinliği",
-      currentStreak: "Geçerli Seri: ",
-      previousWorkouts: "Önceki Antrenmanlar",
-      goToPlanBuilder: "Plan oluşturmaya git",
-      rating: "Derecelendirme: ",
-      duration: "Süre: ",
-      rpe: "RPE: ",
-      clickToSee: "Görmek için tıklayın",
-      search: "Arama",
-      addFriend: "Arkadaş Ekle",
-    },
-    ru: {
-      mainPageTitle: "Главная страница",
-      friendActivity: "Деятельность друга",
-      currentStreak: "Текущая серия: ",
-      previousWorkouts: "Предыдущие тренировки",
-      goToPlanBuilder: "Перейти к построителю плана",
-      rating: "Рейтинг: ",
-      duration: "Продолжительность: ",
-      rpe: "RPE: ",
-      clickToSee: "Нажмите, чтобы увидеть",
-      search: "Поиск",
-      addFriend: "Добавить друга",
-    }
-  });
-
-console.log(selectedLanguage)
-
-  if (selectedLanguage === 'tr') {
-    strings.setLanguage('tr');
-  } else if (selectedLanguage === 'ru') {
-    strings.setLanguage('ru');
-  } else {
-    strings.setLanguage('en');
-  }
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -274,9 +244,9 @@ console.log(selectedLanguage)
               <div style={{ marginLeft: 'auto' }}>
                 {friend['workouts'][0].exercises.length > 0 &&
                   <>
-                    <p>Rating: {friend['workouts'][0].rating}⭐</p>
-                    <p>Duration: {friend['workouts'][0].exercises[0].duration}🕛</p>
-                    <p>RPE: {friend['workouts'][0].exercises[0].rpe}⚡</p>
+                    <p>{strings.rating} {friend['workouts'][0].rating}⭐</p>
+                    <p>{strings.duration} {friend['workouts'][0].exercises[0].duration}🕛</p>
+                    <p>{strings.rpe}{friend['workouts'][0].exercises[0].rpe}⚡</p>
                   </>
                 }
               </div>
@@ -292,7 +262,7 @@ console.log(selectedLanguage)
         <PreviousWorkouts userData={userData} />
         <div style={chatButtonStyles}>
           <button onClick={toggleChat}>
-            Toggle Chat
+            {strings.togglechat}
           </button>
         </div>
 
@@ -304,7 +274,7 @@ console.log(selectedLanguage)
 
         <a href="/planbuilder">
           <div style={buttonStyles}>
-            <p>Go to plan builder</p>
+          <p>{strings.GotoPlanBuilder}</p>
           </div>
         </a>
       </div>

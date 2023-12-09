@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
+import localizationData from '../assets/localization.json';
 
 
 const Timer = (props) => {
@@ -26,35 +27,23 @@ const Timer = (props) => {
   }, []);
 
 
-  let strings = new LocalizedStrings({
-      en: {
-        start: "START",
-        stop: "STOP",
-        currentexercise: "Current exercise",
-        nextexercise: "Next exercise",
-        currentexerciseduration: "Current exercise duration",
-        min: "min",
-        sec: "s",
-      },
-      tr: {
-        start: "BAŞLA",
-        stop: "DUR",
-        currentexercise: "Mevcut egzersiz",
-        nextexercise: "Sonraki egzersiz",
-        currentexerciseduration: "Mevcut egzersiz süresi",
-        min: "dk",
-        sec: "sn",
-      },
-      ru: {
-        start: "НАЧАТЬ",
-        stop: "СТОП",
-        currentexercise: "Текущее упражнение",
-        nextexercise: "Следующее упражнение",
-        currentexerciseduration: "Продолжительность текущего упражнения",
-        min: "мин",
-        sec: "сек",
-      }
-  });
+  const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
+
+  useEffect(() => {
+    async function fetchData() {
+        const lang = await getLanguage(); // Call the getLanguage function
+        setSelectedLanguage(lang); // Set the selected language based on the result
+        setStrings(prevStrings => {
+            const newStrings = new LocalizedStrings(localizationData);
+            newStrings.setLanguage(lang);
+            return newStrings;
+        });
+    }
+
+    fetchData();
+}, []);
+
+
   if (selectedLanguage === 'tr') {
       strings.setLanguage('tr');
   } else if (selectedLanguage === 'en') {
