@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { getLanguage } from '../utils/api';
 
 function WorkoutSettings(props) {
   const [selectedWeightUnit, setSelectedWeightUnit] = useState('lbs');

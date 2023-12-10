@@ -198,6 +198,7 @@ function Signup(props) {
                 console.log(err);
             });
 
+        localStorage.setItem('lang', 'en');
         localStorage.setItem('showExtraQuestions', true);
     }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PreviousWorkouts from "./PreviousWorkouts";
 import LocalizedStrings from "react-localization";
-import { getUserFromUserId } from "../utils/api";
+import { getUserFromUserId, getLanguage } from "../utils/api";
 import { useParams } from "react-router-dom";
 import localizationData from '../assets/localization.json';
 
@@ -44,7 +44,7 @@ function FriendProfile() {
 
   useEffect(() => {
     async function fetchData() {
-        const lang = await getLanguage(); // Call the getLanguage function
+        const lang = selectedLanguage; // Call the getLanguage function
         setSelectedLanguage(lang); // Set the selected language based on the result
         setStrings(prevStrings => {
             const newStrings = new LocalizedStrings(localizationData);

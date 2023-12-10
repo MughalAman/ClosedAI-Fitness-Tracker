@@ -118,13 +118,12 @@ const sectionStyles = {
 
 function MainPage(props) {
 
-
-
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
   useEffect(() => {
       async function fetchData() {
-          const lang = await getLanguage(); // Call the getLanguage function
+          const lang = selectedLanguage; // Call the getLanguage function
+          console.log(lang);
           setSelectedLanguage(lang); // Set the selected language based on the result
           setStrings(prevStrings => {
               const newStrings = new LocalizedStrings(localizationData);
@@ -159,7 +158,7 @@ function MainPage(props) {
 
   useEffect(() => {
     async function fetchData() {
-      const lang = await getLanguage(); // Call the getLanguage function
+      const lang = selectedLanguage; // Call the getLanguage function
       setSelectedLanguage(lang); // Set the selected language based on the result
     }
 
