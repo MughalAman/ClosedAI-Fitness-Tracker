@@ -108,8 +108,8 @@ function Navbar(props) {
 
 
   const handleSearchClick = () => {
-    // Handle search functionality here with the searchText state
-    alert(strings.search + searchText); // Replace with your actual search logic
+    handleAddFriend();
+    setSearchText('');
   };
 
   const handleAddFriend = async () => {
@@ -198,8 +198,7 @@ function Navbar(props) {
             onChange={(e) => setSearchText(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                handleAddFriend();
-                setSearchText('');
+                handleSearchClick();
               }
             }
             }
