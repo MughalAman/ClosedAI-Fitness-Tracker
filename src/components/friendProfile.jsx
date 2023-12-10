@@ -3,6 +3,7 @@ import PreviousWorkouts from "./PreviousWorkouts";
 import LocalizedStrings from "react-localization";
 import { getUserFromUserId } from "../utils/api";
 import { useParams } from "react-router-dom";
+import localizationData from '../assets/localization.json';
 
 function FriendProfile() {
   const [friendData, setFriendData] = useState(null);
@@ -38,56 +39,25 @@ function FriendProfile() {
     }
   }, []);
 
-  let strings = new LocalizedStrings({
-    en: {
-      profileinformation: "Profile information",
-      FriendCode: "FriendCode",
-      Name: "Name",
-      Age: "Age",
-      Sex: "Sex",
-      Weight: "Weight",
-      Height: "Height",
-      ProfileVisibility: "ProfileVisibility",
-      Profile: "Profile",
-      Workout: "Workout settings",
-      workoutMeasurment: "Weight measurement",
-      smallestPlate: "Smallest plate",
-      save: "Save",
-      profile: "Profile",
-    },
-    tr: {
-      profileinformation: "Profil bilgileri",
-      FriendCode: "Arkadaş Kodu",
-      Name: "Isim",
-      Age: "Yaş",
-      Sex: "Cinsiyet",
-      Weight: "Kilo",
-      Height: "Boy",
-      ProfileVisibility: "Profil Gizliliği",
-      Profile: "Profil",
-      Workout: "Antrenman ayarları",
-      workoutMeasurment: "Ağırlık ölçümü",
-      smallestPlate: "En küçük plaka",
-      save: "Kaydet",
-      profile: "Profil",
-    },
-    ru: {
-      profileinformation: "Информация профиля",
-      FriendCode: "Код друга",
-      Name: "Имя",
-      Age: "Возраст",
-      Sex: "Пол",
-      Weight: "Вес",
-      Height: "Рост",
-      ProfileVisibility: "Видимость профиля",
-      Profile: "Профиль",
-      Workout: "Настройки тренировки",
-      workoutMeasurment: "Измерение веса",
-      smallestPlate: "Самая маленькая гиря",
-      save: "Сохранить",
-      profile: "Профиль",
-    },
-  });
+  const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
+
+  useEffect(() => {
+    async function fetchData() {
+        const lang = await getLanguage(); // Call the getLanguage function
+        setSelectedLanguage(lang); // Set the selected language based on the result
+        setStrings(prevStrings => {
+            const newStrings = new LocalizedStrings(localizationData);
+            newStrings.setLanguage(lang);
+            return newStrings;
+        });
+    }
+
+    fetchData();
+}, []);
+
+
+
+
   if (selectedLanguage === "tr") {
     strings.setLanguage("tr");
   } else if (selectedLanguage === "en") {
@@ -196,7 +166,7 @@ function FriendProfile() {
             Profile information
           </h1>
           <img
-            src={friendData.profile_picture_url || "../pic.jpg"}
+            src={friendData.profile_pic_url ? friendData.profile_pic_url : '../pic.jpg'}
             alt="Profile"
             style={{
               width: "150px",
