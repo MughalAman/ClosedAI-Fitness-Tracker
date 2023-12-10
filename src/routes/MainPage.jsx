@@ -229,7 +229,7 @@ function MainPage(props) {
           <h2 style={titleStyles}>{strings.friendActivity}</h2>
           {userFriends.map((friend) => (
             <div key={friend['workouts'][0].workout_id} style={activityItemStyles}>
-              <a href={"/friendprofile/" + friend.user_id}>
+              <a href={"/friendprofile/" + friend.user_id} onClick={(e) => friend['extra_data'].visibility && e.preventDefault()}>
                 <img
                   src={friend.profile_pic_url ? friend.profile_pic_url : '../pic.jpg'}
                   alt={`${friend.name}'s profile`}
@@ -238,10 +238,10 @@ function MainPage(props) {
               </a>
               <div>
                 <p style={friendNameStyles}>{friend.name}</p>
-                <p>{friend['extra_data'].visibility ? friend['workouts'] && friend['workouts'].length > 0 ? friend['workouts'][0].name : 'No Workouts' : "Private Profile"}</p>
+                <p>{!friend['extra_data'].visibility ? friend['workouts'] && friend['workouts'].length > 0 ? friend['workouts'][0].name : 'No Workouts' : "Private Profile"}</p>
               </div>
               <div style={{ marginLeft: 'auto' }}>
-                {friend['workouts'][0].exercises.length > 0 &&
+                {(friend['workouts'][0].exercises.length > 0 && !friend['extra_data'].visibility) &&
                   <>
                     <p>{strings.rating} {friend['workouts'][0].rating}⭐</p>
                     <p>{strings.duration} {friend['workouts'][0].exercises[0].duration}🕛</p>
