@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 
+/**
+ * Functional component for WorkoutSettings.
+ * @component
+ * @param {Object} props - The component props.
+ * @returns {JSX.Element} - JSX element representing the WorkoutSettings component.
+ */
 function WorkoutSettings(props) {
   const [selectedWeightUnit, setSelectedWeightUnit] = useState('lbs');
   const [selectedSmallestPlate, setSelectedSmallestPlate] = useState(null);
 
+  /**
+   * Styles for the heading.
+   * @type {Object}
+   */
   const headingStyle = {
     color: 'white',
     textShadow: '0px 0px 4px rgba(0, 0, 0, 0.56)',
@@ -16,6 +26,10 @@ function WorkoutSettings(props) {
     marginBottom: '60px',
   };
 
+  /**
+   * Styles for the title.
+   * @type {Object}
+   */
   const titleStyle = {
     color: 'white',
     fontFamily: 'Inter',
@@ -26,6 +40,10 @@ function WorkoutSettings(props) {
     textAlign: 'left',
   };
 
+  /**
+   * Styles for the container.
+   * @type {Object}
+   */
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row',
@@ -34,6 +52,10 @@ function WorkoutSettings(props) {
     margin: '50px 0',
   };
 
+  /**
+   * Styles for the inner container.
+   * @type {Object}
+   */
   const innerContainerStyle = {
     display: 'inline-flex',
     flexDirection: 'column',
@@ -49,12 +71,20 @@ function WorkoutSettings(props) {
     cursor: 'pointer',
   };
 
+  /**
+   * Styles for the kg container.
+   * @type {Object}
+   */
   const kgContainerStyle = {
     ...innerContainerStyle,
     backgroundColor: selectedWeightUnit === 'kgs' ? 'white' : '#404040',
     color: selectedWeightUnit === 'kgs' ? 'black' : 'white',
   };
 
+  /**
+   * Styles for the text.
+   * @type {Object}
+   */
   const txtStyle = {
     fontFamily: 'Inter',
     fontSize: '30px',
@@ -63,6 +93,10 @@ function WorkoutSettings(props) {
     lineHeight: 'normal',
   };
 
+  /**
+   * Styles for the button.
+   * @type {Object}
+   */
   const buttonStyle = {
     width: '313px',
     height: '100px',
@@ -78,11 +112,21 @@ function WorkoutSettings(props) {
     cursor: 'pointer',
   };
 
+  /**
+   * Handles the click event for changing weight unit.
+   * @param {string} unit - The selected weight unit ('lbs' or 'kgs').
+   * @returns {void}
+   */
   const handleWeightUnitClick = (unit) => {
     setSelectedWeightUnit(unit);
     setSelectedSmallestPlate(null); // Reset the smallest plate selection when changing weight units
   };
 
+  /**
+   * Handles the click event for selecting the smallest plate.
+   * @param {number|string} plateValue - The value of the selected smallest plate.
+   * @returns {void}
+   */
   const handleSmallestPlateClick = (plateValue) => {
     setSelectedSmallestPlate(plateValue);
   };

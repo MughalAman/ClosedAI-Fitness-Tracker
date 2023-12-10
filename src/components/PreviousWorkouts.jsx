@@ -3,7 +3,10 @@ import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 import { getLanguage } from '../utils/api';
 
-
+/**
+ * Styles for the workout box.
+ * @type {Object}
+ */
 const boxStyles = {
   width: '400px',
   height: '162px',
@@ -17,29 +20,65 @@ const boxStyles = {
   marginRight: '16px',
 };
 
+/**
+ * Styles for the table layout.
+ * @type {Object}
+ */
 const tableStyles = {
   display: 'table',
   width: '100%',
 };
 
+/**
+ * Styles for the table row.
+ * @type {Object}
+ */
 const tableRowStyles = {
   display: 'table-row',
 };
 
+/**
+ * Styles for the table cell.
+ * @type {Object}
+ */
 const tableCellStyles = {
   display: 'table-cell',
   padding: '4px 8px',
   verticalAlign: 'top',
 };
 
+/**
+ * Component for displaying previous workouts.
+ * @component
+ * @param {Object} props - Component props.
+ * @param {Object} props.userData - User data including workouts.
+ * @param {boolean} props.showAsColumn - Flag to display workouts in a column.
+ * @returns {JSX.Element} JSX element representing the PreviousWorkouts component.
+ */
 function PreviousWorkouts(props) {
+
+  /**
+   * Destructuring props for userData and showAsColumn.
+   * @type {Object}
+   */
   const { userData, showAsColumn } = props;
 
+  /**
+   * State for the selected language.
+   * @type {[string, function]}
+   */
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+
+  /**
+   * Handler for changing the selected language.
+   * @function
+   * @param {Object} event - The event object.
+   */
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
     localStorage.setItem('selectedLanguage', event.target.value);
   };
+
   useEffect(() => {
     const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
 
@@ -56,12 +95,18 @@ function PreviousWorkouts(props) {
     }
   }, []);
 
-  
-
-
+  /**
+   * State for localized strings using the selected language.
+   * @type {[Object, function]}
+   */
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
+  
   useEffect(() => {
+    /**
+     * Fetch localized strings based on the selected language.
+     * @function
+     */
     async function fetchData() {
         const lang = selectedLanguage; // Call the getLanguage function
         setSelectedLanguage(lang); // Set the selected language based on the result
@@ -84,6 +129,11 @@ function PreviousWorkouts(props) {
   } else {
     strings.setLanguage('ru');
   }
+
+  /**
+   * Render the PreviousWorkouts component.
+   * @returns {JSX.Element} JSX element representing the PreviousWorkouts component.
+   */
   return (
     <div>
       <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>{strings.previousWorkouts}</h2>

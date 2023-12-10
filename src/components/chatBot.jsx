@@ -4,7 +4,20 @@ import { useState } from "react";
 
 const API_KEY = import.meta.env.VITE_CHAT_GPT_API_KEY;
 
+/**
+ * React component for a fitness chatbot.
+ * @module ChatBot
+ * @param {Object} props - React component props.
+ * @param {function} props.closeChat - Function to close the chat.
+ * @param {Object} props.strings - Localized strings for the chat.
+ * @param {boolean} props.isChatOpen - Flag indicating whether the chat is open.
+ * @returns {JSX.Element} JSX element representing the ChatBot component.
+ */
 function ChatBot({ closeChat, strings, isChatOpen }) {
+    /**
+     * State for typing indicator and chat messages.
+     * @type {[boolean, function]}
+     */
     const [typing, setTyping] = useState(false);
     const [messages, setMessages] = useState([
         {
@@ -13,6 +26,12 @@ function ChatBot({ closeChat, strings, isChatOpen }) {
         }
     ]);
 
+    /**
+     * Handles sending a user message to the chatbot.
+     * @param {string} message - User's message.
+     * @async
+     * @function
+     */
     const handleSend = async (message) => {
         const newMessage = {
             message: message,
@@ -28,6 +47,12 @@ function ChatBot({ closeChat, strings, isChatOpen }) {
         await processMessageToBot(newMessages);
     }
 
+ /**
+     * Processes the chat messages and sends them to the chatbot for a response.
+     * @param {Object[]} chatMessages - Array of chat message objects.
+     * @async
+     * @function
+     */
  async function processMessageToBot(chatMessages) {
     let apiMessages = chatMessages.map((messageObject) => {
         let role = "";
@@ -75,6 +100,10 @@ function ChatBot({ closeChat, strings, isChatOpen }) {
     });
  }
 
+  /**
+     * JSX representing the ChatBot component.
+     * @returns {JSX.Element} JSX element representing the ChatBot component.
+     */
   return (
     <div
       style={{

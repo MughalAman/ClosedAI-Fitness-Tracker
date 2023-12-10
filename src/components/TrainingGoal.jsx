@@ -2,10 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateUserData } from '../utils/api';
 
+/**
+ * Component for selecting the training goal.
+ * @component
+ * @param {Object} props - Component props.
+ * @returns {JSX.Element} JSX element representing the TrainingGoal component.
+ */
 function TrainingGoal(props) {
+
+    /**
+     * State for the selected training goal.
+     * @type {[string, function]}
+     */
     const [selectedGoal, setSelectedGoal] = useState('');
+
+    /**
+     * React Router navigation hook.
+     */
     const navigate = useNavigate();
 
+    /**
+     * Handles the selection of training goal.
+     * @async
+     * @param {string} goal - Selected training goal.
+     * @returns {Promise<void>} A Promise that resolves once the selection is handled.
+     */
     const handleGoalSelection = async (goal) => {
         setSelectedGoal(goal);
         // Save the selected goal to extra_data using API call
@@ -15,6 +36,12 @@ function TrainingGoal(props) {
         navigate('/');
     };
 
+    /**
+     * Saves the training goal to the server.
+     * @async
+     * @param {string} goal - Training goal to save.
+     * @returns {Promise<void>} A Promise that resolves once the goal is saved.
+     */
     const saveTrainingGoal = async (goal) => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -41,6 +68,10 @@ function TrainingGoal(props) {
         }
     };
 
+    /**
+     * Styles for the heading of the component.
+     * @type {Object}
+     */
     const headingStyle = {
         color: 'white',
         textShadow: '0px 0px 4px rgba(0, 0, 0, 0.56)',
@@ -52,6 +83,10 @@ function TrainingGoal(props) {
         textAlign: 'center', // Center the text horizontally
     };
 
+    /**
+     * Styles for the main container of the component.
+     * @type {Object}
+     */
     const containerStyle = {
         display: 'flex',
         flexDirection: 'row',
@@ -60,6 +95,10 @@ function TrainingGoal(props) {
         margin: '50px 0',
     };
 
+    /**
+     * Common styles for inner containers representing each training goal option.
+     * @type {Object}
+     */
     const innerContainerStyle = {
         display: 'inline-flex',
         padding: '0px 10px 19px 8px',
@@ -77,7 +116,11 @@ function TrainingGoal(props) {
         cursor: 'pointer',
     };
 
-    // Define txtStyle with the desired styling properties
+
+    /**
+     * Styles for text inside each inner container.
+     * @type {Object}
+     */
     const txtStyle = {
         color: 'white',
         fontFamily: 'Inter',
@@ -87,6 +130,10 @@ function TrainingGoal(props) {
         lineHeight: 'normal',
     };
 
+    /**
+     * Styles for paragraph inside each inner container.
+     * @type {Object}
+     */
     const pStyle = {
         color: 'white',
         fontFamily: 'Inter',
@@ -96,6 +143,9 @@ function TrainingGoal(props) {
         textAlign: 'left',
     };
 
+    /**
+     * useEffect hook to set showExtraQuestions to false in localStorage.
+     */
     useEffect(() => {
         localStorage.setItem('showExtraQuestions', false);
     }

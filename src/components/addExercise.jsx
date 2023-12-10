@@ -4,10 +4,28 @@ import { createExercise } from '../utils/api';
 
 import localizationData from '../assets/localization.json';
 
+/**
+ * React component for adding exercises.
+ * @module AddExercise
+ * @param {Object} props - React component props.
+ * @param {string} props.userId - User ID.
+ * @param {string} props.workoutId - Workout ID.
+ * @param {function} props.closeModal - Function to close the modal.
+ * @returns {JSX.Element} JSX element representing the AddExercise component.
+ */
 function addExercise(props) {
+  /**
+   * State for selected language and localized strings.
+   * @type {[string, function]}
+   */
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
+  /**
+   * Fetches data based on the selected language.
+   * @async
+   * @function
+   */
   useEffect(() => {
     async function fetchData() {
         const lang = selectedLanguage; // Call the getLanguage function
@@ -22,7 +40,7 @@ function addExercise(props) {
     fetchData();
 }, []);
 
-
+  // Set the language based on the selectedLanguage state
   if (selectedLanguage === 'tr') {
     strings.setLanguage('tr');
   } else if (selectedLanguage === 'ru') {
@@ -31,6 +49,10 @@ function addExercise(props) {
     strings.setLanguage('en');
   }
 
+  /**
+   * Styles for the container.
+   * @type {Object}
+   */
   const containerStyle = {
     width: '1662px',
     height: '764px',
@@ -48,6 +70,10 @@ function addExercise(props) {
     backgroundColor: '#121212',
   };
 
+  /**
+   * Styles for the title.
+   * @type {Object}
+   */
   const titleStyle = {
     fontSize: '64px',
     fontWeight: 'bold',
@@ -122,10 +148,18 @@ function addExercise(props) {
     cursor: "pointer",
   }
 
+  /**
+   * Handles the start of drag events.
+   * @param {Event} event - Drag event.
+   */
   const handleDragStart = (event) => {
     event.preventDefault();
   };
 
+  /**
+   * Handles the addition of an exercise.
+   * @function
+   */
   const handleAddExercise = () =>{
     const nameInput = document.getElementById('name');
     const setInput = document.getElementById('set');
@@ -166,9 +200,17 @@ function addExercise(props) {
     }
     
   }
-
+  
+  /**
+   * State for tags and related functions.
+   * @type {[Array<string>, function]}
+   */
   const [tags, setTags] = useState([]);
 
+  /**
+   * Handles the submission of a tag.
+   * @function
+   */
   const handleSubmit = () => {
     let tagsCopy = tags;
     const value = document.getElementById("tagInput").value;
@@ -188,6 +230,10 @@ function addExercise(props) {
     setTrigger(true);
   }
 
+  /**
+   * Deletes a tag.
+   * @param {string} tag - Tag to be deleted.
+   */
   const deleteTag = (tag) => {
     let tagsCopy = tags;
     tagsCopy = tagsCopy.filter(item => item !== tag);
@@ -195,20 +241,39 @@ function addExercise(props) {
     setTrigger(true);
   }
 
+  /**
+   * Creates a JSX element for a tag.
+   * @param {string} tag - Tag value.
+   * @param {number} key - Unique key for the tag.
+   * @returns {JSX.Element} JSX element representing the tag.
+   */
   const createTag = (tag, key) => {
     return (
       <li style={tagItem} key={key}><p style={tagsX} onClick={(e)=>{e.stopPropagation(), deleteTag(tag)}}>x</p>{tag}</li>
     );
   }
+
+  /**
+   * State for tag elements and trigger.
+   * @type {[Array<JSX.Element>, function]}
+   */
   const [tagElements, setTagElements] = useState([]);
   const [update, setTrigger] = useState(false);
 
+  /**
+   * Effect to update tag elements when the tags state changes.
+   * @function
+   */
   useEffect(()=>{
     setTagElements(tags.map((tag, key)=>createTag(tag, key)));
     setTrigger(false)
 
   }, [update]);
 
+  /**
+   * JSX representing the AddExercise component.
+   * @returns {JSX.Element} JSX element representing the AddExercise component.
+   */
   return (
     <div style={background} onDragStart={handleDragStart}>
       <div style={containerStyle}>

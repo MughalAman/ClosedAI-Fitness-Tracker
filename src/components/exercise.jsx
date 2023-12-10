@@ -3,10 +3,32 @@ import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 import { getLanguage } from '../utils/api';
 
+/**
+ * React component for displaying exercise information and details in a modal.
+ * @module Exercise
+ * @param {Object} props - React component props.
+ * @param {string} props.name - Exercise name.
+ * @param {string} props.videoUrl - URL of the exercise video.
+ * @param {number} props.sets - Number of sets for the exercise.
+ * @param {number} props.reps - Number of repetitions for the exercise.
+ * @param {string} props.weight - Weight used for the exercise.
+ * @param {string} props.description - Description of the exercise.
+ * @param {boolean} props.clickable - Flag indicating whether the exercise is clickable.
+ * @returns {JSX.Element} JSX element representing the Exercise component.
+ */
 const exercise = (props) => {
+    /**
+     * State for the selected language and localized strings.
+     * @type {[string, function]}
+     */
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
     const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
+  /**
+     * Fetches data based on the selected language.
+     * @async
+     * @function
+     */
   useEffect(() => {
     async function fetchData() {
         const lang = selectedLanguage; // Call the getLanguage function
@@ -21,7 +43,7 @@ const exercise = (props) => {
     fetchData();
 }, []);
 
-
+    // Set the language based on the selectedLanguage state
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
     } else if (selectedLanguage === 'en') {
@@ -30,10 +52,18 @@ const exercise = (props) => {
         strings.setLanguage('ru');
     }
 
+    /**
+     * Styles for the exercise component.
+     * @type {Object}
+     */
     const exerciseStyle = {
         color: "white",
     }
 
+    /**
+     * Styles for the modal.
+     * @type {Object}
+     */
     const modalStyle = {
         backgroundColor: "black",
         width: "100%",
@@ -47,12 +77,15 @@ const exercise = (props) => {
         fontFamily: "Inter",
     }
 
+    /**
+     * Styles for the modal content.
+     * @type {Object}
+     */
     const modalContent = {
         backgroundColor: "#0F0E0E",
         width: "100%",
         height: "100%",
         margin: "auto",
-
     }
 
     const history = {
@@ -110,19 +143,33 @@ const exercise = (props) => {
         padding: "15px"
     }
 
-
+    /**
+     * State for controlling the modal's open/closed state.
+     * @type {[boolean, function]}
+     */
     const [isModalOpen, setModalOpen] = useState(false);
 
+    /**
+     * Opens the modal.
+     * @function
+     */
     const openModal = () => {
         setModalOpen(true);
     };
 
+    /**
+     * Closes the modal.
+     * @function
+     */
     const closeModal = () => {
         setModalOpen(false);
     };
 
+    /**
+     * Modal component for displaying detailed exercise information.
+     * @returns {JSX.Element} JSX element representing the Modal component.
+     */
     const Modal = () => {
-
         return (
             <div style={modalStyle}>
                 <div style={modalContent}>
@@ -147,6 +194,10 @@ const exercise = (props) => {
         );
     }
 
+    /**
+     * JSX representing the Exercise component.
+     * @returns {JSX.Element} JSX element representing the Exercise component.
+     */
     return (
         <div style={exerciseStyle}>
             {isModalOpen && <Modal isOpen={isModalOpen} />}

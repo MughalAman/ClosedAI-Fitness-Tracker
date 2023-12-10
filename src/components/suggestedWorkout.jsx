@@ -2,21 +2,40 @@ import React, { useState } from 'react';
 import Exercise from './exercise';
 import Workout from './workout';
 
-//ei ole vielä toteutettu
-const exerciseList = [1, 2, 3, 4, 5, 6];
-
+/**
+ * Component for displaying a suggested workout.
+ * @component
+ * @param {Object} props - Component props.
+ * @returns {JSX.Element} JSX element representing the suggestedWorkout component.
+ */
 const suggestedWorkout = (props) => {
 
+    /**
+     * State for controlling the visibility of the modal.
+     * @type {[boolean, function]}
+     */
     const [isModalOpen, setModalOpen] = useState(false);
 
+    /**
+     * Function to open the modal.
+     * @function
+     */
     const openModal = () => {
         setModalOpen(true);
     };
 
+    /**
+     * Function to close the modal.
+     * @function
+     */
     const closeModal = () => {
         setModalOpen(false);
     };
 
+    /**
+     * Styles for the modal.
+     * @type {Object}
+     */
     const modalStyle = {
         color: "white",
         width: "100%",
@@ -34,6 +53,10 @@ const suggestedWorkout = (props) => {
         alignContent: "center",
     }
 
+    /**
+     * Styles for the modal content.
+     * @type {Object}
+     */
     const modalContent = {
         backgroundColor: "#0F0E0E",
         width: "auto",
@@ -46,12 +69,20 @@ const suggestedWorkout = (props) => {
         padding: "15px",
     }
 
+    /**
+     * Styles for the skip button.
+     * @type {Object}
+     */
     const skip = {
         position: "relative",
         alignSelf: "end",
         padding: "15px",
     }
 
+    /**
+     * Styles for the modal background.
+     * @type {Object}
+     */
     const modalBackground = {
         width: "100%",
         height: "100%",
@@ -61,7 +92,11 @@ const suggestedWorkout = (props) => {
         zIndex: -1,
     }
 
-
+    /**
+     * Modal component to display suggested workouts.
+     * @component
+     * @returns {JSX.Element} JSX element representing the Modal component.
+     */
     const Modal = () => {
         //max 5 workouttia
         return (

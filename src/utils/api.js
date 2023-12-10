@@ -1,5 +1,17 @@
-// api.js
-
+/**
+ * Creates a new user.
+ * @async
+ * @function
+ * @param {string} name - User's name.
+ * @param {string} email - User's email.
+ * @param {string} password - User's password.
+ * @param {string} weight - User's weight.
+ * @param {string} height - User's height.
+ * @param {string} gender - User's gender.
+ * @param {string} birth_date - User's birth date.
+ * @throws {Error} Throws an error if the request fails.
+ * @returns {Promise<Object>} A promise that resolves to the created user data.
+ */
 async function createUser(name, email, password, weight, height, gender, birth_date) {
   try {
     const response = await fetch('https://fitness-api-wlzk.onrender.com/user/', {
@@ -28,6 +40,15 @@ async function createUser(name, email, password, weight, height, gender, birth_d
   }
 }
 
+/**
+ * Updates user data with new information.
+ * @async
+ * @function
+ * @param {string} token - User authentication token.
+ * @param {Object} newData - New data to update.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<void>} Returns a promise that resolves when the update is successful.
+ */
 async function updateUserData(token, newData) {
   try {
     // Fetch the existing user data
@@ -74,6 +95,15 @@ async function updateUserData(token, newData) {
   }
 }
 
+/**
+ * Retrieves a user authentication token.
+ * @async
+ * @function
+ * @param {string} email - User's email address.
+ * @param {string} password - User's password.
+ * @throws {Error} Throws an error if login fails or the API request fails.
+ * @returns {Promise<string>} Returns a promise that resolves to the user's authentication token.
+ */
 async function getUserToken(email, password) {
   try {
     const response = await fetch('https://fitness-api-wlzk.onrender.com/token', {
@@ -97,6 +127,14 @@ async function getUserToken(email, password) {
   }
 }
 
+/**
+ * Retrieves user data based on the authentication token.
+ * @async
+ * @function
+ * @param {string} token - User authentication token.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves to the user data.
+ */
 function getUser(token) {
   return fetch('https://fitness-api-wlzk.onrender.com/user/me', {
       method: 'GET',
@@ -120,6 +158,14 @@ function getUser(token) {
       });
 }
 
+/**
+ * Retrieves a user ID based on the provided friend code.
+ * @async
+ * @function
+ * @param {string} friendcode - Friend code used to identify a user.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves to user data based on the friend code.
+ */
 async function getUserIdFromFriendcode(friendcode) {
   try {
     const response = await fetch(`https://fitness-api-wlzk.onrender.com/users/fc/${friendcode}`, {
@@ -139,6 +185,14 @@ async function getUserIdFromFriendcode(friendcode) {
   }
 }
 
+/**
+ * Retrieves user data based on the user ID.
+ * @async
+ * @function
+ * @param {string} userId - User ID used to identify a user.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves to user data based on the user ID.
+ */
 async function getUserFromUserId(userId) {
   try {
     const response = await fetch(`https://fitness-api-wlzk.onrender.com/user/${userId}`, {
@@ -158,6 +212,15 @@ async function getUserFromUserId(userId) {
   }
 }
 
+/**
+ * Updates the user's profile picture URL.
+ * @async
+ * @function
+ * @param {string} url - New profile picture URL.
+ * @param {string} token - User authentication token.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves when the update is successful.
+ */
 async function updateUserProfilePicUrl(url, token) {
   return fetch('https://fitness-api-wlzk.onrender.com/user/', {
     method: 'PUT',
@@ -433,6 +496,16 @@ const cloneExercise = async (exerciseId, workoutId, userId) => {
   }
 }
 
+/**
+ * Creates a new friendship between two users.
+ * @async
+ * @function
+ * @param {string} userId - User ID initiating the friendship.
+ * @param {string} friendId - User ID of the friend.
+ * @param {string} statusId - Friendship status ID.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves to friendship data.
+ */
 async function createFriendship(userId, friendId, statusId) {
   try{
     const response = await fetch('https://fitness-api-wlzk.onrender.com/friendship/', {
@@ -457,6 +530,14 @@ async function createFriendship(userId, friendId, statusId) {
   }
 }
 
+/**
+ * Retrieves all friendships for a given user.
+ * @async
+ * @function
+ * @param {string} userId - User ID for which to retrieve friendships.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves to an array of friendship data.
+ */
 async function getUserFriendships(userId) {
   const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendships/user/${userId}`, {
     method: 'GET',
@@ -500,6 +581,15 @@ async function deleteFriendship(friendshipId) {
   }
 }
 
+/**
+ * Updates the status of a friendship.
+ * @async
+ * @function
+ * @param {string} friendshipId - Friendship ID.
+ * @param {string} statusId - New friendship status ID.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves when the update is successful.
+ */
 async function updateFriendship(friendshipId, statusId) {
   const response = await fetch(`https://fitness-api-wlzk.onrender.com/friendship/${friendshipId}/?status_id=${statusId}`, {
     method: 'PUT'
@@ -512,6 +602,15 @@ async function updateFriendship(friendshipId, statusId) {
   }
 }
 
+/**
+ * Creates a new workout date.
+ * @async
+ * @function
+ * @param {string} workoutID - ID of the associated workout.
+ * @param {string} date - Date of the workout.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves to the created workout date data.
+ */
 async function createWorkoutDate(workoutID, date){
   return fetch('https://fitness-api-wlzk.onrender.com/workout/date/', {
     method: 'POST',
@@ -538,6 +637,14 @@ async function createWorkoutDate(workoutID, date){
     });
 }
 
+/**
+ * Deletes a workout date.
+ * @async
+ * @function
+ * @param {string} dateID - ID of the workout date to be deleted.
+ * @throws {Error} Throws an error if the API request fails.
+ * @returns {Promise<Object>} Returns a promise that resolves when the deletion is successful.
+ */
 async function deleteWorkoutDate(dateID){
   return fetch(`https://fitness-api-wlzk.onrender.com/workout/date/${dateID}`, {
     method: 'DELETE',

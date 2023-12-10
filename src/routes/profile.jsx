@@ -8,6 +8,11 @@ import localizationData from '../assets/localization.json';
 //lokalisaatio
 import LocalizedStrings from 'react-localization';
 
+/**
+ * Functional component representing the user profile settings.
+ * @component
+ * @returns {JSX.Element} - JSX element representing the Profile component.
+ */
 function Profile() {
     const [unit, setUnit] = useState('kg');
     const [selectedWeightUnit, setSelectedWeightUnit] = useState(null);
@@ -17,6 +22,13 @@ function Profile() {
 
     const [userData, setUserData] = useState({});
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    
+    /**
+    * Handles the language selection change and updates user data.
+    * @function
+    * @param {Object} event - The event object representing the language change.
+    * @returns {void}
+    */
     const handleLanguageChange = (event) => {
         setSelectedLanguage(event.target.value);
         localStorage.setItem('selectedLanguage', event.target.value);
@@ -45,7 +57,6 @@ function Profile() {
         }
     }, []);
 
-
     const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
     useEffect(() => {
@@ -62,8 +73,6 @@ function Profile() {
         fetchData();
     }, []);
 
-    
-
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
     } else if (selectedLanguage === 'en') {
@@ -72,6 +81,13 @@ function Profile() {
         strings.setLanguage('ru');
     }
 
+    /**
+   * Handles the user login and fetches user data.
+   * @async
+   * @function
+   * @param {string} token - User authentication token.
+   * @returns {void}
+   */
     const handleUserLogin = async (token) => {
         try {
             const data = await getUser(token);
@@ -137,7 +153,6 @@ function Profile() {
     const saveData = () => {
         updateUserData(localStorage.getItem('token'), {extra_data: {"visibility": profileVisibility}});
     }
-
 
     const calculateAgeFromDateOfBirth = (dateOfBirth) => {
         // The date of birth may be in the format of "YYYY-MM-DD"
@@ -214,20 +229,25 @@ function Profile() {
 
     const radioStyle = {
         margin: '0 10px',
-        marginLeft: '45px',
+        marginLeft: '20px',
+        width: '25px',
+        height: '25px',
     };
 
     const labelStyle = {
         color: '#FFF',
         fontSize: '32px',
         margin: '0 10px',
-        marginLeft: '45px',
+        marginLeft: '10px',
     };
 
     const containerStyle = {
         display: 'flex',
-        justifyContent: 'flex-start',
+        flexDirection: 'column', // Change the flex direction to column
+        alignItems: 'center', // Center items horizontally
+        justifyContent: 'center', // Center items vertically
         color: '#FFF',
+        fontFamily: 'Inter',
     };
 
     const leftContentStyle = {
@@ -255,6 +275,10 @@ function Profile() {
         lineHeight: 'normal',
     };
 
+    /**
+   * Renders the left content of the profile settings.
+   * @returns {JSX.Element} - JSX element representing the left content.
+   */
     const leftContent = (
         <div>
             <h1 style={profileTxtStyle}>{strings.Profile}</h1>
@@ -324,9 +348,8 @@ function Profile() {
         background: '#D9D9D9',
         marginRight: '164px',
         justifyContent: 'flex-start',
+        float: 'right',
     };
-
-    // ...
 
     const textStyle = {
         color: '#FFF',
@@ -334,9 +357,7 @@ function Profile() {
         fontSize: '30px',
         fontStyle: 'normal',
         fontWeight: 900,
-        lineHeight: '2',
         textAlign: 'center', // Center the text horizontally
-
     };
 
     const languageSelectStyle = {
@@ -350,6 +371,10 @@ function Profile() {
         fontSize: '25px',
         margin: '5px 0',
         fontWeight: 'bold', // Teksti lihavoitu
+    };
+
+    const languageContainerStyle = {
+        marginTop: '20px', // Add some top margin to separate from the profile information
     };
 
     const selectedLanguageStyle = {
@@ -378,6 +403,10 @@ function Profile() {
         </div>
     );
 
+    /**
+   * Renders the right content of the profile settings.
+   * @returns {JSX.Element} - JSX element representing the right content.
+   */
     const rightContent = (
         <div >
             <h1 style={{
@@ -387,7 +416,7 @@ function Profile() {
                 fontStyle: 'normal',
                 fontWeight: 1000,
                 marginBottom: '180px',
-                marginTop: '-30px',
+                marginTop: '30px',
             }}>{strings.profileinformation}</h1>
 
             <img
@@ -433,16 +462,15 @@ function Profile() {
 
     return (
         <div style={containerStyle}>
-            <div style={leftContentStyle}>
-                {leftContent}
-                <button style={saveButtonStyle} onClick={saveData}>{strings.save}</button>
-            </div>
-            <div style={rightContentStyle}>
-                {rightContent}
-                {language}
-            </div>
+          {rightContent}
+          <div style={languageContainerStyle}>
+            {language}
+            <button style={saveButtonStyle} onClick={saveData}>
+              {strings.save}
+            </button>
+          </div>
         </div>
-    );
+      );
 }
 
 export default Profile;

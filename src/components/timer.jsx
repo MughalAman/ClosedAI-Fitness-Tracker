@@ -3,13 +3,30 @@ import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 import { getLanguage } from '../utils/api';
 
+/**
+ * Timer component for managing workout timing.
+ * @component
+ * @param {Object} props - Component props.
+ * @param {Function} props.nextExercise - Function to get the next exercise name based on elapsed time.
+ * @returns {JSX.Element} JSX element representing the Timer component.
+ */
 const Timer = (props) => {
 
+  /**
+   * State for the selected language.
+   * @type {[string, function]}
+   */
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+  
+  /**
+   * Event handler for language change.
+   * @param {Object} event - The event object.
+   */
   const handleLanguageChange = (event) => {
       setSelectedLanguage(event.target.value);
       localStorage.setItem('selectedLanguage', event.target.value);
   };
+
   useEffect(() => {
       const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
 
@@ -26,7 +43,10 @@ const Timer = (props) => {
       }
   }, []);
 
-
+  /**
+   * State for localized strings.
+   * @type {[Object, function]}
+   */
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
   useEffect(() => {
@@ -52,6 +72,10 @@ const Timer = (props) => {
       strings.setLanguage('ru');
   }
 
+  /**
+   * Styles for the timer component.
+   * @type {Object}
+   */
   const timerStyle = {
     display: "flex",
     flexDirection: "column",
@@ -62,6 +86,10 @@ const Timer = (props) => {
     minWidth: "30vw", 
   };
 
+  /**
+   * Styles for the timer button.
+   * @type {Object}
+   */
   const timerButton = {
     aspectRatio: "1/1",
     borderRadius: "50%",
@@ -70,11 +98,34 @@ const Timer = (props) => {
     fontSize: "6vw",
   };
 
+  /**
+   * State for the start time of the timer.
+   * @type {[number, function]}
+   */
   const [startTime, setStartTime] = useState(null);
+
+  /**
+   * State for the elapsed time of the timer.
+   * @type {[number, function]}
+   */
   const [elapsedTime, setElapsedTime] = useState(0);
+
+  /**
+   * State for the running state of the timer.
+   * @type {[boolean, function]}
+   */
   const [isRunning, setIsRunning] = useState(false);
+
+  /**
+   * State for the name of the next exercise.
+   * @type {[string, function]}
+   */
   const [nextName, setNextName] = useState("name");
 
+  /**
+   * Color for the timer button based on the running state.
+   * @type {string}
+   */
   const buttonColor = isRunning ? "#0084CE" : "#00CE78";
 
   useEffect(() => {
@@ -94,12 +145,21 @@ const Timer = (props) => {
     return () => clearInterval(interval);
   }, [isRunning, startTime]);
 
+  /**
+   * Format time function.
+   * @param {number} timeInSeconds - Time in seconds.
+   * @returns {string} Formatted time string.
+   */
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     return `${minutes}${strings.min} ${seconds}${strings.sec}`;
   };
 
+  /**
+   * Timer logic function to start/stop the timer.
+   * @function
+   */
   const timerLogic = () => {
     if (!isRunning) {
       setStartTime(Date.now() - elapsedTime);

@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { createUser, getUserToken, getUser } from '../utils/api';
 
-
+/**
+ * Functional component representing the signup form.
+ * @component
+ * @param {Object} props - React component props.
+ * @param {Function} props.setShowSignup - Function to control the visibility of the signup form.
+ * @param {Function} props.setIsLoggedIn - Function to set the login state.
+ * @param {Function} props.setUserData - Function to set user data.
+ * @returns {JSX.Element} - JSX element representing the Signup component.
+ */
 function Signup(props) {
     const { setShowSignup, setIsLoggedIn, setUserData } = props;
 
@@ -143,11 +151,27 @@ function Signup(props) {
     // Alustetaan valittu sukupuoli
     const [selectedGender, setSelectedGender] = useState(''); // Gender can only be MALE, FEMALE or OTHER
 
+    /**
+    * Handles the 'Already have an account? Login' link click.
+   * Shows the login form.
+   * @param {Object} e - Event object.
+   * @returns {void}
+   */
     const handleShowSignup = (e) => {
         e.preventDefault();
         setShowSignup(false);
     }
 
+    /**
+   * Handles the signup form submission.
+   * Validates password match and required fields.
+   * Calls API to create a new user.
+   * Retrieves user token and data for login.
+   * @async
+   * @function
+   * @param {Object} e - Event object.
+   * @returns {void}
+   */
     const handleSignup = (e) => {
         e.preventDefault();
 

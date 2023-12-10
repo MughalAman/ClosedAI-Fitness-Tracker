@@ -5,6 +5,10 @@ import { createFriendship, getUserIdFromFriendcode, getUserFriendships, updateFr
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 
+/**
+ * Styles for the Navbar component.
+ * @type {Object}
+ */
 const navbarStyles = {
   display: 'flex',
   justifyContent: 'space-between',
@@ -17,6 +21,10 @@ const navbarStyles = {
   borderRadius: '4px',
 };
 
+/**
+ * Styles for the search container within the Navbar.
+ * @type {Object}
+ */
 const searchContainerStyles = {
   display: 'flex',
   alignItems: 'center',
@@ -24,6 +32,10 @@ const searchContainerStyles = {
   backgroundColor: '#404040',
 };
 
+/**
+ * Styles for the input field within the Navbar.
+ * @type {Object}
+ */
 const inputStyles = {
   backgroundColor: '#404040',
   padding: '8px',
@@ -35,17 +47,29 @@ const inputStyles = {
   width: '398px',
 };
 
+/**
+ * Styles for the search icon within the Navbar.
+ * @type {Object}
+ */
 const iconStyles = {
   color: 'black',
   marginRight: '0px',
   cursor: 'pointer',
 };
 
+/**
+ * Styles for bold text within the Navbar.
+ * @type {Object}
+ */
 const boldText = {
   fontWeight: 'bold',
   color: 'white',
 };
 
+/**
+ * Styles for the user image within the Navbar.
+ * @type {Object}
+ */
 const imageStyles = {
   width: '64px',
   height: '64px',
@@ -54,15 +78,33 @@ const imageStyles = {
   marginRight: '4px',
 };
 
+/**
+ * Navbar component for displaying navigation and friend search functionality.
+ * @module Navbar
+ * @component
+ * @default
+ */
 function Navbar(props) {
+
+  /**
+   * State for the search text in the friend search input field.
+   * @type {[string, function]}
+   */
   const [searchText, setSearchText] = useState('');
   const { userData } = props;
 
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+  
+  /**
+   * Handler for handling language change.
+   * @function
+   * @param {Object} event - The event object.
+   */
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
     localStorage.setItem('selectedLanguage', event.target.value);
   };
+
   useEffect(() => {
     const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
 
@@ -79,9 +121,17 @@ function Navbar(props) {
     }
   }, []);
 
+  /**
+   * State for localized strings using the selected language.
+   * @type {[Object, function]}
+   */
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
   useEffect(() => {
+    /**
+     * Fetch localized strings based on the selected language.
+     * @function
+     */
     async function fetchData() {
         const lang = selectedLanguage; // Call the getLanguage function
         setSelectedLanguage(lang); // Set the selected language based on the result
@@ -103,11 +153,19 @@ function Navbar(props) {
     strings.setLanguage('ru');
   }
 
+  /**
+   * Handler for handling click on the search icon.
+   * @function
+   */
   const handleSearchClick = () => {
     handleAddFriend();
     setSearchText('');
   };
 
+  /**
+   * Handler for adding a friend based on the entered friend code.
+   * @function
+   */
   const handleAddFriend = async () => {
     // Check if the user is trying to add themselves
     if (userData.friend_code === searchText) {
@@ -168,6 +226,10 @@ function Navbar(props) {
       });
   };
 
+  /**
+   * JSX representing the Navbar component.
+   * @returns {JSX.Element} JSX element representing the Navbar component.
+   */
   return (
     <nav style={navbarStyles}>
       <div style={searchContainerStyles}>

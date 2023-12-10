@@ -7,10 +7,24 @@ import { getWorkout, cloneExercise, getLanguage } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 
+/**
+ * React component for displaying and managing a workout.
+ * @module Workout
+ * @component
+ * @default
+ */
 const Workout = (props) => {
     
+    /**
+     * State for the selected language.
+     * @type {[string, function]}
+     */
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
 
+    /**
+     * State for localized strings using the selected language.
+     * @type {[Object, function]}
+     */
     const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
     useEffect(() => {
@@ -40,21 +54,37 @@ const Workout = (props) => {
     const [isNewExerciseModalOpen, setNewExerciseModal] = useState(false);
     const [getMills, setMills] = useState(0);
 
+    /**
+     * Handler for opening the modal.
+     * @function
+     */
     const openModal = () => {
         setModalOpen(true);
         props.setDraggable(false);
     };
     
-      const closeModal = () => {
+    /**
+     * Handler for closing the modal.
+     * @function
+     */
+    const closeModal = () => {
         setModalOpen(false);
         setMills(0);
         props.setDraggable(true);
     };
 
+    /**
+     * Handler for opening the new exercise modal.
+     * @function
+     */
     const openNewExerciseModal = () => {
         setNewExerciseModal(true);
     };
     
+    /**
+     * Handler for closing the new exercise modal.
+     * @function
+     */
     const closeNewExerciseModal = () => {
         setNewExerciseModal(false);
         setTrigger(true);
@@ -236,6 +266,10 @@ const workoutRef = useRef();
         );
     }
 
+/**
+     * JSX representing the Workout component.
+     * @returns {JSX.Element} JSX element representing the Workout component.
+     */    
 return (
     <div ref={workoutRef}>
         {isModalOpen && <Modal />}

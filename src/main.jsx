@@ -10,9 +10,12 @@ import TrainingExperience from './components/TrainingExperience.jsx';
 
 import './index.css';
 
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+/**
+ * Create a browser router with specified routes.
+ * @type {Object}
+ */
 const router = createBrowserRouter([
   {
     path: '/',
@@ -44,6 +47,11 @@ const router = createBrowserRouter([
   },
 ]);
 
+/**
+ * Render the React app into the root element.
+ * @param {JSX.Element} element - React element to render.
+ * @returns {void}
+ */
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router}>

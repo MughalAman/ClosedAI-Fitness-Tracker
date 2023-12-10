@@ -6,7 +6,6 @@ import Workout from '../components/workout';
 import MainPageWorkoutList from '../components/MainPageWorkoutList';
 import { getUserFriendships, getUserFromUserId, getLanguage, getUser } from '../utils/api';
 import ChatBot from '../components/chatBot';
-
 import localizationData from '../assets/localization.json';
 
 
@@ -115,7 +114,13 @@ const sectionStyles = {
   justifyContent: 'space-between', // Add this line to align items to the right
 };
 
-
+/**
+ * Component representing the main page of the application.
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Object} props.userData - User data object.
+ * @returns {JSX.Element} - JSX element representing the MainPage component.
+ */
 function MainPage(props) {
 
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
@@ -141,6 +146,10 @@ function MainPage(props) {
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const [isChatOpen, setIsChatOpen] = useState(false);
 
+  /**
+   * Toggles the chat window.
+   * @returns {void}
+   */
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
   };
@@ -167,6 +176,10 @@ function MainPage(props) {
 
   console.log(userData);
 
+  /**
+   * Fetches user friends and their workout data.
+   * @returns {void}
+   */
   useEffect(() => {
     const fetchData = async () => {
 
@@ -200,6 +213,10 @@ function MainPage(props) {
     fetchData();
   }, [userData]);
 
+  /**
+   * Asynchronously retrieves the user's language setting.
+   * @returns {string} - User's selected language.
+   */
   async function getLanguage() {
     const token = localStorage.getItem('token');
   

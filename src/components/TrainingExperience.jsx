@@ -2,10 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateUserData } from '../utils/api';
 
+/**
+ * Component for selecting the training experience level.
+ * @component
+ * @param {Object} props - Component props.
+ * @returns {JSX.Element} JSX element representing the TrainingExperience component.
+ */
 function TrainingExperience(props) {
+
+  /**
+   * State for the selected training experience.
+   * @type {[string, function]}
+   */
   const [selectedExperience, setSelectedExperience] = useState('');
+
+  /**
+   * React Router navigation hook.
+   */
   const navigate = useNavigate();
 
+  /**
+   * Handles the selection of training experience.
+   * @async
+   * @param {string} experience - Selected training experience level.
+   * @returns {Promise<void>} A Promise that resolves once the selection is handled.
+   */
   const handleExperienceSelection = async (experience) => {
     setSelectedExperience(experience);
     // Save the selected experience to extra_data using API call
@@ -15,6 +36,12 @@ function TrainingExperience(props) {
     navigate('/trainingdays');
   };
 
+  /**
+   * Saves the training experience to the server.
+   * @async
+   * @param {string} experience - Training experience level to save.
+   * @returns {Promise<void>} A Promise that resolves once the experience is saved.
+   */
   const saveTrainingExperience = async (experience) => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -41,6 +68,10 @@ function TrainingExperience(props) {
     }
   };
 
+  /**
+   * Styles for the heading of the component.
+   * @type {Object}
+   */
   const headingStyle = {
     color: 'white',
     textShadow: '0px 0px 4px rgba(0, 0, 0, 0.56)',
@@ -52,6 +83,10 @@ function TrainingExperience(props) {
     textAlign: 'center',
   };
 
+  /**
+   * Styles for the main container of the component.
+   * @type {Object}
+   */
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row',
@@ -60,6 +95,10 @@ function TrainingExperience(props) {
     margin: '50px 0',
   };
 
+  /**
+   * Common styles for inner containers representing each training experience option.
+   * @type {Object}
+   */
   const innerContainerStyle = {
     display: 'inline-flex',
     padding: '0px 10px 19px 8px',
@@ -77,6 +116,10 @@ function TrainingExperience(props) {
     cursor: 'pointer',
   };
 
+  /**
+   * Styles for text inside each inner container.
+   * @type {Object}
+   */
   const txtStyle = {
     color: 'white',
     fontFamily: 'Inter',
@@ -86,6 +129,10 @@ function TrainingExperience(props) {
     lineHeight: 'normal',
   };
 
+  /**
+   * Styles for paragraph inside each inner container.
+   * @type {Object}
+   */
   const pStyle = {
     color: 'white',
     fontFamily: 'Inter',

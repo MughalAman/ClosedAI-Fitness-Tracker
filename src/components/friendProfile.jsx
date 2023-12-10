@@ -5,25 +5,59 @@ import { getUserFromUserId, getLanguage } from "../utils/api";
 import { useParams } from "react-router-dom";
 import localizationData from '../assets/localization.json';
 
+/**
+ * React component for displaying a friend's profile information.
+ * @module FriendProfile
+ * @component
+ * @default
+ */
 function FriendProfile() {
+
+  /**
+   * State for storing the friend's data.
+   * @type {[Object, function]}
+   */
   const [friendData, setFriendData] = useState(null);
+
+  /**
+   * React Router hook to get the user ID parameter from the URL.
+   * @type {Object}
+   */
   const { id } = useParams();
 
+  /**
+   * Effect hook to fetch the friend's data based on the user ID.
+   * @function
+   * @param {string} id - User ID parameter from the URL.
+   */
   useEffect(() => {
     getUserFromUserId(id).then((data) => {
       setFriendData(data);
     });
   }, [id]);
 
+  /**
+   * State for the selected language.
+   * @type {[string, function]}
+   */
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem("selectedLanguage") || "en"
   );
 
+  /**
+   * Event handler for changing the selected language.
+   * @function
+   * @param {Object} event - The change event.
+   */
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
     localStorage.setItem("selectedLanguage", event.target.value);
   };
 
+  /**
+   * Effect hook to initialize the selected language.
+   * @function
+   */
   useEffect(() => {
     const storedSelectedLanguage = localStorage.getItem("selectedLanguage");
 
@@ -40,8 +74,16 @@ function FriendProfile() {
     }
   }, []);
 
+  /**
+   * State for localized strings using the selected language.
+   * @type {[Object, function]}
+   */
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
+  /**
+   * Effect hook to fetch data and set localized strings based on the selected language.
+   * @function
+   */
   useEffect(() => {
     async function fetchData() {
         const lang = selectedLanguage; // Call the getLanguage function
@@ -56,9 +98,7 @@ function FriendProfile() {
     fetchData();
 }, []);
 
-
-
-
+  // Set the language based on the selectedLanguage state
   if (selectedLanguage === "tr") {
     strings.setLanguage("tr");
   } else if (selectedLanguage === "en") {
@@ -73,6 +113,10 @@ function FriendProfile() {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
+  /**
+   * Styles for the profile text.
+   * @type {Object}
+   */
   const profileTxtStyle = {
     color: "#FFF",
     fontFamily: "Inter",
@@ -81,27 +125,47 @@ function FriendProfile() {
     textAlign: "left",
   };
 
+  /**
+   * Styles for the smaller profile text.
+   * @type {Object}
+   */
   const profileTxtStyle1 = {
     ...profileTxtStyle,
     fontSize: "46px",
   };
 
+  /**
+   * Styles for the main container.
+   * @type {Object}
+   */
   const containerStyle = {
     display: "flex",
     justifyContent: "flex-start",
     color: "#FFF",
   };
 
+  /**
+   * Styles for the left content.
+   * @type {Object}
+   */
   const leftContentStyle = {
     marginRight: "20px",
   };
 
+  /**
+   * Styles for the right content.
+   * @type {Object}
+   */
   const rightContentStyle = {
     marginTop: "50px",
     marginLeft: "600px",
     lineHeight: "3",
   };
 
+  /**
+   * Styles for the text.
+   * @type {Object}
+   */
   const textStyle = {
     color: "#FFF",
     fontFamily: "Inter",
@@ -112,6 +176,12 @@ function FriendProfile() {
     textAlign: "center",
   };
 
+  /**
+   * Function to calculate age from the date of birth.
+   * @function
+   * @param {Date} dateOfBirth - The date of birth.
+   * @returns {number} The calculated age.
+   */
   const calculateAgeFromDateOfBirth = (dateOfBirth) => {
     // The date of birth may be in the format of "YYYY-MM-DD"
     // Split the string to get the year, month and day
@@ -144,6 +214,10 @@ function FriendProfile() {
     return age;
 }
 
+  /**
+   * JSX representing the FriendProfile component.
+   * @returns {JSX.Element|null} JSX element representing the FriendProfile component or null if friendData is not available.
+   */
   return (
     friendData && (
       <div style={containerStyle}>

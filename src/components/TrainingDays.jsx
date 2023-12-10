@@ -2,10 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateUserData } from '../utils/api';
 
+/**
+ * Component for selecting the number of training days per week.
+ * @component
+ * @param {Object} props - Component props.
+ * @returns {JSX.Element} JSX element representing the TrainingDays component.
+ */
 function TrainingDays(props) {
+
+  /**
+   * State for the selected training days.
+   * @type {[string, function]}
+   */
   const [selectedDays, setSelectedDays] = useState('');
+
+  /**
+   * React Router navigation hook.
+   */
   const navigate = useNavigate();
 
+  /**
+   * Handles the selection of training days.
+   * @async
+   * @param {string} days - Selected number of training days.
+   * @returns {Promise<void>} A Promise that resolves once the selection is handled.
+   */
   const handleDaysSelection = async (days) => {
     setSelectedDays(days);
     // Save the selected days to extra_data using API call
@@ -41,6 +62,10 @@ function TrainingDays(props) {
     }
   };
 
+  /**
+   * Styles for the heading of the component.
+   * @type {Object}
+   */
   const headingStyle = {
     color: 'white',
     textShadow: '0px 0px 4px rgba(0, 0, 0, 0.56)',
@@ -52,6 +77,10 @@ function TrainingDays(props) {
     textAlign: 'center',
   };
 
+  /**
+   * Styles for the main container of the component.
+   * @type {Object}
+   */
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row',
@@ -60,7 +89,10 @@ function TrainingDays(props) {
     margin: '50px 0',
   };
 
-  // Common style for inner containers
+  /**
+   * Common styles for inner containers representing each training day option.
+   * @type {Object}
+   */
   const innerContainerStyle = {
     display: 'inline-flex',
     flexDirection: 'column',
@@ -77,6 +109,10 @@ function TrainingDays(props) {
     cursor: 'pointer',
   };
 
+  /**
+   * Styles for text inside each inner container.
+   * @type {Object}
+   */
   const txtStyle = {
     color: 'white',
     fontFamily: 'Inter',
@@ -86,6 +122,10 @@ function TrainingDays(props) {
     lineHeight: 'normal',
   };
 
+  /**
+   * Styles for paragraph inside each inner container.
+   * @type {Object}
+   */
   const pStyle = {
     color: 'white',
     fontFamily: 'Inter',

@@ -7,11 +7,29 @@ import { getWorkout, cloneExercise, getLanguage } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 
+/**
+ * Functional component representing a workout.
+ * @component
+ * @param {Object} props - Component props.
+ * @returns {JSX.Element} JSX element representing the Workout component.
+ */
 const Workout = (props) => {
     
+    /**
+     * State for the selected language.
+     * @type {[string, function]}
+     */
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    
+    /**
+     * State for the localized strings.
+     * @type {[LocalizedStrings, function]}
+     */
     const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
+    /**
+     * useEffect hook to fetch data and set the selected language.
+     */
     useEffect(() => {
       async function fetchData() {
           const lang = selectedLanguage; // Call the getLanguage function
@@ -26,6 +44,9 @@ const Workout = (props) => {
       fetchData();
   }, []);
   
+    /**
+     * Set the language based on the selectedLanguage state.
+     */
     if (selectedLanguage === 'tr') {
         strings.setLanguage('tr');
     } else if (selectedLanguage === 'en') {
@@ -34,30 +55,60 @@ const Workout = (props) => {
         strings.setLanguage('ru');
     }
 
+    /**
+     * State for controlling the modal visibility.
+     * @type {[boolean, function]}
+     */
     const [isModalOpen, setModalOpen] = useState(false);
+    
+    /**
+     * State for controlling the new exercise modal visibility.
+     * @type {[boolean, function]}
+     */
     const [isNewExerciseModalOpen, setNewExerciseModal] = useState(false);
+    
+    /**
+     * State for storing the total milliseconds of completed exercises.
+     * @type {[number, function]}
+     */
     const [getMills, setMills] = useState(0);
 
+    /**
+     * Function to open the main modal.
+     */
     const openModal = () => {
         setModalOpen(true);
         props.setDraggable(false);
     };
     
-      const closeModal = () => {
+    /**
+     * Function to close the main modal.
+     */
+    const closeModal = () => {
         setModalOpen(false);
         setMills(0);
         props.setDraggable(true);
     };
 
+    /**
+     * Function to open the new exercise modal.
+     */
     const openNewExerciseModal = () => {
         setNewExerciseModal(true);
     };
     
+    /**
+     * Function to close the new exercise modal.
+     */
     const closeNewExerciseModal = () => {
         setNewExerciseModal(false);
         setTrigger(true);
     };
 
+    /**
+     * Style object for the main modal.
+     * @type {Object}
+     */
     const modalStyle = {
         backgroundColor: "black",
         color: "white",
@@ -74,6 +125,10 @@ const Workout = (props) => {
         draggable: false,
     }
 
+    /**
+     * Style object for the content inside the main modal.
+     * @type {Object}
+     */
     const modalContent = {
         backgroundColor: "#0F0E0E",
         width: "100%",
@@ -83,6 +138,10 @@ const Workout = (props) => {
 
     }
 
+    /**
+     * Style object for the top bar of the main modal.
+     * @type {Object}
+     */
     const topBar = {
         backgroundColor: "black",
         width: "100%",
@@ -91,32 +150,50 @@ const Workout = (props) => {
         alignItems: "center",
     }
 
+    /**
+     * Style object for the workout name.
+     * @type {Object}
+     */
     const workoutName = {
         top: "15px",
         fontSize: "15px",
         position: "relative",
     }
 
+    /**
+     * Style object for the workout name inside the modal.
+     * @type {Object}
+     */
     const workoutModalName = {
         position: "relative",
         fontSize: "2vw",
     }
 
-
+    /**
+     * Style object for the search field in the main modal.
+     * @type {Object}
+     */
     const searchField = {
         color: "black",
         padding: "5px",
         fontFamily: "Inter",
     }
 
+    /**
+     * Style object for the list of exercises inside the main modal.
+     * @type {Object}
+     */
     const exerciseListStyle = {
         width: "50%",
         minWidth: "500px",
         overflow: "auto",
         margin: "auto",
-
     }
 
+    /**
+     * Style object for each list item in the main modal.
+     * @type {Object}
+     */
     const listItem = {
         display: "grid",
         gridTemplateColumns: "3fr 1fr 1fr",
@@ -124,6 +201,10 @@ const Workout = (props) => {
         fontFamily: "Inter",
     }
 
+    /**
+     * Style object for the workout label.
+     * @type {Object}
+     */
     const workoutLabel = {
         draggable: "false",
         backgroundColor: "#404040",
@@ -135,15 +216,22 @@ const Workout = (props) => {
         height: "300px",
         position: "relative",
         cursor: "pointer",
-    
     }
 
+    /**
+     * Style object for the full workout text.
+     * @type {Object}
+     */
     const fullWorkoutText = {
         fontSize: "15px",
         position: "relative",
         top: "230px",
     }
 
+    /**
+     * Style object for the timer.
+     * @type {Object}
+     */
     const timerStyle = {
         float: "right",
         position: "relative",
@@ -153,10 +241,27 @@ const Workout = (props) => {
         minWidth: "30vw",
     }
 
+/**
+     * State for storing the workout data.
+     * @type {[Object, function]}
+     */
 const [data, setData] = useState(null);
+
+/**
+     * State for storing the exercise data.
+     * @type {[Array, function]}
+     */
 const [exerciseData, setExercises] = useState([]);
+
+/**
+     * State for triggering updates.
+     * @type {[boolean, function]}
+     */
 const [update, setTrigger] = useState(false);
 
+/**
+     * Function to fetch workout data.
+     */
 const fetchData = async () => {
     const response = await getWorkout(props.id);
                                 //    \|/tänne se MAIN workoutin id, josta otetaan kaikki valmiit exerciset
@@ -165,13 +270,31 @@ const fetchData = async () => {
     setExercises(exercises);
 };
 
+/**
+     * useEffect hook to fetch data and trigger updates.
+     */
 useEffect(() => {
   fetchData(); 
   setTrigger(false);
 }, [update]);
 
+/**
+     * Ref for the workout component.
+     */
 const workoutRef = useRef();
 
+    /**
+     * Function to get an exercise JSX element.
+     * @param {number} e - Exercise ID.
+     * @param {string} name - Exercise name.
+     * @param {string} description - Exercise description.
+     * @param {number} sets - Number of sets.
+     * @param {number} reps - Number of reps.
+     * @param {number} weight - Weight.
+     * @param {string} url - Video URL.
+     * @param {boolean} isClickable - Indicates whether the exercise is clickable.
+     * @returns {JSX.Element} JSX element representing the exercise.
+     */
     const getExercise = (e, name="NAME", description="DESCRIPTION", sets=99, reps=99, weight=99, url="https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
         return React.createElement(
             'li',
@@ -182,13 +305,27 @@ const workoutRef = useRef();
         );
     }
 
+    /**
+     * Function to handle exercise option selection.
+     * @param {string|number} option - Selected exercise option.
+     */
     const handleExerciseOption = (option) => {
         option === Math.floor(option) ? cloneExercise(option, props.id, data.user_id) : option === "new" && openNewExerciseModal();
     }
 
+    /**
+     * Modal component.
+     * @returns {JSX.Element} JSX element representing the modal.
+     */
     const Modal = () => {
     let i=-2;
     const names = data.exercises.map((exercise)=>exercise.name);
+    
+    /**
+         * Function to handle exercise completion.
+         * @param {number} mills - Milliseconds.
+         * @returns {string} Name of the completed exercise.
+         */
     const exerciseDone = (mills) => {
         i++
         if(i>=names.length) setMills(getMills+mills);

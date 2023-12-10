@@ -4,13 +4,30 @@ import { getUser, createWorkout, createWorkoutDate, deleteWorkoutDate, getWorkou
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 
+/**
+ * PlanBuilder component for building and managing workout plans.
+ * @module PlanBuilder
+ * @component
+ * @default
+ */
 const PlanBuilder = (props) => {
 
+    /**
+        * State for the selected language.
+        * @type {[string, function]}
+        */
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+    
+    /**
+   * Handler for changing the selected language.
+   * @function
+   * @param {Object} event - The event object.
+   */
     const handleLanguageChange = (event) => {
         setSelectedLanguage(event.target.value);
         localStorage.setItem('selectedLanguage', event.target.value);
     };
+
     useEffect(() => {
         const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
 
@@ -26,9 +43,18 @@ const PlanBuilder = (props) => {
             setSelectedLanguage(storedSelectedLanguage);
         }
     }, []);
+
+    /**
+   * State for localized strings using the selected language.
+   * @type {[Object, function]}
+   */
     const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
     useEffect(() => {
+     /**
+     * Fetch localized strings based on the selected language.
+     * @function
+     */
       async function fetchData() {
           const lang = selectedLanguage; // Call the getLanguage function
           setSelectedLanguage(lang); // Set the selected language based on the result
@@ -65,6 +91,10 @@ const closeModal = () => {
     setModalOpen(false);
 };
 
+/**
+   * Dynamic styles for the modal.
+   * @type {Object}
+   */
 const modalStyle = {
     backgroundColor: "black",
     color: "white",
@@ -80,6 +110,10 @@ const modalStyle = {
     fontFamily: "Inter",
 }
 
+/**
+   * Dynamic styles for the modal content.
+   * @type {Object}
+   */
 const modalContent = {
     backgroundColor: "#0F0E0E",
     width: "100%",
@@ -93,6 +127,10 @@ const modalContent = {
 
 }
 
+/**
+   * Dynamic styles for the heading.
+   * @type {Object}
+   */
 const headingStyle = {
     color: '#1DAEFF',
     textShadow: '0px 0px 4px rgba(0, 0, 0, 0.56)',
@@ -171,7 +209,6 @@ const newWorkout = {
     minWidth: "200px",
     height: "300px",
     alignItems: "center",
-
 }
 
 const calendar = {
@@ -182,6 +219,13 @@ const calendar = {
     display: "flex",
 }
 
+/**
+   * Function to create a workout label for rendering.
+   * @function
+   * @param {number} i - Index of the label.
+   * @param {Object} data - Workout data.
+   * @returns {JSX.Element} JSX element representing the workout label.
+   */
 const createWorkoutLabel = (i, data) => {
     //console.log(data)
     return React.createElement(
@@ -211,6 +255,11 @@ const getLabel = (target) => {
     return e;
 }
 
+/**
+   * Function to get a list of segments based on the current date.
+   * @function
+   * @returns {Array} List of segments.
+   */
 const getSegmentList = () => {
     let segmentList = [];
     const currentDate = new Date();
@@ -273,24 +322,6 @@ const dropToList = (e) => {
     obj?.parentDate && (document.querySelector(`[date="${obj.parentDate}"]`).innerHTML="");
 }
 
-//EI OLE VALMIS VIELÄ MUTTA EI NIIN TÄRKEÄ JOTEN VOI JÄTTÄÄ VIIMEISEKSI
-const dropWorkout = (e) => {
-    /*
-    e.preventDefault();
-    const target = getLabel(e.target);
-    const obj = JSON.parse(e.dataTransfer.getData("application/json"));
-    const data = document.getElementById(obj.id);
-    console.log("target", target.parentElement);
-    console.log("data", data);
-    //target.parentElement?.getAttribute("date") && (
-    //   setTimeout(data.parentElement.appendChild(target), 1000)
-    //)
-    //(target.parentElement.id !== "workoutField" || dataParent.id !== "workoutField") && target.parentElement.insertBefore(data, target.parentElement.childNodes[target.parentElement.children.length-1]);
-    //target.parentElement.id !== "workoutField" && dataParent.insertBefore(target, dataParent.childNodes[target.parentElement.children.length-1]);
-    */
-}
-
-
 const createUserWorkout = (value) => {
 	getUser(localStorage.getItem('token'))
 	.then((data)=>{createWorkout(value, [], data.user_id)});
@@ -318,6 +349,11 @@ const NewWorkoutModal = () =>{
         </div>
     );
 }
+
+/**
+   * JSX representing the PlanBuilder component.
+   * @returns {JSX.Element} JSX element representing the PlanBuilder component.
+   */
 return (
     <div style={{maxWidth: "1280px", margin: "auto"}}>
         <h1 style={headingStyle}>{strings.planbuilder}</h1>
