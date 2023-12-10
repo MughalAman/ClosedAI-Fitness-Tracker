@@ -134,7 +134,7 @@ const Workout = (props) => {
         textAlign: "center",
         position: "relative",
         cursor: "pointer",
-        width: '600px',
+        width: '800px',
         height: '555px',
         borderRadius: '4px',
         fontSize: '30px',
