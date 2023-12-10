@@ -17,30 +17,30 @@ const Timer = (props) => {
    * @type {[string, function]}
    */
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
-  
+
   /**
    * Event handler for language change.
    * @param {Object} event - The event object.
    */
   const handleLanguageChange = (event) => {
-      setSelectedLanguage(event.target.value);
-      localStorage.setItem('selectedLanguage', event.target.value);
+    setSelectedLanguage(event.target.value);
+    localStorage.setItem('selectedLanguage', event.target.value);
   };
 
   useEffect(() => {
-      const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
+    const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
 
-      if (!storedSelectedLanguage) {
-          fetch('/api/language')
-              .then(response => response.json())
-              .then(data => {
-                  const selectedLanguage = data.language;
-                  setSelectedLanguage(selectedLanguage);
-                  localStorage.setItem('selectedLanguage', selectedLanguage);
-              });
-      } else {
-          setSelectedLanguage(storedSelectedLanguage);
-      }
+    if (!storedSelectedLanguage) {
+      fetch('/api/language')
+        .then(response => response.json())
+        .then(data => {
+          const selectedLanguage = data.language;
+          setSelectedLanguage(selectedLanguage);
+          localStorage.setItem('selectedLanguage', selectedLanguage);
+        });
+    } else {
+      setSelectedLanguage(storedSelectedLanguage);
+    }
   }, []);
 
   /**
@@ -51,25 +51,25 @@ const Timer = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-        const lang = selectedLanguage; // Call the getLanguage function
-        setSelectedLanguage(lang); // Set the selected language based on the result
-        setStrings(prevStrings => {
-            const newStrings = new LocalizedStrings(localizationData);
-            newStrings.setLanguage(lang);
-            return newStrings;
-        });
+      const lang = selectedLanguage; // Call the getLanguage function
+      setSelectedLanguage(lang); // Set the selected language based on the result
+      setStrings(prevStrings => {
+        const newStrings = new LocalizedStrings(localizationData);
+        newStrings.setLanguage(lang);
+        return newStrings;
+      });
     }
 
     fetchData();
-}, []);
+  }, []);
 
 
   if (selectedLanguage === 'tr') {
-      strings.setLanguage('tr');
+    strings.setLanguage('tr');
   } else if (selectedLanguage === 'en') {
-      strings.setLanguage('en');
+    strings.setLanguage('en');
   } else {
-      strings.setLanguage('ru');
+    strings.setLanguage('ru');
   }
 
   /**
@@ -82,8 +82,8 @@ const Timer = (props) => {
     justifyContent: "space-between",
     color: "white",
     fontSize: "2vw",
-    padding: "2vh", 
-    minWidth: "30vw", 
+    padding: "2vh",
+    minWidth: "30vw",
   };
 
   /**

@@ -101,24 +101,24 @@ function PreviousWorkouts(props) {
    */
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
-  
+
   useEffect(() => {
     /**
      * Fetch localized strings based on the selected language.
      * @function
      */
     async function fetchData() {
-        const lang = selectedLanguage; // Call the getLanguage function
-        setSelectedLanguage(lang); // Set the selected language based on the result
-        setStrings(prevStrings => {
-            const newStrings = new LocalizedStrings(localizationData);
-            newStrings.setLanguage(lang);
-            return newStrings;
-        });
+      const lang = selectedLanguage; // Call the getLanguage function
+      setSelectedLanguage(lang); // Set the selected language based on the result
+      setStrings(prevStrings => {
+        const newStrings = new LocalizedStrings(localizationData);
+        newStrings.setLanguage(lang);
+        return newStrings;
+      });
     }
 
     fetchData();
-}, []);
+  }, []);
 
 
 
@@ -137,7 +137,7 @@ function PreviousWorkouts(props) {
   return (
     <div>
       <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>{strings.previousWorkouts}</h2>
-      <div style={{ display: 'flex', flexDirection: showAsColumn ? 'column': 'row', gap: '1em', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', flexDirection: showAsColumn ? 'column' : 'row', gap: '1em', justifyContent: 'space-between' }}>
         {userData['workouts'].slice(0, 3).map((workout) => {
           // Calculate the total and average rating from the exercises' ratings
           let totalRating = 0;
@@ -150,18 +150,18 @@ function PreviousWorkouts(props) {
               ratedExercisesCount += 1;
             }
           });
-          
+
           const averageRating = ratedExercisesCount > 0
             ? (totalRating / ratedExercisesCount).toFixed(1)
             : 'N/A';
-          
+
           // Calculate the total workout duration from the exercises' durations
           const totalDuration = workout.exercises.reduce((acc, exercise) => acc + exercise.duration, 0);
-          
+
           // Calculate the total rpe from the exercises' rpes
           const totalRpe = workout.exercises.reduce((acc, exercise) => acc + exercise.rpe, 0);
           const averageRpe = (totalRpe / workout.exercises.length).toFixed(1);
-          
+
 
           return (
             <div key={workout.workout_id} style={boxStyles}>

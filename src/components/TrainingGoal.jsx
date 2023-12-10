@@ -31,7 +31,7 @@ function TrainingGoal(props) {
         setSelectedGoal(goal);
         // Save the selected goal to extra_data using API call
         const token = localStorage.getItem('token');
-        await updateUserData(token, {extra_data: {training_goal: goal}});
+        await updateUserData(token, { extra_data: { training_goal: goal } });
         // Redirect to the next page
         navigate('/');
     };

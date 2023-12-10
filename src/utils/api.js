@@ -77,18 +77,18 @@ async function updateUserData(token, newData) {
 
     console.log('Updated User Data:', updatedUserData);
 
-      const response = await fetch('https://fitness-api-wlzk.onrender.com/user/', {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedUserData),
-      });
+    const response = await fetch('https://fitness-api-wlzk.onrender.com/user/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedUserData),
+    });
 
-      if (!response.ok) {
-          console.error('Failed to save questionnaire data');
-      }
+    if (!response.ok) {
+      console.error('Failed to save questionnaire data');
+    }
 
   } catch (error) {
     console.error('Error:', error);
@@ -137,25 +137,25 @@ async function getUserToken(email, password) {
  */
 function getUser(token) {
   return fetch('https://fitness-api-wlzk.onrender.com/user/me', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-       }
-      })
-      .then((response) => {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+  })
+    .then((response) => {
       if (!response.ok) {
-          throw new Error('Network response was not ok');
+        throw new Error('Network response was not ok');
       }
       return response.json();
-      })
-      .then((data) => {
+    })
+    .then((data) => {
       console.log(data);
       return data;
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
       console.error('Error:', error);
-      });
+    });
 }
 
 /**
@@ -227,23 +227,23 @@ async function updateUserProfilePicUrl(url, token) {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
-     },
+    },
     body: JSON.stringify({
       "profile_pic_url": url,
     })
   })
     .then((response) => {
-    if (!response.ok) {
+      if (!response.ok) {
         throw new Error('Network response was not ok');
-    }
-    return response.json();
+      }
+      return response.json();
     })
     .then((data) => {
-    console.log(data);
-    return data;
+      console.log(data);
+      return data;
     })
     .catch((error) => {
-    console.error('Error:', error);
+      console.error('Error:', error);
     });
 }
 
@@ -256,7 +256,7 @@ async function setUserLanguage(id, lang) {
       height: data?.height,
       weight: data?.weight,
       gender: data?.gender,
-      extra_data: {"lang": lang},
+      extra_data: { "lang": lang },
     };
     const result = await setWorkout(id, updatedUserData);
     console.log(result);
@@ -279,7 +279,7 @@ async function getLanguage() {
 }
 
 
-function createWorkout(name="NAME", dates=[], userId) {
+function createWorkout(name = "NAME", dates = [], userId) {
   return fetch('https://fitness-api-wlzk.onrender.com/workout/', {
     method: 'POST',
     headers: {
@@ -296,7 +296,7 @@ function createWorkout(name="NAME", dates=[], userId) {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -318,7 +318,7 @@ function setWorkout(id, workoutData) {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -339,7 +339,7 @@ function getWorkout(id) {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -363,7 +363,7 @@ async function updateWorkout(id, workoutData) {
   }
 }
 
-function createExercise(name="NAME", description="DESCRIPTION", url="URL", userId, set, rep, dur, weight, rpe, workoutId, tags) {
+function createExercise(name = "NAME", description = "DESCRIPTION", url = "URL", userId, set, rep, dur, weight, rpe, workoutId, tags) {
   return fetch(`https://fitness-api-wlzk.onrender.com/exercise/`, {
     method: 'POST',
     headers: {
@@ -388,7 +388,7 @@ function createExercise(name="NAME", description="DESCRIPTION", url="URL", userI
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -410,7 +410,7 @@ function setExercise(id, exerciseData) {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -431,7 +431,7 @@ function getExercise(id) {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -452,7 +452,7 @@ function getExerciseRating(id) {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -507,7 +507,7 @@ const cloneExercise = async (exerciseId, workoutId, userId) => {
  * @returns {Promise<Object>} Returns a promise that resolves to friendship data.
  */
 async function createFriendship(userId, friendId, statusId) {
-  try{
+  try {
     const response = await fetch('https://fitness-api-wlzk.onrender.com/friendship/', {
       method: 'POST',
       headers: {
@@ -611,7 +611,7 @@ async function updateFriendship(friendshipId, statusId) {
  * @throws {Error} Throws an error if the API request fails.
  * @returns {Promise<Object>} Returns a promise that resolves to the created workout date data.
  */
-async function createWorkoutDate(workoutID, date){
+async function createWorkoutDate(workoutID, date) {
   return fetch('https://fitness-api-wlzk.onrender.com/workout/date/', {
     method: 'POST',
     headers: {
@@ -628,7 +628,7 @@ async function createWorkoutDate(workoutID, date){
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -645,18 +645,19 @@ async function createWorkoutDate(workoutID, date){
  * @throws {Error} Throws an error if the API request fails.
  * @returns {Promise<Object>} Returns a promise that resolves when the deletion is successful.
  */
-async function deleteWorkoutDate(dateID){
+async function deleteWorkoutDate(dateID) {
   return fetch(`https://fitness-api-wlzk.onrender.com/workout/date/${dateID}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-    }})
+    }
+  })
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       return data;
     })
@@ -665,4 +666,4 @@ async function deleteWorkoutDate(dateID){
     });
 }
 
-export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate, cloneExercise, getLanguage};
+export { createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate, cloneExercise, getLanguage };

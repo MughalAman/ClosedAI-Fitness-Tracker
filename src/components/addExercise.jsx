@@ -28,17 +28,17 @@ function addExercise(props) {
    */
   useEffect(() => {
     async function fetchData() {
-        const lang = selectedLanguage; // Call the getLanguage function
-        setSelectedLanguage(lang); // Set the selected language based on the result
-        setStrings(prevStrings => {
-            const newStrings = new LocalizedStrings(localizationData);
-            newStrings.setLanguage(lang);
-            return newStrings;
-        });
+      const lang = selectedLanguage; // Call the getLanguage function
+      setSelectedLanguage(lang); // Set the selected language based on the result
+      setStrings(prevStrings => {
+        const newStrings = new LocalizedStrings(localizationData);
+        newStrings.setLanguage(lang);
+        return newStrings;
+      });
     }
 
     fetchData();
-}, []);
+  }, []);
 
   // Set the language based on the selectedLanguage state
   if (selectedLanguage === 'tr') {
@@ -61,7 +61,7 @@ function addExercise(props) {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%)', 
+    transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -93,7 +93,7 @@ function addExercise(props) {
     backgroundColor: '#EAEAEA',
     margin: '9px 9px',
 
-};
+  };
 
   const buttonStyle = {
     width: '500px',
@@ -160,7 +160,7 @@ function addExercise(props) {
    * Handles the addition of an exercise.
    * @function
    */
-  const handleAddExercise = () =>{
+  const handleAddExercise = () => {
     const nameInput = document.getElementById('name');
     const setInput = document.getElementById('set');
     const repetitionInput = document.getElementById('repetition');
@@ -175,14 +175,14 @@ function addExercise(props) {
     let video = "";
     if (startIndex !== -1) {
       const videoId = uncutUrl.substring(startIndex + "watch?v=".length);
-      video = "https://www.youtube.com/embed/"+videoId;
-    } else if(urlInput.value!=="") {
+      video = "https://www.youtube.com/embed/" + videoId;
+    } else if (urlInput.value !== "") {
       alert("Invalid YouTube link");
     }
 
     console.log(video)
 
-    switch("") {
+    switch ("") {
       case nameInput.value: alert("Name cannot be empty");
         break;
       case setInput.value: alert("Sets cannot be empty");
@@ -191,16 +191,16 @@ function addExercise(props) {
         break;
       case weightInput.value: alert("Weight cannot be empty");
         break;
-      case rpeInput.value: alert("RPE cannot be empty"); 
+      case rpeInput.value: alert("RPE cannot be empty");
         break;
       case descriptionInput.value: alert("Description cannot be empty");
         break;
       default: createExercise(nameInput.value, descriptionInput.value, video, props.userId, setInput.value, repetitionInput.value, 0, weightInput.value, rpeInput.value, props.workoutId, tags);
-               props.closeModal();
+        props.closeModal();
     }
-    
+
   }
-  
+
   /**
    * State for tags and related functions.
    * @type {[Array<string>, function]}
@@ -215,15 +215,15 @@ function addExercise(props) {
     let tagsCopy = tags;
     const value = document.getElementById("tagInput").value;
     let ignore = false;
-    if(value.trim() === "") {
+    if (value.trim() === "") {
       alert("Empty tag cannot be submitted");
       ignore = true;
-    } else if(!/^[A-Za-z]+$/.test(value)) {
+    } else if (!/^[A-Za-z]+$/.test(value)) {
       alert("Tag can contain characters only");
       ignore = true;
-    } 
+    }
     else {
-      tagsCopy.forEach(tag=>tag === value && (alert("Tag already submitted"), ignore = true));
+      tagsCopy.forEach(tag => tag === value && (alert("Tag already submitted"), ignore = true));
     }
     ignore || (tagsCopy[tagsCopy.length] = value.toLowerCase());
     setTags(tagsCopy);
@@ -249,7 +249,7 @@ function addExercise(props) {
    */
   const createTag = (tag, key) => {
     return (
-      <li style={tagItem} key={key}><p style={tagsX} onClick={(e)=>{e.stopPropagation(), deleteTag(tag)}}>x</p>{tag}</li>
+      <li style={tagItem} key={key}><p style={tagsX} onClick={(e) => { e.stopPropagation(), deleteTag(tag) }}>x</p>{tag}</li>
     );
   }
 
@@ -264,8 +264,8 @@ function addExercise(props) {
    * Effect to update tag elements when the tags state changes.
    * @function
    */
-  useEffect(()=>{
-    setTagElements(tags.map((tag, key)=>createTag(tag, key)));
+  useEffect(() => {
+    setTagElements(tags.map((tag, key) => createTag(tag, key)));
     setTrigger(false)
 
   }, [update]);
@@ -279,24 +279,24 @@ function addExercise(props) {
       <div style={containerStyle}>
         <h1 style={titleStyle}>Add Exercise</h1>
         <div >
-        <input style={listStyle} id='name' type="text" placeholder={strings.name} />
-        <input style={listStyle} id='set' type="number" min="1" placeholder={strings.set} />
-        <input style={listStyle} id='repetition' type="number" min="1" placeholder={strings.repetition} />
-        <input style={listStyle} id='duration' type="number" min="1" placeholder={strings.duration} />
-        <input style={listStyle} id='weight' type="number" min="1" placeholder={strings.weight} />
-        <input style={listStyle} id='rpe' type="number" min="1" placeholder={strings.rpe} />
-        <input style={{...listStyle, width: "47%"}} id='description' type="text" placeholder={strings.description} />
-        <input style={{...listStyle, width: "47%"}} id='url' type="text" placeholder={strings.video_url} />
+          <input style={listStyle} id='name' type="text" placeholder={strings.name} />
+          <input style={listStyle} id='set' type="number" min="1" placeholder={strings.set} />
+          <input style={listStyle} id='repetition' type="number" min="1" placeholder={strings.repetition} />
+          <input style={listStyle} id='duration' type="number" min="1" placeholder={strings.duration} />
+          <input style={listStyle} id='weight' type="number" min="1" placeholder={strings.weight} />
+          <input style={listStyle} id='rpe' type="number" min="1" placeholder={strings.rpe} />
+          <input style={{ ...listStyle, width: "47%" }} id='description' type="text" placeholder={strings.description} />
+          <input style={{ ...listStyle, width: "47%" }} id='url' type="text" placeholder={strings.video_url} />
         </div>
-        <div style={{display: "inline-block", flexDirection: "column"}}>
-        <input style={listStyle} id="tagInput" type="text" placeholder="tags" />
-        <button style={buttonStyle} type="text" onClick={handleSubmit}>Submit Tag</button>
-        <ul style={tagsStyle}>
-        {tagElements}
-        </ul>
+        <div style={{ display: "inline-block", flexDirection: "column" }}>
+          <input style={listStyle} id="tagInput" type="text" placeholder="tags" />
+          <button style={buttonStyle} type="text" onClick={handleSubmit}>Submit Tag</button>
+          <ul style={tagsStyle}>
+            {tagElements}
+          </ul>
         </div>
-          <button style={buttonStyle} onClick={handleAddExercise}>Add</button>
-          <button style={{...buttonStyle, position: "absolute", right: "20px", bottom: "20px", width: "200px", backgroundColor: "red"}} onClick={e=>{e.preventDefault(), props.closeModal()}}>Cancel</button>
+        <button style={buttonStyle} onClick={handleAddExercise}>Add</button>
+        <button style={{ ...buttonStyle, position: "absolute", right: "20px", bottom: "20px", width: "200px", backgroundColor: "red" }} onClick={e => { e.preventDefault(), props.closeModal() }}>Cancel</button>
       </div>
     </div>
   );

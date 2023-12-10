@@ -31,17 +31,17 @@ function ExerciseComplete(props) {
    */
   useEffect(() => {
     async function fetchData() {
-        const lang = selectedLanguage; // Call the getLanguage function
-        setSelectedLanguage(lang); // Set the selected language based on the result
-        setStrings(prevStrings => {
-            const newStrings = new LocalizedStrings(localizationData);
-            newStrings.setLanguage(lang);
-            return newStrings;
-        });
+      const lang = selectedLanguage; // Call the getLanguage function
+      setSelectedLanguage(lang); // Set the selected language based on the result
+      setStrings(prevStrings => {
+        const newStrings = new LocalizedStrings(localizationData);
+        newStrings.setLanguage(lang);
+        return newStrings;
+      });
     }
 
     fetchData();
-}, []);
+  }, []);
 
   // Set the language based on the selectedLanguage state
   if (selectedLanguage === 'tr') {

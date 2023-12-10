@@ -94,7 +94,7 @@ function Navbar(props) {
   const { userData } = props;
 
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
-  
+
   /**
    * Handler for handling language change.
    * @function
@@ -133,17 +133,17 @@ function Navbar(props) {
      * @function
      */
     async function fetchData() {
-        const lang = selectedLanguage; // Call the getLanguage function
-        setSelectedLanguage(lang); // Set the selected language based on the result
-        setStrings(prevStrings => {
-            const newStrings = new LocalizedStrings(localizationData);
-            newStrings.setLanguage(lang);
-            return newStrings;
-        });
+      const lang = selectedLanguage; // Call the getLanguage function
+      setSelectedLanguage(lang); // Set the selected language based on the result
+      setStrings(prevStrings => {
+        const newStrings = new LocalizedStrings(localizationData);
+        newStrings.setLanguage(lang);
+        return newStrings;
+      });
     }
 
     fetchData();
-}, []);
+  }, []);
 
   if (selectedLanguage === 'tr') {
     strings.setLanguage('tr');

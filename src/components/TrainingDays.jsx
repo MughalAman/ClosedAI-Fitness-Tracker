@@ -31,7 +31,7 @@ function TrainingDays(props) {
     setSelectedDays(days);
     // Save the selected days to extra_data using API call
     const token = localStorage.getItem('token');
-    await updateUserData(token, {extra_data: {training_days: days}});
+    await updateUserData(token, { extra_data: { training_days: days } });
     // Redirect to the next page or homepage
     navigate('/traininggoal');
   };

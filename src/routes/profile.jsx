@@ -22,7 +22,7 @@ function Profile() {
 
     const [userData, setUserData] = useState({});
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
-    
+
     /**
     * Handles the language selection change and updates user data.
     * @function
@@ -32,7 +32,7 @@ function Profile() {
     const handleLanguageChange = (event) => {
         setSelectedLanguage(event.target.value);
         localStorage.setItem('selectedLanguage', event.target.value);
-        updateUserData(localStorage.getItem('token'), {extra_data: {lang: event.target.value}})
+        updateUserData(localStorage.getItem('token'), { extra_data: { lang: event.target.value } })
     };
 
     useEffect(() => {
@@ -69,7 +69,7 @@ function Profile() {
                 return newStrings;
             });
         }
-    
+
         fetchData();
     }, []);
 
@@ -151,7 +151,7 @@ function Profile() {
     };
 
     const saveData = () => {
-        updateUserData(localStorage.getItem('token'), {extra_data: {"visibility": profileVisibility}});
+        updateUserData(localStorage.getItem('token'), { extra_data: { "visibility": profileVisibility } });
     }
 
     const calculateAgeFromDateOfBirth = (dateOfBirth) => {
@@ -462,15 +462,15 @@ function Profile() {
 
     return (
         <div style={containerStyle}>
-          {rightContent}
-          <div style={languageContainerStyle}>
-            {language}
-            <button style={saveButtonStyle} onClick={saveData}>
-              {strings.save}
-            </button>
-          </div>
+            {rightContent}
+            <div style={languageContainerStyle}>
+                {language}
+                <button style={saveButtonStyle} onClick={saveData}>
+                    {strings.save}
+                </button>
+            </div>
         </div>
-      );
+    );
 }
 
 export default Profile;

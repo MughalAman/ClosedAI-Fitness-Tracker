@@ -24,24 +24,24 @@ const exercise = (props) => {
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
     const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
-  /**
-     * Fetches data based on the selected language.
-     * @async
-     * @function
-     */
-  useEffect(() => {
-    async function fetchData() {
-        const lang = selectedLanguage; // Call the getLanguage function
-        setSelectedLanguage(lang); // Set the selected language based on the result
-        setStrings(prevStrings => {
-            const newStrings = new LocalizedStrings(localizationData);
-            newStrings.setLanguage(lang);
-            return newStrings;
-        });
-    }
+    /**
+       * Fetches data based on the selected language.
+       * @async
+       * @function
+       */
+    useEffect(() => {
+        async function fetchData() {
+            const lang = selectedLanguage; // Call the getLanguage function
+            setSelectedLanguage(lang); // Set the selected language based on the result
+            setStrings(prevStrings => {
+                const newStrings = new LocalizedStrings(localizationData);
+                newStrings.setLanguage(lang);
+                return newStrings;
+            });
+        }
 
-    fetchData();
-}, []);
+        fetchData();
+    }, []);
 
     // Set the language based on the selectedLanguage state
     if (selectedLanguage === 'tr') {

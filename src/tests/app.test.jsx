@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from '../App.jsx';
 import { it } from 'vitest';
 
@@ -8,7 +8,7 @@ it("renders without crashing", () => {
 })
 
 it("should have login", () => {
-    render(<App />)
-    const message = screen.queryByText(/Login/i);
-    expect(message).toBeVisible();
+  render(<App />)
+  const message = screen.queryByText(/Login/i);
+  expect(message).toBeVisible();
 })

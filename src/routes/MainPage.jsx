@@ -126,20 +126,20 @@ function MainPage(props) {
   const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
 
   useEffect(() => {
-      async function fetchData() {
-          const lang = selectedLanguage; // Call the getLanguage function
-          console.log(lang);
-          setSelectedLanguage(lang); // Set the selected language based on the result
-          setStrings(prevStrings => {
-              const newStrings = new LocalizedStrings(localizationData);
-              newStrings.setLanguage(lang);
-              return newStrings;
-          });
-      }
-  
-      fetchData();
+    async function fetchData() {
+      const lang = selectedLanguage; // Call the getLanguage function
+      console.log(lang);
+      setSelectedLanguage(lang); // Set the selected language based on the result
+      setStrings(prevStrings => {
+        const newStrings = new LocalizedStrings(localizationData);
+        newStrings.setLanguage(lang);
+        return newStrings;
+      });
+    }
+
+    fetchData();
   }, []);
-  
+
 
   const { userData } = props;
   const [userFriends, setUserFriends] = useState([]);
@@ -219,24 +219,24 @@ function MainPage(props) {
    */
   async function getLanguage() {
     const token = localStorage.getItem('token');
-  
+
     if (token) {
       const response = await getUser(token);
-  
+
       if (response && response.extra_data) {
         const lang = response.extra_data.lang;
         console.log(lang);
         return lang; // Return the language directly
       }
     }
-  
+
     return 'en'; // Provide a default language in case of errors
   }
 
   const date = new Date();
-  const format = `${date.getFullYear()}-${date.getMonth()+1}-${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}`
+  const format = `${date.getFullYear()}-${date.getMonth() + 1}-${("" + date.getDate()).length < 2 ? "0" + date.getDate() : date.getDate()}`
   let workout;
-  userData.workouts.forEach(x=>x.dates.forEach(y=>y.date===format && (workout = x)));
+  userData.workouts.forEach(x => x.dates.forEach(y => y.date === format && (workout = x)));
 
   return (
     <div style={parentContainerStyles}>
@@ -246,7 +246,7 @@ function MainPage(props) {
           <h2 style={titleStyles}>{strings.friendActivity}</h2>
           {userFriends.map((friend) => (
             <div key={friend['workouts'][0].workout_id} style={activityItemStyles}>
-              <a href={"/friendprofile/" + friend.user_id} onClick={(e) => friend['extra_data'].visibility==="private" && e.preventDefault()}>
+              <a href={"/friendprofile/" + friend.user_id} onClick={(e) => friend['extra_data'].visibility === "private" && e.preventDefault()}>
                 <img
                   src={friend.profile_pic_url ? friend.profile_pic_url : '../pic.jpg'}
                   alt={`${friend.name}'s profile`}
@@ -255,7 +255,7 @@ function MainPage(props) {
               </a>
               <div>
                 <p style={friendNameStyles}>{friend.name}</p>
-                <p>{friend['extra_data'].visibility==="public" ? friend['workouts'] && friend['workouts'].length > 0 ? friend['workouts'][0].name : 'No Workouts' : "Private Profile"}</p>
+                <p>{friend['extra_data'].visibility === "public" ? friend['workouts'] && friend['workouts'].length > 0 ? friend['workouts'][0].name : 'No Workouts' : "Private Profile"}</p>
               </div>
               <div style={{ marginLeft: 'auto' }}>
                 {(friend['workouts'][0].exercises.length > 0 && !friend['extra_data'].visibility) &&
@@ -270,7 +270,7 @@ function MainPage(props) {
           ))}
         </div>
         <div style={rightContainerStyles}>
-        {workout && <MainPageWorkoutList data={workout} id={workout.workout_id} />}
+          {workout && <MainPageWorkoutList data={workout} id={workout.workout_id} />}
         </div>
       </div>
 
@@ -283,14 +283,14 @@ function MainPage(props) {
         </div>
 
         {isChatOpen && (
-  <ChatBot closeChat={toggleChat} strings={strings} isChatOpen={isChatOpen}>
-    <button onClick={toggleChat}></button>
-  </ChatBot>
-)}
+          <ChatBot closeChat={toggleChat} strings={strings} isChatOpen={isChatOpen}>
+            <button onClick={toggleChat}></button>
+          </ChatBot>
+        )}
 
         <a href="/planbuilder">
           <div style={buttonStyles}>
-          <p>{strings.GotoPlanBuilder}</p>
+            <p>{strings.GotoPlanBuilder}</p>
           </div>
         </a>
       </div>

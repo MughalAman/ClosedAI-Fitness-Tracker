@@ -86,17 +86,17 @@ function FriendProfile() {
    */
   useEffect(() => {
     async function fetchData() {
-        const lang = selectedLanguage; // Call the getLanguage function
-        setSelectedLanguage(lang); // Set the selected language based on the result
-        setStrings(prevStrings => {
-            const newStrings = new LocalizedStrings(localizationData);
-            newStrings.setLanguage(lang);
-            return newStrings;
-        });
+      const lang = selectedLanguage; // Call the getLanguage function
+      setSelectedLanguage(lang); // Set the selected language based on the result
+      setStrings(prevStrings => {
+        const newStrings = new LocalizedStrings(localizationData);
+        newStrings.setLanguage(lang);
+        return newStrings;
+      });
     }
 
     fetchData();
-}, []);
+  }, []);
 
   // Set the language based on the selectedLanguage state
   if (selectedLanguage === "tr") {
@@ -203,16 +203,16 @@ function FriendProfile() {
 
     // If the current month is before the birth month, the age is one year less
     if (currentMonth < month) {
-        age--;
+      age--;
     }
 
     // If the current month is the same as the birth month, but the current day is before the birth day, the age is one year less
     if (currentMonth === month && currentDay < day) {
-        age--;
+      age--;
     }
 
     return age;
-}
+  }
 
   /**
    * JSX representing the FriendProfile component.
@@ -238,7 +238,7 @@ function FriendProfile() {
               fontWeight: 900,
             }}
           >
-          Profile information
+            Profile information
           </h1>
           <img
             src={friendData.profile_pic_url ? friendData.profile_pic_url : '../pic.jpg'}

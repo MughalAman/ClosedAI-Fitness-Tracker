@@ -31,7 +31,7 @@ function TrainingExperience(props) {
     setSelectedExperience(experience);
     // Save the selected experience to extra_data using API call
     const token = localStorage.getItem('token');
-    await updateUserData(token, {extra_data: {training_experience: experience}});
+    await updateUserData(token, { extra_data: { training_experience: experience } });
     // Redirect to the next page or homepage
     navigate('/trainingdays');
   };
@@ -106,7 +106,7 @@ function TrainingExperience(props) {
     alignItems: 'center',
     justifyContent: 'start',
     borderRadius: '5px',
-    background: selectedExperience  ? 'green' : '#404040', // Change background color based on selected experience
+    background: selectedExperience ? 'green' : '#404040', // Change background color based on selected experience
     color: selectedExperience ? 'white' : 'white', // Adjust text color based on selected experience
     width: '440px',
     height: '324px',
