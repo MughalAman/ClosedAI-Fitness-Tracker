@@ -238,7 +238,7 @@ function MainPage(props) {
               </a>
               <div>
                 <p style={friendNameStyles}>{friend.name}</p>
-                <p>{!friend['extra_data'].visibility==="public" ? friend['workouts'] && friend['workouts'].length > 0 ? friend['workouts'][0].name : 'No Workouts' : "Private Profile"}</p>
+                <p>{friend['extra_data'].visibility==="public" ? friend['workouts'] && friend['workouts'].length > 0 ? friend['workouts'][0].name : 'No Workouts' : "Private Profile"}</p>
               </div>
               <div style={{ marginLeft: 'auto' }}>
                 {(friend['workouts'][0].exercises.length > 0 && !friend['extra_data'].visibility) &&
