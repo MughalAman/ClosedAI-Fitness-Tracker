@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import App from './app';
+import App from '../App.jsx';
 import { it } from 'vitest';
 
 it("renders without crashing", () => {
