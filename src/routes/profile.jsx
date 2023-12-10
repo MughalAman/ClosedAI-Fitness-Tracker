@@ -134,6 +134,10 @@ function Profile() {
         }
     };
 
+    const saveData = () => {
+        updateUserData(localStorage.getItem('token'), {extra_data: {"visibility": profileVisibility}});
+    }
+
 
     const calculateAgeFromDateOfBirth = (dateOfBirth) => {
         // The date of birth may be in the format of "YYYY-MM-DD"
@@ -431,7 +435,7 @@ function Profile() {
         <div style={containerStyle}>
             <div style={leftContentStyle}>
                 {leftContent}
-                <button style={saveButtonStyle}>{strings.save}</button>
+                <button style={saveButtonStyle} onClick={saveData}>{strings.save}</button>
             </div>
             <div style={rightContentStyle}>
                 {rightContent}
