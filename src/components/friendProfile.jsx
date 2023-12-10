@@ -18,6 +18,7 @@ function FriendProfile() {
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem("selectedLanguage") || "en"
   );
+
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
     localStorage.setItem("selectedLanguage", event.target.value);
@@ -163,7 +164,7 @@ function FriendProfile() {
               fontWeight: 900,
             }}
           >
-            Profile information
+          Profile information
           </h1>
           <img
             src={friendData.profile_pic_url ? friendData.profile_pic_url : '../pic.jpg'}

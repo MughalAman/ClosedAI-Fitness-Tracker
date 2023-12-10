@@ -157,6 +157,7 @@ async function getUserFromUserId(userId) {
     throw error;
   }
 }
+
 async function updateUserProfilePicUrl(url, token) {
   return fetch('https://fitness-api-wlzk.onrender.com/user/', {
     method: 'PUT',
