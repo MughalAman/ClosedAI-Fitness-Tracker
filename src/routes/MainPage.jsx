@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import PreviousWorkouts from '../components/PreviousWorkouts';
 import Workout from '../components/workout';
 import MainPageWorkoutList from '../components/MainPageWorkoutList';
-import { getUserFriendships, getUserFromUserId, getExerciseRating, getUser } from '../utils/api';
+import { getUserFriendships, getUserFromUserId, getLanguage, getUser } from '../utils/api';
 import ChatBot from '../components/chatBot';
 
 import localizationData from '../assets/localization.json';

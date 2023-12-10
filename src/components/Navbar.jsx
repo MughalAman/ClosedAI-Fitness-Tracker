@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { createFriendship, getUserIdFromFriendcode, getUserFriendships, updateFriendship } from '../utils/api';
+import { createFriendship, getUserIdFromFriendcode, getUserFriendships, updateFriendship, getLanguage } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
-
 
 const navbarStyles = {
   display: 'flex',
@@ -96,8 +95,6 @@ function Navbar(props) {
     fetchData();
 }, []);
 
-
-
   if (selectedLanguage === 'tr') {
     strings.setLanguage('tr');
   } else if (selectedLanguage === 'en') {
@@ -105,7 +102,6 @@ function Navbar(props) {
   } else {
     strings.setLanguage('ru');
   }
-
 
   const handleSearchClick = () => {
     handleAddFriend();
@@ -126,7 +122,6 @@ function Navbar(props) {
     let friendId = await getUserIdFromFriendcode(searchText);
 
     console.log('Friend id:', friendId);
-
 
     // Check if the user is trying to add friend that has already sent them a friend request
     for (let i = 0; i < existingFriendships.length; i++) {
@@ -149,7 +144,6 @@ function Navbar(props) {
       }
     }
 
-
     // Check if the user is trying to add a friend they already have or if the friend code is invalid or if the friendship status is 0 (pending) or 1 (accepted)
     for (let i = 0; i < existingFriendships.length; i++) {
       console.log('Friendship:', existingFriendships[i]);
@@ -164,8 +158,6 @@ function Navbar(props) {
       }
     }
 
-
-
     // Handle new friendship creation
     await createFriendship(userData.user_id, friendId, 1)
       .then(() => {
@@ -175,7 +167,6 @@ function Navbar(props) {
         console.error('Error creating friendship:', error);
       });
   };
-
 
   return (
     <nav style={navbarStyles}>

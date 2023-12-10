@@ -558,4 +558,4 @@ async function deleteWorkoutDate(dateID){
     });
 }
 
-export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate, cloneExercise};
+export {createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate, cloneExercise, getLanguage};

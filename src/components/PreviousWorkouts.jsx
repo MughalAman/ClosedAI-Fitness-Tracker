@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
+import { getLanguage } from '../utils/api';
 
 
 const boxStyles = {

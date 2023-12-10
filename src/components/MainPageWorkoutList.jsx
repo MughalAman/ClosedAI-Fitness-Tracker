@@ -3,7 +3,7 @@ import Exercise from './exercise';
 import Timer from './timer';
 import ExerciseComplete from './ExerciseComplete';
 import AddExercise from './addExercise';
-import { getWorkout, cloneExercise } from '../utils/api';
+import { getWorkout, cloneExercise, getLanguage } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 

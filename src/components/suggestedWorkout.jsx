@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Exercise from './exercise';
 import Workout from './workout';
+import { getLanguage } from '../utils/api';
 
 //ei ole vielä toteutettu
 const exerciseList = [1, 2, 3, 4, 5, 6];

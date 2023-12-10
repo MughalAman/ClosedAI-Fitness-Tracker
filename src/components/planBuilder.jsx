@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Workout from './workout';
-import { getUser, updateWorkout, createWorkout, createWorkoutDate, deleteWorkoutDate, getWorkout } from '../utils/api';
+import { getUser, createWorkout, createWorkoutDate, deleteWorkoutDate, getWorkout, getLanguage } from '../utils/api';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
 

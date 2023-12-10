@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
-
+import { getLanguage } from '../utils/api';
 
 function ExerciseComplete(props) {
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
