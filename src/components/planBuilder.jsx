@@ -237,8 +237,8 @@ const PlanBuilder = (props) => {
     const createWorkoutLabel = (props) => {
         return React.createElement(
             'div',
-            { draggable: true, key: props.workout_id, id: props.workout_id, onDrop: dropWorkout, onDragOver: allowDrop, className: "draggableLabel", onDragStart: handleDragLogic},
-            React.createElement(Workout, { data: props, id:props.workout_id, setDraggable: setDraggable, setProps: getProps })
+            { draggable: true, key: props.workout_id, id: props.workout_id, onDragOver: allowDrop, className: "draggableLabel", onDragStart: handleDragLogic},
+            React.createElement(Workout, { data: props, id:props.workout_id, setDraggable: setDraggable })
         );
     }
 
