@@ -346,7 +346,7 @@ function Profile() {
         fontWeight: 700,
         lineHeight: 'normal',
         background: '#D9D9D9',
-        marginRight: '164px',
+        marginRight: '10px',
         justifyContent: 'flex-start',
         float: 'right',
     };
@@ -374,7 +374,9 @@ function Profile() {
     };
 
     const languageContainerStyle = {
-        marginTop: '20px', // Add some top margin to separate from the profile information
+        marginTop: '20px',
+        display: 'flex',
+        flexDirection: 'row',
     };
 
     const selectedLanguageStyle = {
@@ -385,6 +387,26 @@ function Profile() {
         fontWeight: 900,
         lineHeight: '2',
         textAlign: 'center', // Center the text horizontally
+    };
+
+    const logoutButtonStyle = {
+        width: '253px',
+        height: '90px',
+        flexShrink: 0,
+        color: 'black',
+        fontFamily: 'Inter',
+        fontSize: '30px',
+        fontStyle: 'normal',
+        fontWeight: 700,
+        lineHeight: 'normal',
+        background: '#D9D9D9', // You can customize the color
+        marginRight: '10px',
+        marginBottom: '20px', // Add some bottom margin to separate from other buttons
+    };
+
+    const backButtonStyle = {
+        ...logoutButtonStyle,
+        background: '#D9D9D9', // You can customize the color
     };
 
     const language = (
@@ -401,6 +423,27 @@ function Profile() {
                 <option value="ru">{strings.russian}</option>
             </select>
         </div>
+    );
+
+    const logout = () => {
+        localStorage.clear(); // Clear all items from local storage
+        window.location.href = '/'; // Redirect to the home page
+    };
+
+    const goToQuestionnaire = () => {
+        window.location.href = '/trainingexperience'; // Redirect to the questionnaire page
+    };
+
+    const logoutButton = (
+        <button style={logoutButtonStyle} onClick={logout}>
+            Log out
+        </button>
+    );
+
+    const backButton = (
+        <button style={backButtonStyle} onClick={goToQuestionnaire}>
+            Go back to questionnaire
+        </button>
     );
 
     /**
@@ -465,9 +508,13 @@ function Profile() {
             {rightContent}
             <div style={languageContainerStyle}>
                 {language}
+            </div>
+            <div style={languageContainerStyle}>
                 <button style={saveButtonStyle} onClick={saveData}>
                     {strings.save}
                 </button>
+                {logoutButton}
+                {backButton}
             </div>
         </div>
     );
