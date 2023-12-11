@@ -1,8 +1,12 @@
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 import { useState } from "react";
+import localizationData from '../assets/localization.json';
+import LocalizedStrings from 'react-localization';
+import React, { useEffect } from 'react';
 
 const API_KEY = import.meta.env.VITE_CHAT_GPT_API_KEY;
+
 
 /**
  * React component for a fitness chatbot.
@@ -13,7 +17,32 @@ const API_KEY = import.meta.env.VITE_CHAT_GPT_API_KEY;
  * @param {boolean} props.isChatOpen - Flag indicating whether the chat is open.
  * @returns {JSX.Element} JSX element representing the ChatBot component.
  */
-function ChatBot({ closeChat, strings, isChatOpen }) {
+function ChatBot({ closeChat, isChatOpen }) {
+    const [selectedLanguage, setSelectedLanguage] = useState(
+        localStorage.getItem("selectedLanguage") || "en"
+      );
+    const [strings, setStrings] = useState(new LocalizedStrings(localizationData));
+
+    useEffect(() => {
+      async function fetchData() {
+        const lang = selectedLanguage; // Call the getLanguage function
+        setSelectedLanguage(lang); // Set the selected language based on the result
+        setStrings((prevStrings) => {
+          const newStrings = new LocalizedStrings(localizationData);
+          newStrings.setLanguage(lang);
+          return newStrings;
+        });
+      }
+    
+      fetchData();
+    }, []);
+    if (selectedLanguage === 'tr') {
+        strings.setLanguage('tr');
+    } else if (selectedLanguage === 'en') {
+        strings.setLanguage('en');
+    } else {
+        strings.setLanguage('ru');
+    }
     /**
      * State for typing indicator and chat messages.
      * @type {[boolean, function]}
@@ -21,7 +50,9 @@ function ChatBot({ closeChat, strings, isChatOpen }) {
     const [typing, setTyping] = useState(false);
     const [messages, setMessages] = useState([
         {
-            message: "Hi, I am fitbot by closedAI. How can I help you?",
+
+            
+            message: strings.chatbot,
             sender: 'ChatGPT'
         }
     ]);

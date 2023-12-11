@@ -87,7 +87,8 @@
       "GotoPlanBuilder": "Go to Plan Builder",
       "togglechat": "Toggle Chat",
       "newExercise": "New Exercise",
-      "addE": "Add Exercise"
+      "addE": "Add Exercise",
+      "chatbot": "Hi, I am fitbot by closedAI. How can I help you?"
     
     },
     "tr": {
@@ -178,7 +179,8 @@
         "GotoPlanBuilder": "Plan Oluşturucuya Git",
         "togglechat": "Sohbeti Aç/Kapat",
         "newExercise": "Yeni Egzersiz",
-        "addE": "Egzersiz Ekle"
+        "addE": "Egzersiz Ekle",
+        "chatbot": "Merhaba, ben fitbot. Nasıl yardımcı olabilirim?"
     },
     "ru": {
             "name": "Имя",
@@ -268,6 +270,7 @@
             "GotoPlanBuilder": "Перейти к планировщику",
             "togglechat": "Переключить чат",
             "newExercise": "Новое упражнение",
-            "addE": "Добавить упражнение"
+            "addE": "Добавить упражнение",
+            "chatbot": "Привет, я fitbot. Чем могу помочь?"
      }
 }
