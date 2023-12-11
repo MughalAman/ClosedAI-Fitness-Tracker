@@ -349,6 +349,7 @@ function Profile() {
         marginRight: '10px',
         justifyContent: 'flex-start',
         float: 'right',
+        borderRadius: '10px',
     };
 
     const textStyle = {
@@ -399,6 +400,7 @@ function Profile() {
         fontStyle: 'normal',
         fontWeight: 700,
         lineHeight: 'normal',
+        borderRadius: '10px',
         background: '#D9D9D9', // You can customize the color
         marginRight: '10px',
         marginBottom: '20px', // Add some bottom margin to separate from other buttons
