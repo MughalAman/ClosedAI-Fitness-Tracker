@@ -137,6 +137,12 @@ const exercise = (props) => {
         left: "15px",
     }
 
+    const deleteButton = {
+        position: "absolute",
+        top: "15px",
+        right: "15px",
+    }
+
     const exerciseInfo = {
         display: "flex",
         justifyContent: "space-between",
