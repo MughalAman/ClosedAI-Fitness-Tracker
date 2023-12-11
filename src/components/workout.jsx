@@ -310,7 +310,7 @@ const Workout = (props) => {
      * @param {string|number} option - Selected exercise option.
      */
     const handleExerciseOption = (option) => {
-        option === Math.floor(option) ? cloneExercise(option, props.id, data.user_id) : option === "new" && openNewExerciseModal();
+        Math.floor(option) ? cloneExercise(Math.floor(option), props.id, data.user_id) : option === "new" && openNewExerciseModal();
     }
 
     /**
