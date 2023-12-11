@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
-import { getLanguage } from '../utils/api';
+import { createWorkoutDate, getLanguage } from '../utils/api';
 
 /**
  * React component for displaying completion details of an exercise.
@@ -143,7 +143,7 @@ function ExerciseComplete(props) {
             <li>{strings.duration}: {Math.floor(props.mills / 1000 / 60)} {strings.min}</li>
           </ul>
         </div>
-        <button style={buttonStyle} onClick={props.closeWorkout}>{strings.save}</button>
+        <button style={buttonStyle} onClick={()=>{props.closeWorkout(), createWorkoutDate(props.id, `${date.getFullYear()}-${date.getMonth()+1}-${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}`, true)}}>{strings.save}</button>
       </div></div>
   );
 }

@@ -354,7 +354,7 @@ const Workout = (props) => {
                         {data.exercises.map((exercise)=>getExercise(exercise.exercise_id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.weight, exercise.video_url, true))}
                     </ul>
                         <div style={timerStyle}>
-                            {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} name={data.name} /* rpe={"N/A"} rating={"N/A"} */  />}
+                            {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} name={data.name} id={data.workout_id} /* rpe={"N/A"} rating={"N/A"} */  />}
                             <Timer nextExercise={exerciseDone} />
                             {isNewExerciseModalOpen && <AddExercise closeModal={closeNewExerciseModal} workoutId={props.id} userId={data.user_id} />}
                         </div>

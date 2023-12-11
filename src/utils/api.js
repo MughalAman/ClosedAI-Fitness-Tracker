@@ -629,7 +629,7 @@ async function updateFriendship(friendshipId, statusId) {
  * @throws {Error} Throws an error if the API request fails.
  * @returns {Promise<Object>} Returns a promise that resolves to the created workout date data.
  */
-async function createWorkoutDate(workoutID, date) {
+async function createWorkoutDate(workoutID, date, completed=false) {
   return fetch('https://fitness-api-wlzk.onrender.com/workout/date/', {
     method: 'POST',
     headers: {
@@ -638,7 +638,7 @@ async function createWorkoutDate(workoutID, date) {
     body: JSON.stringify({
       "date": date,
       "workout_id": workoutID,
-      "completed": false,
+      "completed": completed,
     }),
   })
     .then((response) => {
