@@ -88,7 +88,8 @@
       "togglechat": "Toggle Chat",
       "newExercise": "New Exercise",
       "addE": "Add Exercise",
-      "chatbot": "Hi, I am fitbot by closedAI. How can I help you?"
+      "chatbot": "Hi, I am fitbot by closedAI. How can I help you?",
+      "returnMain": "Return to main Page"
     
     },
     "tr": {
@@ -180,7 +181,10 @@
         "togglechat": "Sohbeti Aç/Kapat",
         "newExercise": "Yeni Egzersiz",
         "addE": "Egzersiz Ekle",
-        "chatbot": "Merhaba, ben fitbot. Nasıl yardımcı olabilirim?"
+        "chatbot": "Merhaba, ben fitbot. Nasıl yardımcı olabilirim?",
+        "returnMain": "Ana Sayfaya Dön"
+
+
     },
     "ru": {
             "name": "Имя",
@@ -271,6 +275,7 @@
             "togglechat": "Переключить чат",
             "newExercise": "Новое упражнение",
             "addE": "Добавить упражнение",
-            "chatbot": "Привет, я fitbot. Чем могу помочь?"
+            "chatbot": "Привет, я fitbot. Чем могу помочь?",
+            "returnMain": "Вернуться на главную страницу"
      }
 }

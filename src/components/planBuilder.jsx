@@ -430,7 +430,7 @@ return (
                 <li style={newWorkout} onClick={openModal}>{strings.new}<br></br>{strings.workout}</li>
             </ul>
         </div>
-        <p style={{textAlign: "center", color: "white", fontFamily: 'Inter', fontSize: "24px"}}><a href='/'>Return to the main page</a></p>
+        <p style={{textAlign: "center", color: "white", fontFamily: 'Inter', fontSize: "24px"}}><a href='/'>{strings.returnMain}</a></p>
     </div>
 );
 }
