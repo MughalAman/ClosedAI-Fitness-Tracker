@@ -167,7 +167,7 @@ function PreviousWorkouts(props) {
             <div key={workout.workout_id} style={boxStyles}>
               <div style={tableStyles}>
                 <div style={tableRowStyles}>
-                  <div style={tableCellStyles}>{workout.date}</div>
+                  <div style={tableCellStyles}>{workout.dates[0]?.date}</div>
                   <div style={tableCellStyles}>{strings.rating} {averageRating}⭐</div>
                 </div>
                 <div style={tableRowStyles}>

@@ -140,7 +140,7 @@ function ChatBot({ closeChat, isChatOpen }) {
             style={{
                 position: 'fixed',
                 top: '50%',
-                left: '50%',
+                left: '47%',
                 transform: 'translate(-50%, -50%)',
                 width: '400px', // Adjust width as needed
                 height: '600px', // Adjust height as needed
