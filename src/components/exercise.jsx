@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LocalizedStrings from 'react-localization';
 import localizationData from '../assets/localization.json';
-import { getLanguage } from '../utils/api';
+import { getLanguage, deleteExercise, getUser } from '../utils/api';
 
 /**
  * React component for displaying exercise information and details in a modal.
@@ -148,12 +148,14 @@ const exercise = (props) => {
      * @type {[boolean, function]}
      */
     const [isModalOpen, setModalOpen] = useState(false);
+    const [historyData, setHistoryData] = useState("");
 
     /**
      * Opens the modal.
      * @function
      */
     const openModal = () => {
+        getHistory();
         setModalOpen(true);
     };
 
@@ -165,26 +167,42 @@ const exercise = (props) => {
         setModalOpen(false);
     };
 
+    const getHistory = () => {
+        let historyList = [];
+        getUser(localStorage.getItem("token")).then(userData => {
+            for(const workout in userData.workouts) {
+                for(const exercise in workout.exercises) {
+                     if(exercise.name === props.name) {
+                         workout.dates.forEach(e=> e.completed && (
+                             historyList.push(<li><p>In {workout.name}</p><br /><p>On the date {e.date}</p></li>)
+                         ));
+                     }
+                } 
+            }
+            setHistoryData(historyList.length>0 ? historyList : <p>No history yet</p>)
+        });
+    }
+
+
     /**
      * Modal component for displaying detailed exercise information.
      * @returns {JSX.Element} JSX element representing the Modal component.
      */
     const Modal = () => {
         return (
-            <div style={modalStyle}>
+          <div style={modalStyle}>
                 <div style={modalContent}>
                     <div style={topBar}>
                         <h2 style={exerciseName}>{props.name}</h2>
                         <button onClick={closeModal} style={closeButton}>{strings.close}</button>
+                        <button onClick={()=>{closeModal(), deleteExercise(props.id), props.setTrigger(true)}} style={deleteButton}>Delete Exercise</button>
                     </div>
                     <div style={{ padding: "20px" }}>
                         <div style={video}><iframe width="100%" height="100%" src={props.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe><div style={exerciseInfo}><p>{strings.sets}: {props.sets}</p><p>{strings.reps}: {props.reps}</p><p>{strings.weight}: {props.weight}</p></div></div>
                         <div style={history}>
                             <ul>
                                 <p>{strings.exercisehistory}</p>
-                                <li>{strings.RECENT}1</li>
-                                <li>{strings.RECENT}2</li>
-                                <li>{strings.RECENT}3</li>
+                                {historyData}
                             </ul>
                         </div>
                     </div>
