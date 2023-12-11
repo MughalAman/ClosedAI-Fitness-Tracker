@@ -264,8 +264,8 @@ const Workout = (props) => {
          */
     const fetchData = async () => {
         const response = await getWorkout(props.id);
-        //    \|/tänne se MAIN workoutin id, josta otetaan kaikki valmiit exerciset
-        const exercises = await getWorkout(6).then((data) => { return data?.exercises.map((e, i) => React.createElement("option", { value: e.exercise_id, key: i }, e.name)) });
+        //                                \|/tänne se MAIN workoutin id, josta otetaan kaikki valmiit exerciset
+        const exercises = await getWorkout(13).then((data) => { return data?.exercises.map((e, i) => React.createElement("option", { value: e.exercise_id, key: i }, e.name)) });
         setData(response);
         setExercises(exercises);
     };
