@@ -508,9 +508,7 @@ async function updateExercise(id, exerciseData) {
 const cloneExercise = async (exerciseId, workoutId, userId) => {
   try {
     let exercise = await getExercise(exerciseId);
-    exercise.workout_id = workoutId;
-    exercise.user_id = userId;
-    createExercise(...Object.values(exercise));
+    createExercise(exercise.name, exercise.description, exercise.video_url, userId, exercise.set, exercise.repetition, exercise.duration, exercise.weight, exercise.rpe, workoutId, exercise.tags);
   } catch (error) {
     console.log("Error:", error)
   }
