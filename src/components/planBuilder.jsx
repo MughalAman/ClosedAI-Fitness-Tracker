@@ -234,12 +234,11 @@ const PlanBuilder = (props) => {
        * @param {Object} data - Workout data.
        * @returns {JSX.Element} JSX element representing the workout label.
        */
-    const createWorkoutLabel = (i, data) => {
-        //console.log(data)
+    const createWorkoutLabel = (props) => {
         return React.createElement(
             'div',
-            { draggable: true, key: i, id: data.workout_id, onDragOver: allowDrop, className: "draggableLabel" },
-            <Workout data={data} id={data.workout_id} />
+            { draggable: true, key: props.workout_id, id: props.workout_id, onDrop: dropWorkout, onDragOver: allowDrop, className: "draggableLabel", onDragStart: handleDragLogic},
+            React.createElement(Workout, { data: props, id:props.workout_id, setDraggable: setDraggable, setProps: getProps })
         );
     }
 
@@ -247,11 +246,11 @@ const PlanBuilder = (props) => {
         let savedWorkout;
         for (const workout of data.workouts) {
             for (const dateObj of workout.dates) {
-                dateObj.date === date.format && (savedWorkout = createWorkoutLabel(i, workout));
+                dateObj.date === date.format && (savedWorkout = createWorkoutLabel(workout));
             }
         }
         return (
-            <li style={segment} id={"segment"} key={i}><div style={dateBox}>{date.day}</div><div style={workoutBox} onDragOver={(e) => allowDrop(e)} onDrop={(e) => dropToPlanner(e)} onDragStart={drag} date={date.format}>{savedWorkout}</div></li>
+            <li style={segment} id={"segment"} key={i}><div style={dateBox}>{date.day}</div><div style={workoutBox} onDragOver={(e)=>allowDrop(e)} onDrop={(e)=>dropToPlanner(e)} onDragStart={drag} date={date.format}>{savedWorkout}</div></li>
         );
     }
 
@@ -426,7 +425,7 @@ return (
             {data?.workouts && weekDays.map((e, i) => createSegment(e, i))}
             </ul>
             <ul style={workoutField} onDragOver={allowDrop} onDrop={dropToList} onDragStart={drag} id="workoutField">
-                {data?.workouts && data.workouts.map((workout, i) => createWorkoutLabel(i, workout))}
+                {data?.workouts && data.workouts.map((workout) => createWorkoutLabel(workout))}
                 {isModalOpen && <NewWorkoutModal />}
                 <li style={newWorkout} onClick={openModal}>{strings.new}<br></br>{strings.workout}</li>
             </ul>
