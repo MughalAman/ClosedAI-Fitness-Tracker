@@ -290,7 +290,7 @@ function MainPage(props) {
 
         <a href="/planbuilder">
           <div style={buttonStyles}>
-            <p>{strings.GotoPlanBuilder}</p>
+            <p style={buttonStyles}>{strings.GotoPlanBuilder}</p>
           </div>
         </a>
       </div>
