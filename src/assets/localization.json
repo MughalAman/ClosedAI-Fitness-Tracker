@@ -103,7 +103,10 @@
       "duration": "Duration",
       "logOut": "Log Out",
       "gobackQue": "Go back to questionnaire",
-      "backtoMain": "Back to main page"
+      "backtoMain": "Back to main page",
+      "tagss": "Submit Tags",
+      "Tag": "Tags",
+      "cancel":"Cancel"
     
     },
     "tr": {
@@ -210,7 +213,10 @@
         "duration": "Süre",
         "logOut": "Çıkış Yap",
         "gobackQue": "Anket'e geri dön",
-        "backtoMain": "Ana sayfaya dön"
+        "backtoMain": "Ana sayfaya dön",
+        "tagss": "Etiketleri Gönder",
+        "Tag": "Etiketler",
+        "cancel":"İptal"
 
 
 
@@ -319,7 +325,10 @@
             "duration": "Продолжительность",
             "logOut": "Выйти",
             "gobackQue": "Вернуться к опроснику",
-            "backtoMain": "Вернуться на главную страницу"
-            
+            "backtoMain": "Вернуться на главную страницу",
+            "tagss": "Отправить теги",
+            "Tag": "Теги",
+            "cancel":"Отмена"
+
      }
 }

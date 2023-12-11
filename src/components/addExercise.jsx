@@ -277,7 +277,7 @@ function addExercise(props) {
   return (
     <div style={background} onDragStart={handleDragStart}>
       <div style={containerStyle}>
-        <h1 style={titleStyle}>Add Exercise</h1>
+        <h1 style={titleStyle}>{strings.addE}</h1>
         <div >
           <input style={listStyle} id='name' type="text" placeholder={strings.name} />
           <input style={listStyle} id='set' type="number" min="1" placeholder={strings.set} />
@@ -289,14 +289,14 @@ function addExercise(props) {
           <input style={{ ...listStyle, width: "47%" }} id='url' type="text" placeholder={strings.video_url} />
         </div>
         <div style={{ display: "inline-block", flexDirection: "column" }}>
-          <input style={listStyle} id="tagInput" type="text" placeholder="tags" />
-          <button style={buttonStyle} type="text" onClick={handleSubmit}>Submit Tag</button>
+          <input style={listStyle} id="tagInput" type="text" placeholder={strings.Tag} />
+          <button style={buttonStyle} type="text" onClick={handleSubmit}>{strings.tagss}</button>
           <ul style={tagsStyle}>
             {tagElements}
           </ul>
         </div>
-        <button style={buttonStyle} onClick={handleAddExercise}>Add</button>
-        <button style={{ ...buttonStyle, position: "absolute", right: "20px", bottom: "20px", width: "200px", backgroundColor: "red" }} onClick={e => { e.preventDefault(), props.closeModal() }}>Cancel</button>
+        <button style={buttonStyle} onClick={handleAddExercise}>{strings.save}</button>
+        <button style={{ ...buttonStyle, position: "absolute", right: "20px", bottom: "20px", width: "200px", backgroundColor: "red" }} onClick={e => { e.preventDefault(), props.closeModal() }}>{strings.cancel}</button>
       </div>
     </div>
   );
