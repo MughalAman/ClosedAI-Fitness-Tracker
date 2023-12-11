@@ -133,20 +133,17 @@ function ExerciseComplete(props) {
   return (
     <div style={background}>
       <div style={containerStyle}>
-        <h1 style={titleStyle}>{strings.ExerciseComplete}</h1>
+        <h1 style={titleStyle}>Workout Complete</h1>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <ul style={listStyle}>
-            <li>{strings.Duration} {Math.floor(props.mills / 1000 / 60)} {strings.min}</li>
-            <li>{strings.Sets}  {props.sets}</li>
-            <li>{strings.Reps} {props.reps}</li>
-            <li>{strings.Weight} {props.weight}</li>
-          </ul>
-          <ul style={listStyle}>
-            <li>{strings.RPE}  {props.rpe}</li>
-            <li>{strings.rating}{props.rating}⭐</li>
+            <ul style={listStyle}>
+            <li>Workout name: {props.name}</li>
+            <li>Date: {props.date}</li>
+            <li>Rating: {props.rating}⭐</li>
+            <li>RPE: {props.rpe}</li>
+            <li>Duration: {Math.floor(props.mills / 1000 / 60)} min</li>
           </ul>
         </div>
-        <button style={buttonStyle} onClick={props.closeWorkout}>{strings.save}</button>
+        <button style={buttonStyle} onClick={props.closeWorkout}>Save</button>
       </div></div>
   );
 }
