@@ -137,7 +137,7 @@ function ExerciseComplete(props) {
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             <ul style={listStyle}>
             <li>Workout name: {props.name}</li>
-            <li>Date: {props.date}</li>
+            <li>Date: {`${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`}</li>
             <li>Rating: {props.rating}⭐</li>
             <li>RPE: {props.rpe}</li>
             <li>Duration: {Math.floor(props.mills / 1000 / 60)} min</li>
