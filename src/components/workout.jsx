@@ -225,7 +225,7 @@ const Workout = (props) => {
     const fullWorkoutText = {
         fontSize: "15px",
         position: "relative",
-        top: "230px",
+        top: "220px",
     }
 
     /**
