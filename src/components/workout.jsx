@@ -116,10 +116,10 @@ const Workout = (props) => {
         minWidth: "1100px",
         height: "100%",
         zIndex: 1,
-        left: 0,
+        left: 0, 
         top: 0,
         position: "fixed",
-        fontSize: "2vw",
+        fontSize: "32px",
         fontWeight: 300,
         fontFamily: "Inter",
         draggable: false,
@@ -295,13 +295,13 @@ const Workout = (props) => {
      * @param {boolean} isClickable - Indicates whether the exercise is clickable.
      * @returns {JSX.Element} JSX element representing the exercise.
      */
-    const getExercise = (e, name = "NAME", description = "DESCRIPTION", sets = 99, reps = 99, weight = 99, url = "https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
+    const getExercise = (e, name="NAME", description="DESCRIPTION", sets=99, reps=99, weight=99, url="https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
         return React.createElement(
             'li',
-            { style: listItem, key: e },
-            React.createElement('div', { style: { textAlign: "left" } }, <Exercise name={name} description={description} sets={sets} reps={reps} weight={weight} videoUrl={url} clickable={isClickable} />),
-            <p style={{ textAlign: "center" }}>{sets}</p>,
-            <p style={{ textAlign: "center" }}>{reps}</p>,
+            { style: listItem, key: e},
+            React.createElement('div', {style: {textAlign: "left"}}, <Exercise name={name} description={description} sets={sets} reps={reps} weight={weight} videoUrl={url} clickable={isClickable} id={e} setTrigger={setTrigger} />),
+            <p style={{textAlign: "center"}}>{sets}</p>,
+            <p style={{textAlign: "center"}}>{reps}</p>,
         );
     }
 
@@ -332,36 +332,36 @@ const Workout = (props) => {
             return names[i];
         };
 
-        return (
-            <>
-                <div style={modalStyle}>
-                    <div style={modalContent}>
-                        <div style={topBar}>
-                            <button onClick={closeModal} style={{ flex: 1, textAlign: "left" }}>{strings.close}</button>
-                            <h2 style={{ ...workoutModalName, flex: 1, textAlign: "center" }}>{props.data.name}</h2>
-                            <div style={{ flex: 1, textAlign: "right" }}>
-                                <select style={{ ...searchField, fontFamily: 'Inter' }} id="nameOfExercise" name="nameOfExercise">
-                                    <option style={{ fontFamily: 'Inter' }} value="default">{strings.addE}</option>
-                                    {exerciseData}
-                                    <option style={{ fontFamily: 'Inter' }} value="new">{strings.newExercise}</option>
-                                </select>
-                                <button onClick={(e) => { handleExerciseOption(e.target.parentElement.firstChild.options[e.target.parentElement.firstChild.selectedIndex].value) }}>{strings.add}</button>
-                            </div>
+    return (
+        <>
+            <div style={modalStyle}>
+                <div style={modalContent}>
+                    <div style={topBar}>
+                        <button onClick={closeModal} style={{flex: 1, textAlign: "left"}}>{strings.close}</button>
+                        <h2 style={{...workoutModalName, flex: 1, textAlign: "center"}}>{props.data.name}</h2>
+                        <div style={{flex: 1, textAlign: "right"}}>
+                            <select style={{ ...searchField, fontFamily: 'Inter'}} id="nameOfExercise" name="nameOfExercise">
+                                <option value="default">{strings.addE}</option>
+                                {exerciseData}
+                                <option value="new">{strings.newExercise}</option>
+                            </select>
+                            <button onClick={(e)=>{handleExerciseOption(e.target.parentElement.firstChild.options[e.target.parentElement.firstChild.selectedIndex].value)}}>{strings.add}</button>
                         </div>
-                        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-                            <ul style={exerciseListStyle}>
-                                <li style={listItem}><div style={{ textAlign: "left" }}>{strings.exercise}</div><div style={{ textAlign: "center" }}>{strings.sets}</div><div style={{ textAlign: "center" }}>{strings.reps}</div></li>
-                                {data.exercises.map((exercise) => getExercise(exercise.exercise_id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.weight, exercise.video_url, true))}
-                            </ul>
-                            <div style={timerStyle}>
-                                {getMills > 0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={"setsTotal"} reps={"repsTotal"} weight={"weightAvg"} rpe={"rpeAvg"} rating={"ratingAvg"} />}
-                                <Timer nextExercise={exerciseDone} />
-                                {isNewExerciseModalOpen && <AddExercise closeModal={closeNewExerciseModal} workoutId={props.id} userId={data.user_id} />}
-                            </div>
+                    </div>
+                    <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
+                    <ul style={exerciseListStyle}>
+                        <li style={listItem}><div style={{textAlign: "left"}}>{strings.exercise}</div><div style={{textAlign: "center"}}>{strings.sets}</div><div style={{textAlign: "center"}}>{strings.reps}</div></li>
+                        {data.exercises.map((exercise)=>getExercise(exercise.exercise_id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.weight, exercise.video_url, true))}
+                    </ul>
+                        <div style={timerStyle}>
+                            {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} sets={"setsTotal"} reps={"repsTotal"} weight={"weightAvg"} rpe={"rpeAvg"} rating={"ratingAvg"} />}
+                            <Timer nextExercise={exerciseDone} />
+                            {isNewExerciseModalOpen && <AddExercise closeModal={closeNewExerciseModal} workoutId={props.id} userId={data.user_id} />}
                         </div>
                     </div>
                 </div>
-            </>
+            </div>
+        </>
         );
     }
 
