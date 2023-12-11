@@ -125,7 +125,7 @@ function ExerciseComplete(props) {
     top: 0,
     left: 0,
   }
-
+  const date = new Date();
   /**
    * JSX representing the ExerciseComplete component.
    * @returns {JSX.Element} JSX element representing the ExerciseComplete component.
