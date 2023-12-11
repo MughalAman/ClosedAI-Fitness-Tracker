@@ -1,4 +1,6 @@
-import { createUser, getUserToken, getUser, updateUserData, getUserIdFromFriendcode, getUserFromUserId, updateUserProfilePicUrl, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, deleteExercise, createFriendship, getUserFriendships, getFriendship, deleteFriendship, updateFriendship, setUserLanguage, getLanguage, createWorkoutDate, deleteWorkoutDate, cloneExercise } from './api';
+
+
+import { createUser, getUserToken, getUser, updateUserData, getUserIdFromFriendcode, getUserFromUserId, updateUserProfilePicUrl, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, deleteExercise, createFriendship, getUserFriendships, getFriendship, deleteFriendship, updateFriendship, setUserLanguage, getLanguage, createWorkoutDate, deleteWorkoutDate, cloneExercise } from '../utils/api';
 
 // Mocking the global fetch function
 global.fetch = jest.fn();
