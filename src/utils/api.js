@@ -440,6 +440,26 @@ function getExercise(id) {
     });
 }
 
+async function deleteExercise(id){
+  return fetch(`https://fitness-api-wlzk.onrender.com/exercise/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then((data)=>{
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
 function getExerciseRating(id) {
   return fetch(`https://fitness-api-wlzk.onrender.com/exercise/${id}/rating`, {
     method: 'GET',
@@ -666,4 +686,4 @@ async function deleteWorkoutDate(dateID) {
     });
 }
 
-export { createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate, cloneExercise, getLanguage };
+export { deleteExercise, createUser, getUserToken, getUser, getUserFromUserId, getUserIdFromFriendcode, createWorkout, updateWorkout, getWorkout, createExercise, updateExercise, getExercise, getExerciseRating, createFriendship, getFriendship, getUserFriendships, deleteFriendship, updateFriendship, setUserLanguage, updateUserProfilePicUrl, updateUserData, createWorkoutDate, deleteWorkoutDate, cloneExercise, getLanguage };
