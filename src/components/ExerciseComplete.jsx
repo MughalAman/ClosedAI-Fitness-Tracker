@@ -146,7 +146,7 @@ function ExerciseComplete(props) {
             <li>{strings.rating}{props.rating}⭐</li>
           </ul>
         </div>
-        <button style={buttonStyle} onClick={props.closeWorkout}>SAVE</button>
+        <button style={buttonStyle} onClick={props.closeWorkout}>{strings.save}</button>
       </div></div>
   );
 }
