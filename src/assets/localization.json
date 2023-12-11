@@ -106,7 +106,10 @@
       "backtoMain": "Back to main page",
       "tagss": "Submit Tags",
       "Tag": "Tags",
-      "cancel":"Cancel"
+      "cancel":"Cancel",
+      "history":"No history yet",
+      "back":"Back",
+      "deleteExercise":"Delete Exercise"
     
     },
     "tr": {
@@ -216,7 +219,10 @@
         "backtoMain": "Ana sayfaya dön",
         "tagss": "Etiketleri Gönder",
         "Tag": "Etiketler",
-        "cancel":"İptal"
+        "cancel":"İptal",
+        "history":"Henüz geçmiş yok",
+        "back":"Geri",
+        "deleteExercise":"Egzersizi Sil"
 
 
 
@@ -328,7 +334,10 @@
             "backtoMain": "Назад",
             "tagss": "Отправить теги",
             "Tag": "Теги",
-            "cancel":"Отмена"
+            "cancel":"Отмена",
+            "history":"История отсутствует",
+            "back":"Назад",
+            "deleteExercise":"Удалить упражнение"
 
      }
 }

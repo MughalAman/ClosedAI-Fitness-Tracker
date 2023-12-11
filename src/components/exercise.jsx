@@ -180,12 +180,12 @@ const exercise = (props) => {
                 for(const exercise of workout.exercises) {
                      if(exercise.name === props.name) {
                          workout.dates.forEach(e=> e.completed && (
-                             historyList.push(<li><p>In {workout.name}</p><p>Date: {e.date}</p></li>), console.log("on historiaa")
+                             historyList.push(<li><p>{strings.exercise}: {workout.name}</p><p>{strings.date}: {e.date}</p></li>), console.log("on historiaa")
                          ));
                      }
                 } 
             }
-            setHistoryData(historyList.length>0 ? historyList : <p>No history yet</p>)
+            setHistoryData(historyList.length>0 ? historyList : <p>{strings.history}</p>)
         });
     }
 
@@ -201,7 +201,7 @@ const exercise = (props) => {
                     <div style={topBar}>
                         <h2 style={exerciseName}>{props.name}</h2>
                         <button onClick={closeModal} style={closeButton}>{strings.close}</button>
-                        <button onClick={()=>{closeModal(), deleteExercise(props.id), props.setTrigger(true)}} style={deleteButton}>Delete Exercise</button>
+                        <button onClick={()=>{closeModal(), deleteExercise(props.id), props.setTrigger(true)}} style={deleteButton}>{strings.deleteExercise}</button>
                     </div>
                     <div style={{ padding: "20px" }}>
                         <div style={video}><iframe width="100%" height="100%" src={props.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe><div style={exerciseInfo}><p>{strings.sets}: {props.sets}</p><p>{strings.reps}: {props.reps}</p><p>{strings.RPE}: {props.RPE}</p></div></div>
