@@ -426,7 +426,7 @@ return (
             {data?.workouts && weekDays.map((e, i) => createSegment(e, i))}
             </ul>
             <ul style={workoutField} onDragOver={allowDrop} onDrop={dropToList} onDragStart={drag} id="workoutField">
-                {data?.workouts && data.workouts.map((workout) => createWorkoutLabel(workout))}
+                {data?.workouts && data.workouts.map((workout, i) => createWorkoutLabel(i, workout))}
                 {isModalOpen && <NewWorkoutModal />}
                 <li style={newWorkout} onClick={openModal}>{strings.new}<br></br>{strings.workout}</li>
             </ul>
