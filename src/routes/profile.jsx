@@ -448,6 +448,12 @@ function Profile() {
         </button>
     );
 
+    const backButtonToMain = (
+        <button style={backButtonStyle} onClick={() => window.location.href = '/'}>
+            Back to Main Page
+        </button>
+    );
+
     /**
    * Renders the right content of the profile settings.
    * @returns {JSX.Element} - JSX element representing the right content.
@@ -517,6 +523,7 @@ function Profile() {
                 </button>
                 {logoutButton}
                 {backButton}
+                {backButtonToMain}
             </div>
         </div>
     );

@@ -168,7 +168,6 @@ function PreviousWorkouts(props) {
               <div style={tableStyles}>
                 <div style={tableRowStyles}>
                   <div style={tableCellStyles}>{workout.dates[0]?.date}</div>
-                  // ei implementoitu
                   {/* <div style={tableCellStyles}>{strings.rating} {averageRating}⭐<div> */}
                 </div>
                 <div style={tableRowStyles}>
