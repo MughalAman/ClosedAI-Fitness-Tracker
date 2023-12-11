@@ -389,16 +389,16 @@ function Profile() {
 
     const language = (
         <div >
-            <label htmlFor="languageSelect" style={selectedLanguageStyle}>Select Language: </label>
+            <label htmlFor="languageSelect" style={selectedLanguageStyle}>{strings.selectlanguage}: </label>
             <select
                 id="languageSelect"
                 value={selectedLanguage}
                 onChange={handleLanguageChange}
                 style={languageSelectStyle}
             >
-                <option value="en">English</option>
-                <option value="tr">Turkish</option>
-                <option value="ru">Russian</option>
+                <option value="en">{strings.english}</option>
+                <option value="tr">{strings.turkish}</option>
+                <option value="ru">{strings.russian}</option>
             </select>
         </div>
     );
@@ -448,7 +448,7 @@ function Profile() {
                 onChange={() => setProfileVisibility('private')}
                 style={radioStyle}
             />
-            <label style={labelStyle}>Private</label>
+            <label style={labelStyle}>{strings.private}</label>
             <input
                 type="radio"
                 value="public"
@@ -456,7 +456,7 @@ function Profile() {
                 onChange={() => setProfileVisibility('public')}
                 style={radioStyle}
             />
-            <label style={labelStyle}>Public</label>
+            <label style={labelStyle}>{strings.public}</label>
         </div>
     );
 

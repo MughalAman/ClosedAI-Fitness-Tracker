@@ -89,7 +89,14 @@
       "newExercise": "New Exercise",
       "addE": "Add Exercise",
       "chatbot": "Hi, I am fitbot by closedAI. How can I help you?",
-      "returnMain": "Return to main Page"
+      "returnMain": "Return to main Page",
+      "typemessage": "Type a message...",
+      "private": "Private",
+      "public": "Public",
+      "selectlanguage": "Select Language",
+      "turkish": "Turkish",
+      "russian": "Russian",
+      "english": "English"
     
     },
     "tr": {
@@ -182,7 +189,14 @@
         "newExercise": "Yeni Egzersiz",
         "addE": "Egzersiz Ekle",
         "chatbot": "Merhaba, ben fitbot. Nasıl yardımcı olabilirim?",
-        "returnMain": "Ana Sayfaya Dön"
+        "returnMain": "Ana Sayfaya Dön",
+        "typemessage": "Bir mesaj yazın...",
+        "private": "Özel",
+        "public": "Genel",
+        "selectlanguage": "Dil Seçiniz",
+        "turkish": "Türkçe",
+        "russian": "Rusça",
+        "english": "İngilizce"
 
 
     },
@@ -276,6 +290,13 @@
             "newExercise": "Новое упражнение",
             "addE": "Добавить упражнение",
             "chatbot": "Привет, я fitbot. Чем могу помочь?",
-            "returnMain": "Вернуться на главную страницу"
+            "returnMain": "Вернуться на главную страницу",
+            "typemessage": "Введите сообщение...",
+            "private": "Приватный",
+            "public": "Публичный",
+            "selectlanguage": "Выберите язык",
+            "turkish": "Турецкий",
+            "russian": "Русский",
+            "english": "Английский"
      }
 }

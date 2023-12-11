@@ -158,7 +158,7 @@ function ChatBot({ closeChat, isChatOpen }) {
                                 <Message key={index} model={message} />
                             ))}
                         </MessageList>
-                        <MessageInput placeholder="Type message here" onSend={handleSend} />
+                        <MessageInput placeholder= {strings.typemessage} onSend={handleSend} />
                     </ChatContainer>
                 </MainContainer>
             )}
