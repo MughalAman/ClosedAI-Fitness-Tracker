@@ -133,14 +133,14 @@ function ExerciseComplete(props) {
   return (
     <div style={background}>
       <div style={containerStyle}>
-        <h1 style={titleStyle}>Workout Complete</h1>
+        <h1 style={titleStyle}>{strings.WorkoutComplete}</h1>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             <ul style={listStyle}>
-            <li>Workout name: {props.name}</li>
-            <li>Date: {`${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`}</li>
+            <li>{strings.workoutName}: {props.name}</li>
+            <li>{strings.date}: {`${(""+date.getDate()).length<2 ? "0"+date.getDate() : date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`}</li>
             {/* <li>Rating: {props.rating}⭐</li> */}
             {/* <li>RPE: {props.rpe}</li> */}
-            <li>Duration: {Math.floor(props.mills / 1000 / 60)} min</li>
+            <li>{strings.duration}: {Math.floor(props.mills / 1000 / 60)} {strings.min}</li>
           </ul>
         </div>
         <button style={buttonStyle} onClick={props.closeWorkout}>Save</button>

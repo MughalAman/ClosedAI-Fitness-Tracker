@@ -438,19 +438,19 @@ function Profile() {
 
     const logoutButton = (
         <button style={logoutButtonStyle} onClick={logout}>
-            Log out
+            {strings.logOut}
         </button>
     );
 
     const backButton = (
         <button style={backButtonStyle} onClick={goToQuestionnaire}>
-            Go back to questionnaire
+            {strings.gobackQue}
         </button>
     );
 
     const backButtonToMain = (
         <button style={backButtonStyle} onClick={() => window.location.href = '/'}>
-            Back to Main Page
+            {strings.backtoMain}
         </button>
     );
 

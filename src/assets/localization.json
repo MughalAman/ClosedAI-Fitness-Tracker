@@ -96,7 +96,14 @@
       "selectlanguage": "Select Language",
       "turkish": "Turkish",
       "russian": "Russian",
-      "english": "English"
+      "english": "English",
+      "WorkoutComplete": "Workout Complete!",
+      "workoutName": "Workout name",
+      "date": "Date",
+      "duration": "Duration",
+      "logOut": "Log Out",
+      "gobackQue": "Go back to questionnaire",
+      "backtoMain": "Back to main page"
     
     },
     "tr": {
@@ -196,7 +203,15 @@
         "selectlanguage": "Dil Seçiniz",
         "turkish": "Türkçe",
         "russian": "Rusça",
-        "english": "İngilizce"
+        "english": "İngilizce",
+        "WorkoutComplete": "Antrenman Tamamlandı!",
+        "workoutName": "Antrenman adı",
+        "date": "Tarih",
+        "duration": "Süre",
+        "logOut": "Çıkış Yap",
+        "gobackQue": "Anket'e geri dön",
+        "backtoMain": "Ana sayfaya dön"
+
 
 
     },
@@ -297,6 +312,14 @@
             "selectlanguage": "Выберите язык",
             "turkish": "Турецкий",
             "russian": "Русский",
-            "english": "Английский"
+            "english": "Английский",
+            "WorkoutComplete": "Тренировка завершена!",
+            "workoutName": "Название тренировки",
+            "date": "Дата",
+            "duration": "Продолжительность",
+            "logOut": "Выйти",
+            "gobackQue": "Вернуться к опроснику",
+            "backtoMain": "Вернуться на главную страницу"
+            
      }
 }
