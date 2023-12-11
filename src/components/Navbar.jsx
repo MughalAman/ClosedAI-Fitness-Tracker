@@ -105,22 +105,6 @@ function Navbar(props) {
     localStorage.setItem('selectedLanguage', event.target.value);
   };
 
-  useEffect(() => {
-    const storedSelectedLanguage = localStorage.getItem('selectedLanguage');
-
-    if (!storedSelectedLanguage) {
-      fetch('/api/language')
-        .then(response => response.json())
-        .then(data => {
-          const selectedLanguage = data.language;
-          setSelectedLanguage(selectedLanguage);
-          localStorage.setItem('selectedLanguage', selectedLanguage);
-        });
-    } else {
-      setSelectedLanguage(storedSelectedLanguage);
-    }
-  }, []);
-
   /**
    * State for localized strings using the selected language.
    * @type {[Object, function]}

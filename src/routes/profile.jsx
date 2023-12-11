@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { getUser, updateUserProfilePicUrl, updateUserData } from '../utils/api';
+import { getUser, updateUserProfilePicUrl, updateUserData, getLanguage } from '../utils/api';
 import { storage } from "../firebase-config";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from 'uuid';
@@ -61,7 +61,7 @@ function Profile() {
 
     useEffect(() => {
         async function fetchData() {
-            const lang = selectedLanguage; // Call the getLanguage function
+            const lang = await getLanguage(localStorage.getItem('token'));// Call the getLanguage function
             setSelectedLanguage(lang); // Set the selected language based on the result
             setStrings(prevStrings => {
                 const newStrings = new LocalizedStrings(localizationData);
@@ -100,21 +100,6 @@ function Profile() {
         } catch (err) {
             console.log(err);
         }
-    }
-
-    async function getLanguage() {
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            const response = await getUser(token);
-
-            if (response && response.extra_data) {
-                const lang = response.extra_data.lang;
-                console.log(lang);
-                return lang; // Return the language directly
-            }
-        }
-        return 'defaultLanguage'; // Provide a default language in case of errors
     }
 
     useEffect(() => {

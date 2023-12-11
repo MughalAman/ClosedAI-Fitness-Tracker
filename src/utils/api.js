@@ -268,9 +268,8 @@ async function setUserLanguage(id, lang) {
 async function getLanguage() {
   try {
     const response = localStorage.getItem('token') ? await getUser(localStorage.getItem('token')) : undefined;
-    const lang = response?.extra_data?.lang;
-    console.log(lang);
-    return lang ? lang : 'en';
+    const lang = response?.extra_data?.lang || 'en';
+    return lang;
   } catch (error) {
     console.error('Error getting language:', error);
     // Handle error

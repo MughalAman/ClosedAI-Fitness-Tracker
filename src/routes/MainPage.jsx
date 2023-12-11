@@ -7,6 +7,7 @@ import MainPageWorkoutList from '../components/MainPageWorkoutList';
 import { getUserFriendships, getUserFromUserId, getLanguage, getUser } from '../utils/api';
 import ChatBot from '../components/chatBot';
 import localizationData from '../assets/localization.json';
+import { get } from 'lodash';
 
 
 const parentContainerStyles = {
@@ -127,7 +128,7 @@ function MainPage(props) {
 
   useEffect(() => {
     async function fetchData() {
-      const lang = selectedLanguage; // Call the getLanguage function
+      const lang = await getLanguage(localStorage.getItem('token')); // Call the getLanguage function
       console.log(lang);
       setSelectedLanguage(lang); // Set the selected language based on the result
       setStrings(prevStrings => {
@@ -145,7 +146,6 @@ function MainPage(props) {
   const [userFriends, setUserFriends] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const [isChatOpen, setIsChatOpen] = useState(false);
-
   /**
    * Toggles the chat window.
    * @returns {void}
@@ -164,17 +164,6 @@ function MainPage(props) {
       // rest of the cleanup code
     };
   }, []); // The empty dependency array means this useEffect runs only once (on mount)
-
-  useEffect(() => {
-    async function fetchData() {
-      const lang = selectedLanguage; // Call the getLanguage function
-      setSelectedLanguage(lang); // Set the selected language based on the result
-    }
-
-    fetchData();
-  }, []);
-
-  console.log(userData);
 
   /**
    * Fetches user friends and their workout data.
@@ -212,26 +201,6 @@ function MainPage(props) {
 
     fetchData();
   }, [userData]);
-
-  /**
-   * Asynchronously retrieves the user's language setting.
-   * @returns {string} - User's selected language.
-   */
-  async function getLanguage() {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      const response = await getUser(token);
-
-      if (response && response.extra_data) {
-        const lang = response.extra_data.lang;
-        console.log(lang);
-        return lang; // Return the language directly
-      }
-    }
-
-    return 'en'; // Provide a default language in case of errors
-  }
 
   const date = new Date();
   const format = `${date.getFullYear()}-${date.getMonth() + 1}-${("" + date.getDate()).length < 2 ? "0" + date.getDate() : date.getDate()}`
