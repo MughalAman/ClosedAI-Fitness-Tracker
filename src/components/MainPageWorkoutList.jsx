@@ -167,7 +167,7 @@ const Workout = (props) => {
         width: '800px',
         height: '555px',
         borderRadius: '4px',
-        fontSize: '30px',
+        fontSize: '20px',
         fontWeight: 'bold',
         marginTop: '16px',
         overflow: "none",

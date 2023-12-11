@@ -148,9 +148,9 @@ const PlanBuilder = (props) => {
     }
 
     const plannerBox = {
-        minHeight: "1000px",
+        minHeight: "90%",
         minWidth: "500px",
-        height: "100%",
+        height: "850px",
         width: "100%",
         overflowY: "auto",
         margin: "auto",
@@ -230,7 +230,7 @@ const PlanBuilder = (props) => {
         //console.log(data)
         return React.createElement(
             'div',
-            { draggable: true, key: i, id: data.workout_id, onDrop: dropWorkout, onDragOver: allowDrop, className: "draggableLabel" },
+            { draggable: true, key: i, id: data.workout_id, onDragOver: allowDrop, className: "draggableLabel" },
             <Workout data={data} id={data.workout_id} />
         );
     }
@@ -355,7 +355,7 @@ const PlanBuilder = (props) => {
        * @returns {JSX.Element} JSX element representing the PlanBuilder component.
        */
     return (
-        <div style={{ maxWidth: "1280px", margin: "auto" }}>
+        <div style={{maxWidth: "1280px", margin: "auto", userSelect: "none", height: "100%"}}>
             <h1 style={headingStyle}>{strings.planbuilder}</h1>
             <div style={plannerBox}>
                 <ul style={calendar}>
