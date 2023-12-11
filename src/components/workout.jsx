@@ -295,11 +295,11 @@ const Workout = (props) => {
      * @param {boolean} isClickable - Indicates whether the exercise is clickable.
      * @returns {JSX.Element} JSX element representing the exercise.
      */
-    const getExercise = (e, name="NAME", description="DESCRIPTION", sets=99, reps=99, weight=99, url="https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
+    const getExercise = (e, name="NAME", description="DESCRIPTION", sets=99, reps=99, RPE=99, url="https://www.youtube.com/embed/9t5G5XwDzmk?si=MfoSymK0c0m7corR", isClickable) => {
         return React.createElement(
             'li',
             { style: listItem, key: e},
-            React.createElement('div', {style: {textAlign: "left"}}, <Exercise name={name} description={description} sets={sets} reps={reps} weight={weight} videoUrl={url} clickable={isClickable} id={e} setTrigger={setTrigger} />),
+            React.createElement('div', {style: {textAlign: "left"}}, <Exercise name={name} description={description} sets={sets} reps={reps} RPE={RPE} videoUrl={url} clickable={isClickable} id={e} setTrigger={setTrigger} />),
             <p style={{textAlign: "center"}}>{sets}</p>,
             <p style={{textAlign: "center"}}>{reps}</p>,
         );
@@ -351,7 +351,7 @@ const Workout = (props) => {
                     <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
                     <ul style={exerciseListStyle}>
                         <li style={listItem}><div style={{textAlign: "left"}}>{strings.exercise}</div><div style={{textAlign: "center"}}>{strings.sets}</div><div style={{textAlign: "center"}}>{strings.reps}</div></li>
-                        {data.exercises.map((exercise)=>getExercise(exercise.exercise_id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.weight, exercise.video_url, true))}
+                        {data.exercises.map((exercise)=>getExercise(exercise.exercise_id, exercise.name, exercise.description, exercise.set, exercise.repetition, exercise.rpe, exercise.video_url, true))}
                     </ul>
                         <div style={timerStyle}>
                             {getMills>0 && <ExerciseComplete mills={getMills} closeWorkout={(closeModal)} name={data.name} id={data.workout_id} /* rpe={"N/A"} rating={"N/A"} */  />}

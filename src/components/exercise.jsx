@@ -176,11 +176,11 @@ const exercise = (props) => {
     const getHistory = () => {
         let historyList = [];
         getUser(localStorage.getItem("token")).then(userData => {
-            for(const workout in userData.workouts) {
-                for(const exercise in workout.exercises) {
+            for(const workout of userData.workouts) {
+                for(const exercise of workout.exercises) {
                      if(exercise.name === props.name) {
                          workout.dates.forEach(e=> e.completed && (
-                             historyList.push(<li><p>In {workout.name}</p><br /><p>On the date {e.date}</p></li>)
+                             historyList.push(<li><p>In {workout.name}</p><p>Date: {e.date}</p></li>), console.log("on historiaa")
                          ));
                      }
                 } 
@@ -204,7 +204,7 @@ const exercise = (props) => {
                         <button onClick={()=>{closeModal(), deleteExercise(props.id), props.setTrigger(true)}} style={deleteButton}>Delete Exercise</button>
                     </div>
                     <div style={{ padding: "20px" }}>
-                        <div style={video}><iframe width="100%" height="100%" src={props.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe><div style={exerciseInfo}><p>{strings.sets}: {props.sets}</p><p>{strings.reps}: {props.reps}</p><p>{strings.weight}: {props.weight}</p></div></div>
+                        <div style={video}><iframe width="100%" height="100%" src={props.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe><div style={exerciseInfo}><p>{strings.sets}: {props.sets}</p><p>{strings.reps}: {props.reps}</p><p>{strings.RPE}: {props.RPE}</p></div></div>
                         <div style={history}>
                             <ul>
                                 <p>{strings.exercisehistory}</p>

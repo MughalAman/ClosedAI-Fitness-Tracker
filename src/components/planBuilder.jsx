@@ -246,7 +246,7 @@ const PlanBuilder = (props) => {
         let savedWorkout;
         for (const workout of data.workouts) {
             for (const dateObj of workout.dates) {
-                dateObj.date === date.format && (savedWorkout = createWorkoutLabel(workout));
+                (dateObj.date === date.format && !dateObj.completed) && (savedWorkout = createWorkoutLabel(workout));
             }
         }
         return (
@@ -317,7 +317,7 @@ const PlanBuilder = (props) => {
     const dropToList = (e) => {
         e.preventDefault();
         const obj = JSON.parse(e.dataTransfer.getData("application/json"));
-        getWorkout(obj.id).then(e=>e?.dates.forEach(e=>e.date===obj.parentDate && deleteWorkoutDate(e.id)))
+        getWorkout(obj.id).then(e=>e?.dates.forEach(e=>(e.date===obj.parentDate && !e.completed)&& deleteWorkoutDate(e.id)))
         obj?.parentDate && (document.querySelector(`[date="${obj.parentDate}"]`).innerHTML="");
     }
 
