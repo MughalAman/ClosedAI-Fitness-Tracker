@@ -143,7 +143,7 @@ function ExerciseComplete(props) {
             <li>{strings.duration}: {Math.floor(props.mills / 1000 / 60)} {strings.min}</li>
           </ul>
         </div>
-        <button style={buttonStyle} onClick={props.closeWorkout}>Save</button>
+        <button style={buttonStyle} onClick={props.closeWorkout}>{strings.save}</button>
       </div></div>
   );
 }
