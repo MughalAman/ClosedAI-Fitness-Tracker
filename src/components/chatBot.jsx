@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 
 const API_KEY = import.meta.env.VITE_CHAT_GPT_API_KEY;
 
-
 /**
  * React component for a fitness chatbot.
  * @module ChatBot
@@ -50,8 +49,6 @@ function ChatBot({ closeChat, isChatOpen }) {
     const [typing, setTyping] = useState(false);
     const [messages, setMessages] = useState([
         {
-
-            
             message: strings.chatbot,
             sender: 'ChatGPT'
         }
