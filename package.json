@@ -14,7 +14,7 @@
     "@chatscope/chat-ui-kit-react": "^1.10.1",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "firebase": "^10.6.0",
+    "firebase": "^10.7.0",
     "i18next": "^23.7.8",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
